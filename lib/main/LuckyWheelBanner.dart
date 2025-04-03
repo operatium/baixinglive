@@ -4,9 +4,9 @@ class LuckyWheelBanner extends StatelessWidget {
   final VoidCallback onTap;
 
   const LuckyWheelBanner({
-    Key? key,
+    super.key,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

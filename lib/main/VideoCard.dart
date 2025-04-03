@@ -8,13 +8,13 @@ class VideoCard extends StatelessWidget {
   final String viewCount;
 
   const VideoCard({
-    Key? key,
+    super.key,
     required this.index,
     required this.tag,
     required this.hostName,
     required this.category,
     required this.viewCount,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

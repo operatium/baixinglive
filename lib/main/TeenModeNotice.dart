@@ -4,9 +4,9 @@ class TeenModeNotice extends StatelessWidget {
   final VoidCallback onClose;
 
   const TeenModeNotice({
-    Key? key,
+    super.key,
     required this.onClose,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
