@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'BottomNavBar.dart';
-import 'LuckyWheelBanner.dart';
-import 'TeenModeNotice.dart';
-import 'VideoCard.dart';
+import 'bottom_nav_bar.dart';
+import 'lucky_wheel_banner.dart';
+import 'teen_mode_notice.dart';
+import 'video_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
