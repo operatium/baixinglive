@@ -10,22 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec3edb2-d2c0-4c5d-b053-3368a3e4f788" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/baixing_logo.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/baixing2live.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/baixing2live.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/caches/deviceStreaming.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/scene/baixing_splash_scene.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/scene/baixing_web_scene.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lib/widget/Baixing_rick_text.dart" afterDir="false" />
+      <change beforePath="$USER_HOME$/myLibs/flutter/packages/flutter_tools/gradle/build.gradle.kts" beforeDir="false" afterPath="$USER_HOME$/myLibs/flutter/packages/flutter_tools/gradle/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Flutter/Debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Flutter/Release.xcconfig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/main/bottom_nav_bar.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/main/home_page.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/main/lucky_wheel_banner.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/main/teen_mode_notice.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/main/video_card.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../macos/Flutter/Flutter-Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../macos/Flutter/Flutter-Debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../macos/Flutter/Flutter-Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../macos/Flutter/Flutter-Release.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/scene/Baixing_Splash.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,11 +34,11 @@
     </projectState>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$USER_HOME$/myLibs/flutter" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2w16RStuGWKghWKSNftx5wVhltV" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -55,6 +46,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Android App.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -63,7 +55,7 @@
     "cidr.known.project.marker": "true",
     "com.codeium.enabled": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "stable",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/yuyuexing/myProject/code/flutter/baixing2live/android/app/src/main/res/mipmap-hdpi",
     "settings.editor.selected.configurable": "AndroidSdkUpdater",

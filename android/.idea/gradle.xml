@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -19,8 +20,9 @@
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_android-10.3.6/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/fluttertoast-8.2.12/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_android-2.4.10/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter_android-4.4.1/android" />
             <option value="$USER_HOME$/myLibs/flutter/packages/flutter_tools/gradle" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />

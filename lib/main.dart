@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:baixinglive/scene/baixing_login_scene.dart';
+import 'package:baixinglive/scene/baixing_select_login_scene.dart';
+import 'package:baixinglive/scene/baixing_web_scene.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:baixinglive/scene/Baixing_Splash.dart';
+import 'package:baixinglive/scene/baixing_splash_scene.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -40,6 +43,21 @@ GoRouter router = GoRouter(
     GoRoute(
       path: '/splash',
       builder: (context, state) => const Baixing_SplashScene(),
+    ),
+    GoRoute(
+      path: '/web',
+      builder: (context, state) {
+        final url = state.uri.queryParameters['url']??"";
+        return Baixing_WebScene(url: url);
+      },
+    ),
+    GoRoute(
+      path: '/selectLogin',
+      builder: (context, state) => const Baixing_SelectLoginScene()
+    ),
+    GoRoute(
+        path: '/login',
+        builder: (context, state) => const Baixing_LoginScene()
     ),
   ],
 );

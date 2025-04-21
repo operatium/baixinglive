@@ -19,9 +19,11 @@ dependencies:
   shared_preferences: ^2.2.2
   go_router: ^15.0.0
   flutter_screenutil: ^5.9.3
-  fluttertoast: ^8.2.12
+  fluttertoast: ^8.2.11
   flutter_svg: ^2.0.7
   window_manager: ^0.3.0
+  webview_flutter: ^4.11.0
+  permission_handler: ^12.0.0+1
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
@@ -35,14 +37,14 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - images/baixing_weixin.webp
     - images/baixing_99zhibo_text.webp
+    - images/baixing_qq.webp
     - images/baixing_bg_jianbian.png
     - images/baixing_logo.svg
+    - images/baixing_99.webp
     - images/baixing_logo.webp
-    - images/baixing_girl_xxxl.jpg
-    - images/baixing_bg_jianbian.png
-    - images/baixing_logo.svg
-    - images/baixing_logo.webp
+    - images/baixing_weibo.webp
     - images/baixing_girl_xxxl.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
