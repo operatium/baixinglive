@@ -35,7 +35,15 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - images/baixing_99zhibo_text.webp
+    - images/baixing_bg_jianbian.png
+    - images/baixing_logo.svg
     - images/baixing_logo.webp
+    - images/baixing_girl_xxxl.jpg
+    - images/baixing_bg_jianbian.png
+    - images/baixing_logo.svg
+    - images/baixing_logo.webp
+    - images/baixing_girl_xxxl.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
