@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Baixing_SplashScene extends StatefulWidget {
   const Baixing_SplashScene({super.key});
@@ -16,22 +17,35 @@ class Baixing_SplashScene extends StatefulWidget {
 
 class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
   String _TAG = "yyx @_Baixing_SplashSceneState: ";
-  CupertinoAlertDialog? _alertDialog = null;
 
   _Baixing_SplashSceneState() {
     print(_TAG + 'State 构造函数被调用');
   }
 
+  void _initDialog(BuildContext context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var isHide = prefs.getBool("个人信息保护指引")??false;
+    var showTime = prefs.getInt("个人信息保护指引时间")??0;
+    final t = DateTime.now().millisecondsSinceEpoch - showTime;
+    if (!isHide || t > 24 * 3600 * 1000) {
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) => _createDialog(),
+      );
+      await prefs.setBool("个人信息保护指引", true);
+      await prefs.setInt("个人信息保护指引时间", DateTime
+          .now()
+          .millisecondsSinceEpoch);
+    } else {
+      Future.delayed(const Duration(milliseconds: 300),
+              () => GoRouter.of(context).go("/selectLogin")
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    print(_TAG + 'initState 方法被调用');
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      showCupertinoDialog(
-        context: context,
-        builder: (BuildContext context) => createDialog(),
-      );
-    });
   }
 
   @override
@@ -61,6 +75,7 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
   @override
   Widget build(BuildContext context) {
     print(_TAG + 'build 方法被调用');
+    _initDialog(context);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -109,7 +124,7 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
     );
   }
 
-  CupertinoAlertDialog createDialog() => CupertinoAlertDialog(
+  CupertinoAlertDialog _createDialog() => CupertinoAlertDialog(
     title: const Text('个人信息保护指引'),
     content: Column(
       mainAxisSize: MainAxisSize.min,

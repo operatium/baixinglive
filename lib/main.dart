@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:baixinglive/provider/baixing_login.dart';
 import 'package:baixinglive/scene/baixing_login_scene.dart';
 import 'package:baixinglive/scene/baixing_select_login_scene.dart';
 import 'package:baixinglive/scene/baixing_web_scene.dart';
@@ -71,9 +72,13 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(windowWidth, windowHeight),
       builder: (context, child) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: router,
+        return MultiProvider(providers: [
+          ChangeNotifierProvider(create: (context) => Baixing_LoginModel()),
+        ],
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: router,
+          ),
         );
       },
     );
