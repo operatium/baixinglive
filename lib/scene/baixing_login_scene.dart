@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_debouncer/flutter_debouncer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -76,9 +77,19 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
     } else {
       _animationCount = 20;
       _controller.forward();
+      _vibrate();
       Fluttertoast.showToast(msg: "请同意用户协议", gravity: ToastGravity.CENTER);
     }
     return false;
+  }
+
+  Future<void> _vibrate() async {
+    bool canVibrate = await Vibrate.canVibrate;
+    if (canVibrate) {
+      Vibrate.vibrate();
+    } else {
+      print('yyx 设备不支持震动');
+    }
   }
 
   @override
