@@ -5,8 +5,8 @@ class Baixing_NetCoreWork {
   static var sBaixing_HttpTimeout = 5000;
 
   static Future<int> randomDelay({
-    int maxMilliseconds = 5000,
-    int minMilliseconds = 1000,
+    int maxMilliseconds = 2000,
+    int minMilliseconds = 500,
   }) async {
     final random = Random();
     final delayMilliseconds =

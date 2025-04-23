@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:baixinglive/provider/baixing_login.dart';
+import 'package:baixinglive/scene/baixing_home_scene.dart';
 import 'package:baixinglive/scene/baixing_login_scene.dart';
 import 'package:baixinglive/scene/baixing_select_login_scene.dart';
 import 'package:baixinglive/scene/baixing_web_scene.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:baixinglive/scene/baixing_splash_scene.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +19,8 @@ void main() {
   runApp(const MyApp());
 }
 
-const double  windowWidth = 360;
-const double  windowHeight = 640;
+const double windowWidth = 360;
+const double windowHeight = 640;
 
 void setupWindow() {
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
@@ -48,17 +50,21 @@ GoRouter router = GoRouter(
     GoRoute(
       path: '/web',
       builder: (context, state) {
-        final url = state.uri.queryParameters['url']??"";
+        final url = state.uri.queryParameters['url'] ?? "";
         return Baixing_WebScene(url: url);
       },
     ),
     GoRoute(
       path: '/selectLogin',
-      builder: (context, state) => const Baixing_SelectLoginScene()
+      builder: (context, state) => const Baixing_SelectLoginScene(),
     ),
     GoRoute(
-        path: '/login',
-        builder: (context, state) => const Baixing_LoginScene()
+      path: '/login',
+      builder: (context, state) => const Baixing_LoginScene(),
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const Baixing_HomeScene(),
     ),
   ],
 );
@@ -72,12 +78,17 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(windowWidth, windowHeight),
       builder: (context, child) {
-        return MultiProvider(providers: [
-          ChangeNotifierProvider(create: (context) => Baixing_LoginModel()),
-        ],
-          child: MaterialApp.router(
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => Baixing_LoginModel()),
+          ],
+          child: CupertinoApp.router(
             debugShowCheckedModeBanner: false,
             routerConfig: router,
+            title: '99直播',
+            theme: CupertinoThemeData(
+              primaryColor: const Color(0xffFF0000),
+            ),
           ),
         );
       },

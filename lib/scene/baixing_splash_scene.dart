@@ -37,7 +37,7 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
           .now()
           .millisecondsSinceEpoch);
     } else {
-      Future.delayed(const Duration(milliseconds: 300),
+      Future.delayed(const Duration(milliseconds: 500),
               () => GoRouter.of(context).go("/selectLogin")
       );
     }
