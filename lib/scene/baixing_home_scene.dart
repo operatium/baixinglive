@@ -1,4 +1,4 @@
-import 'package:baixinglive/scene/baixing_login_scene.dart';
+import 'package:baixinglive/scene/baixing_livepage_scene.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +12,15 @@ class Baixing_HomeScene extends StatefulWidget {
 }
 
 class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
+  Widget getPage(int index) {
+    switch (index) {
+      case 0:
+        return const Baixing_LivePageScene();
+      default:
+        return const Baixing_HomeScene();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
@@ -35,13 +44,12 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
           ),
         ],
         currentIndex: 0,
-        onTap: (index) {},
         backgroundColor: Color(0xfff6f9fc),
-        activeColor: CupertinoColors.systemBlue,
-        inactiveColor: CupertinoColors.systemGrey,
+        activeColor: CupertinoColors.systemPurple,
+        inactiveColor: Color(0xff333333),
       ),
       tabBuilder: (context, index) {
-        return const Baixing_LoginScene();
+        return getPage(index);
       },
     );
   }

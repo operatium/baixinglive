@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:baixinglive/compat/baixing_toast.dart';
+import 'package:baixinglive/compat/baixing_vibrate.dart';
 import 'package:baixinglive/provider/baixing_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_debouncer/flutter_debouncer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -40,10 +41,10 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
       code: _baixing_codeController.text,
     );
     if (result) {
-      Fluttertoast.showToast(msg: "登录成功");
+      Baixing_Toast.show("登录成功");
       GoRouter.of(context).go("/home");
     } else {
-      Fluttertoast.showToast(msg: "登录失败");
+      Baixing_Toast.show("登录失败");
     }
   }
 
@@ -54,12 +55,12 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
         phoneNumber: _baixing_phoneNumberController.text,
       );
       if (result) {
-        Fluttertoast.showToast(msg: "验证码已发送");
+        Baixing_Toast.show("验证码已发送");
       } else {
-        Fluttertoast.showToast(msg: "验证码发送失败");
+        Baixing_Toast.show("验证码发送失败");
       }
     } else {
-      Fluttertoast.showToast(msg: "请输入正确的手机号");
+      Baixing_Toast.show("请输入正确的手机号");
     }
   }
 
@@ -78,25 +79,10 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
     } else {
       _animationCount = 20;
       _controller.forward();
-      _vibrate();
-      Fluttertoast.showToast(
-        msg: "请同意用户协议",
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.black,
-        timeInSecForIosWeb: 1,
-        fontSize: 10.sp,
-      );
+      Baixing_Vibrate.vibrate();
+      Baixing_Toast.showCenter("请同意用户协议");
     }
     return false;
-  }
-
-  Future<void> _vibrate() async {
-    bool canVibrate = await Vibrate.canVibrate;
-    if (canVibrate) {
-      Vibrate.vibrate();
-    } else {
-      print('yyx 设备不支持震动');
-    }
   }
 
   @override
@@ -128,7 +114,6 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
   @override
   void didChangeMetrics() {
     final bottomInset = View.of(context).viewInsets.bottom;
-    print("yyx bottomInset: $bottomInset");
     setState(() {
       _height = max(230.w - bottomInset, 10.w);
       if(bottomInset > 0 && _move == false) {
@@ -167,7 +152,7 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
         if (didPop) {
           print('返回操作已执行');
         } else {
-          Fluttertoast.showToast(msg: "请用home键切后台");
+          Baixing_Toast.show("请用home键切后台");
         }
       },
       child: Scaffold(
