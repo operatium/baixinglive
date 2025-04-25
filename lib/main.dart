@@ -82,12 +82,13 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(create: (context) => Baixing_LoginModel()),
           ],
-          child: CupertinoApp.router(
+          child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
             routerConfig: router,
             title: '99直播',
-            theme: CupertinoThemeData(
-              primaryColor: const Color(0xffFF0000),
+            theme: ThemeData(
+              splashFactory: NoSplash.splashFactory,
+              scaffoldBackgroundColor: Color(0xfff4f9fc),
             ),
           ),
         );
