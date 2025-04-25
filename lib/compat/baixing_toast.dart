@@ -17,7 +17,8 @@ class Baixing_Toast {
     if (Platform.isIOS || Platform.isAndroid) {
       Fluttertoast.showToast(msg: msg,
         gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
       );
     } else {
       print('yyx 居中弹窗: ${msg}');

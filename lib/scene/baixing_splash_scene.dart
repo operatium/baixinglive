@@ -135,7 +135,7 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
         onPressed: () {
           Navigator.of(context).pop();
         },
-        child: const Text('取消'),
+        child: const Text('取消', style: TextStyle(color: Colors.black),),
       ),
       CupertinoDialogAction(
         onPressed: () async {
@@ -148,7 +148,7 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
           GoRouter.of(context).go("/selectLogin");
         },
         isDefaultAction: true,
-        child: const Text('确认'),
+        child: const Text('确认', style: TextStyle(color: Colors.black),),
       ),
     ],
   );
