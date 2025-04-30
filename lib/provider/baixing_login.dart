@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:baixinglive/business/net/baixing_net_core_work.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+
 
 class Baixing_LoginModel extends ChangeNotifier {
   final int remainingSeconds = 60;

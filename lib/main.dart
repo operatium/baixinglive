@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:baixinglive/provider/baixing_account.dart';
+import 'package:baixinglive/provider/baixing_live_streaming_column.dart';
 import 'package:baixinglive/provider/baixing_login.dart';
 import 'package:baixinglive/scene/baixing_home_scene.dart';
 import 'package:baixinglive/scene/baixing_login_scene.dart';
@@ -81,6 +83,8 @@ class MyApp extends StatelessWidget {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => Baixing_LoginModel()),
+            ChangeNotifierProvider(create: (context) => Baixing_LiveStraeamingColumnModel()),
+            ChangeNotifierProvider(create: (context) => Baixing_AccountModel()),
           ],
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
@@ -88,7 +92,7 @@ class MyApp extends StatelessWidget {
             title: '99直播',
             theme: ThemeData(
               splashFactory: NoSplash.splashFactory,
-              scaffoldBackgroundColor: Color(0xfff4f9fc),
+              scaffoldBackgroundColor: Color(0xfff7f7f7),
             ),
           ),
         );

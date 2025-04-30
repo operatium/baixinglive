@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:baixinglive/compat/baixing_toast.dart';
 import 'package:baixinglive/compat/baixing_vibrate.dart';
+import 'package:baixinglive/entity/baixing_accountentity.dart';
+import 'package:baixinglive/provider/baixing_account.dart';
 import 'package:baixinglive/provider/baixing_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +43,9 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
       code: _baixing_codeController.text,
     );
     if (result) {
+      Baixing_AccountModel accountModel = context.read();
+      accountModel.baixing_current_account = Baixing_AccountEntity(phone: _baixing_phoneNumberController.text)
+        ..token = baixing_loginModel.baixing_netin_userToken;
       Baixing_Toast.show("登录成功");
       GoRouter.of(context).go("/home");
     } else {

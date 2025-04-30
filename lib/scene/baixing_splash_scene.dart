@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:baixinglive/compat/baixing_persistence.dart';
+import 'package:baixinglive/entity/baixing_accountentity.dart';
 import 'package:baixinglive/widget/Baixing_privacy_agreement_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,7 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
           .millisecondsSinceEpoch);
     } else {
       Future.delayed(const Duration(milliseconds: 500),
-              () => GoRouter.of(context).go("/selectLogin")
+              () => _goNextScene(context)
       );
     }
   }
@@ -46,6 +48,9 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      Baixing_SharedPreferences.init();
+    });
   }
 
   @override
@@ -145,11 +150,24 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
             await Permission.camera.request();
             await Permission.microphone.request();
           }
-          GoRouter.of(context).go("/selectLogin");
+          _goNextScene(context);
         },
         isDefaultAction: true,
         child: const Text('确认', style: TextStyle(color: Colors.black),),
       ),
     ],
   );
+
+  void _goNextScene(BuildContext context) {
+    String loginstring = Baixing_SharedPreferences.baixing_getString("login");
+    if (loginstring.isNotEmpty) {
+      var jsonmap = json.decode(loginstring);
+      Baixing_AccountEntity account = Baixing_AccountEntity.fromJson(jsonmap);
+      if(account.token.isNotEmpty) {
+        GoRouter.of(context).go("/home");
+        return;
+      }
+    }
+    GoRouter.of(context).go("/selectLogin");
+  }
 }

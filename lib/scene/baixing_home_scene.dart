@@ -59,7 +59,7 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
                     ),
                   ],
                   currentIndex: _selectedIndex,
-                  selectedItemColor: Colors.purple,
+                  selectedItemColor: Color(0xffb888f6),
                   unselectedItemColor: Colors.grey,
                   onTap: (index) {
                     setState(() {
