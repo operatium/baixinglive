@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 // 生成的代码文件
-part 'baixing_accountentity.g.dart';
+part 'baixing_account_entity.g.dart';
 
 // 使用 @JsonSerializable 注解标记类
 @JsonSerializable()

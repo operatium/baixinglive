@@ -1,4 +1,4 @@
-import 'package:baixinglive/fragment/baixing_livepage_fragment.dart';
+import 'package:baixinglive/fragment/baixing_live_page_fragment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

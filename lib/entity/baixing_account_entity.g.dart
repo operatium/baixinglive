@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'baixing_accountentity.dart';
+part of 'baixing_account_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

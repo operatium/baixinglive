@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:baixinglive/compat/baixing_persistence.dart';
-import 'package:baixinglive/entity/baixing_accountentity.dart';
+import 'package:baixinglive/entity/baixing_account_entity.dart';
 import 'package:flutter/foundation.dart';
 
 class Baixing_AccountModel extends ChangeNotifier {

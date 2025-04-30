@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:baixinglive/compat/baixing_persistence.dart';
-import 'package:baixinglive/entity/baixing_accountentity.dart';
+import 'package:baixinglive/entity/baixing_account_entity.dart';
 import 'package:baixinglive/widget/Baixing_privacy_agreement_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

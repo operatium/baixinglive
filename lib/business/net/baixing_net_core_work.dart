@@ -1,12 +1,14 @@
 import 'dart:math';
 
+import 'package:baixinglive/entity/baixing_live_room_entity.dart';
+
 class Baixing_NetCoreWork {
   static var _TAG = "Baixing_NetCoreWork";
   static var sBaixing_HttpTimeout = 5000;
 
   static Future<int> randomDelay({
-    int maxMilliseconds = 2000,
-    int minMilliseconds = 500,
+    int maxMilliseconds = 5000,
+    int minMilliseconds = 4000,
   }) async {
     final random = Random();
     final delayMilliseconds =
@@ -30,4 +32,24 @@ class Baixing_NetCoreWork {
     return ["推荐","游戏","音乐","舞蹈","美食","旅游","体育","科技","教育","娱乐"];
   }
 
+  static Future<List<Baixing_LiveRoomEntity>> getLiveRoomList({required String column, required int page}) async {
+    await randomDelay();
+    return _generateRandomLiveRoomList(10);
+  }
+
+
+  static List<Baixing_LiveRoomEntity> _generateRandomLiveRoomList(int count) {
+    final random = Random();
+    List<Baixing_LiveRoomEntity> liveRooms = [];
+    for (int i = 0; i < count; i++) {
+      liveRooms.add(Baixing_LiveRoomEntity(
+        mBaixing_room_id: "roomId:${random.nextInt(10000)}",
+        mBaixing_room_name: "房间名${random.nextInt(100)}",
+        mBaixing_girl_name: "主播名${random.nextInt(100)}",
+        mBaixing_room_cover: "https://picsum.photos/200/200?random=${random.nextInt(1000)}",
+        mBaixing_audience_count: random.nextInt(1000),
+      ));
+    }
+    return liveRooms;
+  }
 }

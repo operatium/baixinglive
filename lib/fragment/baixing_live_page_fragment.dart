@@ -1,5 +1,5 @@
 import 'package:baixinglive/compat/baixing_toast.dart';
-import 'package:baixinglive/provider/baixing_live_streaming_column.dart';
+import 'package:baixinglive/provider/baixing_live_streaming_column_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +17,7 @@ class Baixing_LiveFragment extends StatefulWidget {
 
 class _Baixing_LiveFragmentState extends State<Baixing_LiveFragment>
     with TickerProviderStateMixin {
-  TabController? _tabController = null;
+  TabController? _tabController;
 
   @override
   void initState() {
@@ -118,7 +118,7 @@ class _Baixing_LiveFragmentState extends State<Baixing_LiveFragment>
 
   List<Widget> _getPage(Baixing_LiveStraeamingColumnModel model) {
     return model.columnList
-        .map((String name) => Baixing_LiveRoomListFragment(title: name))
+        .map((String name) => Baixing_LiveRoomListFragment(mBaixing_title: name))
         .toList();
   }
 }

@@ -29,6 +29,8 @@ dependencies:
   custom_sliding_segmented_control: ^1.8.5
   freezed_annotation: ^3.0.0
   json_annotation: ^4.9.0
+  cached_network_image: ^3.4.1
+  custom_refresh_indicator: ^4.0.1
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
@@ -54,6 +56,7 @@ flutter:
     - images/baixing_logo.webp
     - images/baixing_weibo.webp
     - images/baixing_girl_xxxl.jpg
+    - images/baixing_def_cover.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

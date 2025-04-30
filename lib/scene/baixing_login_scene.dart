@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:baixinglive/compat/baixing_toast.dart';
 import 'package:baixinglive/compat/baixing_vibrate.dart';
-import 'package:baixinglive/entity/baixing_accountentity.dart';
-import 'package:baixinglive/provider/baixing_account.dart';
-import 'package:baixinglive/provider/baixing_login.dart';
+import 'package:baixinglive/entity/baixing_account_entity.dart';
+import 'package:baixinglive/provider/baixing_account_model.dart';
+import 'package:baixinglive/provider/baixing_login_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
