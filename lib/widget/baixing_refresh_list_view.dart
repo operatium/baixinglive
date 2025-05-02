@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -38,17 +36,42 @@ class Baixing_RefreshListView extends StatefulWidget {
 class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
   final _indicatorController = IndicatorController();
   bool _loading = false;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   bool _mBaixing_isBottom = false;
+  int _time = 0;
 
   @override
   Widget build(BuildContext context) {
-    return _get1(context);
+    return Stack(
+      children: [
+        NotificationListener(
+          onNotification: (ScrollNotification notification) {
+            _handleScroll(context, notification, widget.mBaixing_data);
+            return false;
+          },
+          child: _getRefreshIndicator(
+            child: GridView.builder(
+              controller: _scrollController,
+              gridDelegate: widget.mBaixing_gridDelegate,
+              itemBuilder: widget.mBaixing_itemBuilder,
+              itemCount: widget.mBaixing_getItemCount(
+                context,
+                widget.mBaixing_data,
+              ),
+            ),
+          ),
+        ),
+        _getFootView(context),
+      ],
+    );
   }
 
   Widget _getRefreshIndicator({required Widget child}) {
     return CustomMaterialIndicator(
-      onRefresh: () => widget.mBaixing_onRefresh(widget.mBaixing_data),
+      onRefresh: () async {
+        _mBaixing_isBottom = false;
+        return await widget.mBaixing_onRefresh(widget.mBaixing_data);
+      },
       controller: _indicatorController,
       backgroundColor: Colors.white,
       durations: RefreshIndicatorDurations(
@@ -79,6 +102,12 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
     if (notification is ScrollEndNotification &&
         !_loading &&
         notification.metrics.pixels == notification.metrics.maxScrollExtent) {
+      final t = DateTime.now().millisecondsSinceEpoch - _time;
+      if(t > 1000) {
+        _time = DateTime.now().millisecondsSinceEpoch;
+      } else {
+        return;
+      }
       setState(() {
         _loading = true;
       });
@@ -102,43 +131,22 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
     }
   }
 
-  Widget _get1(BuildContext context) {
-    return Stack(
-      children: [
-        NotificationListener(
-          onNotification: (ScrollNotification notification) {
-            _handleScroll(context, notification, widget.mBaixing_data);
-            return false;
-          },
-          child: _getRefreshIndicator(
-            child: GridView.builder(
-              controller: _scrollController,
-              gridDelegate: widget.mBaixing_gridDelegate,
-              itemBuilder: widget.mBaixing_itemBuilder,
-              itemCount: widget.mBaixing_getItemCount(
-                context,
-                widget.mBaixing_data,
-              ),
+  Widget _getFootView(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Visibility(
+        visible: _loading,
+        child: Container(
+          color: Colors.grey,
+          height: 30.w,
+          child: Center(
+            child: Text(
+              _mBaixing_isBottom ? "没有更多了" : "正在加载...",
+              style: TextStyle(color: Colors.white, fontSize: 14.sp),
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Visibility(
-            visible: _loading,
-            child: Container(
-              color: Colors.grey,
-              height: 30.w,
-              child: Center(
-                child: Text(
-                  _mBaixing_isBottom ? "没有更多了" : "正在加载..$_loading",
-                  style: TextStyle(color: Colors.white, fontSize: 14.sp),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

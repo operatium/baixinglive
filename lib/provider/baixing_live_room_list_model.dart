@@ -2,6 +2,7 @@ import 'package:baixinglive/business/net/baixing_net_core_work.dart';
 import 'package:baixinglive/entity/baixing_live_room_entity.dart';
 import 'package:baixinglive/entity/baixing_live_room_page_entity.dart';
 import 'package:flutter/foundation.dart';
+import 'package:tuple/tuple.dart';
 
 class Baixing_LiveRoomListModel extends ChangeNotifier {
   final Map<String, Map<int, Baixing_LiveRoomPageEntity>> _liveRoomMap = {};
@@ -22,31 +23,34 @@ class Baixing_LiveRoomListModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> requestFirstLiveRoomList(String column) async {
+  Future<Tuple2<bool, List<Baixing_LiveRoomEntity>>> requestFirstLiveRoomList(String column) async {
     _liveRoomPageMap[column] = 0;
     return await _requestLiveRoomList(column, 0);
   }
 
-  Future<bool> requestNextLiveRoomList(String column) async {
+  Future<Tuple2<bool, List<Baixing_LiveRoomEntity>>> requestNextLiveRoomList(String column) async {
     if(_liveRoomPageMap[column] == null) {
       _liveRoomPageMap[column] = 0;
     }
+    final old = _liveRoomPageMap[column]!;
     _liveRoomPageMap[column] = _liveRoomPageMap[column]! + 1;
-    return await _requestLiveRoomList(column, _liveRoomPageMap[column]!);
+    var result = await _requestLiveRoomList(column, _liveRoomPageMap[column]!);
+    if(!result.item1) {
+      _liveRoomPageMap[column] = old;
+    }
+    return result;
   }
 
-  Future<bool> _requestLiveRoomList(String column, int page) async {
-    print("yyx- _requestLiveRoomList column: ${column}, page: ${page}");
-    if(page > 5) {
-      return false;
-    }
+  Future<Tuple2<bool, List<Baixing_LiveRoomEntity>>> _requestLiveRoomList(String column, int page) async {
     final result = await Baixing_NetCoreWork.getLiveRoomList(
       column: column,
       page: page,
     );
-    _addDataCache(column, page, result);
+    if(result.item1) {
+      _addDataCache(column, page, result.item2);
+    }
     notifyListeners();
-    return result.isNotEmpty;
+    return result;
   }
 
   void _addDataCache(String column, int page, List<Baixing_LiveRoomEntity> list) {

@@ -1,16 +1,18 @@
 import 'dart:math';
 
 import 'package:baixinglive/entity/baixing_live_room_entity.dart';
+import 'package:tuple/tuple.dart';
 
 class Baixing_NetCoreWork {
   static var _TAG = "Baixing_NetCoreWork";
   static var sBaixing_HttpTimeout = 5000;
+  static final random = Random();
+  static bool success = true;
 
   static Future<int> randomDelay({
-    int maxMilliseconds = 5000,
-    int minMilliseconds = 4000,
+    int maxMilliseconds = 500,
+    int minMilliseconds = 100,
   }) async {
-    final random = Random();
     final delayMilliseconds =
         random.nextInt(maxMilliseconds - minMilliseconds) + minMilliseconds;
     await Future.delayed(Duration(milliseconds: delayMilliseconds));
@@ -32,9 +34,17 @@ class Baixing_NetCoreWork {
     return ["推荐","游戏","音乐","舞蹈","美食","旅游","体育","科技","教育","娱乐"];
   }
 
-  static Future<List<Baixing_LiveRoomEntity>> getLiveRoomList({required String column, required int page}) async {
+  static Future<Tuple2<bool, List<Baixing_LiveRoomEntity>>> getLiveRoomList({required String column, required int page}) async {
     await randomDelay();
-    return _generateRandomLiveRoomList(10);
+    // success = !success;
+    if(page > 2) {
+      return Tuple2(success, []);
+    }
+    final c = random.nextInt(10)+ 10;
+    if(success) {
+      print("yyx- 生产Baixing_LiveRoomEntity: $c个");
+    }
+    return Tuple2(success, _generateRandomLiveRoomList(c));
   }
 
 
