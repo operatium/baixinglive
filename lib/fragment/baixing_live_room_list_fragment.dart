@@ -26,41 +26,6 @@ class Baixing_LiveRoomListFragment extends StatefulWidget {
 
 class _Baixing_LiveRoomListFragmentState
     extends State<Baixing_LiveRoomListFragment> {
-  bool _loading = false;
-  ScrollController _scrollController = ScrollController();
-  bool _mBaixing_isBottom = false;
-
-  void scroll() {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        _scrollController.offset + 30,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    }
-  }
-
-  void _handleScroll(
-    ScrollNotification notification,
-    Baixing_LiveRoomListModel model,
-    String title,
-  ) async {
-    if (notification is ScrollEndNotification &&
-        !_loading &&
-        notification.metrics.pixels == notification.metrics.maxScrollExtent) {
-      setState(() {
-        _loading = true;
-      });
-      bool r = await model.requestNextLiveRoomList(title);
-      if (r) {
-        scroll();
-      }
-      setState(() {
-        _mBaixing_isBottom = !r;
-        _loading = false;
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -76,46 +41,42 @@ class _Baixing_LiveRoomListFragmentState
   Widget build(BuildContext context) {
     Baixing_LiveRoomListModel model = context.watch();
     final title = widget.mBaixing_title;
-    return Stack(
-      children: [
-        NotificationListener(
-          onNotification: (ScrollNotification notification) {
-            _handleScroll(notification, model, title);
-            return false;
+    return Baixing_RefreshListView(
+      mBaixing_onRefresh: (String data) {
+        return model.requestFirstLiveRoomList(data);
+      },
+      mBaixing_itemBuilder: (BuildContext context, int index) {
+        return LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            final double width = constraints.maxWidth / 2 - 10.w;
+            final Baixing_LiveRoomEntity entity = model.getList(title)[index];
+            return _baixing_getRoundedCornerImageView(width, entity);
           },
-          child: Baixing_RefreshListView(
-            mBaixing_onRefresh: (control) async {
-              model.requestFirstLiveRoomList(widget.mBaixing_title);
-            },
-            child: Baixing_DoubleListView(
-              mBaixing_ScrollController: _scrollController,
-              mBaixing_title: title,
-              mBaixing_itemCount: (context) {
-                return model.getList(title).length;
-              },
-              mBaixing_itemCoverUrlBuilder: (context, index) {
-                return model.getList(title)[index].mBaixing_room_cover;
-              },
-            ),
-          ),
+        );
+      },
+      mBaixing_data: title,
+      mBaixing_getItemCount: (context, data) {
+        return model.getList(data).length;
+      },
+      mBaixing_gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1.0,
+      ),
+      mBaixing_onLoad: (String data) {
+        return model.requestNextLiveRoomList(data);
+      },
+    );
+  }
+
+  Widget _baixing_getRoundedCornerImageView(double width, Baixing_LiveRoomEntity entity) {
+    return Container(
+      margin: EdgeInsets.only(left: 10.w, top: 10.w),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(width / 10),
+        child: Baixing_CoverWidget(
+          mBaixing_url: entity.mBaixing_room_cover,
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Visibility(
-            visible: _loading,
-            child: Container(
-              color: Colors.grey,
-              height: 30.w,
-              child: Center(
-                child: Text(
-                  _mBaixing_isBottom ? "没有更多了" : "正在加载..$_loading",
-                  style: TextStyle(color: Colors.white, fontSize: 14.sp),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

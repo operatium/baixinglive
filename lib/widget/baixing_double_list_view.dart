@@ -26,34 +26,56 @@ class Baixing_DoubleListView extends StatefulWidget {
 }
 
 class _Baixing_DoubleListViewState extends State<Baixing_DoubleListView> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 10.w),
-      child: GridView.builder(
-        controller: widget.mBaixing_ScrollController,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1.0,
+
+  Widget _baixing_getRoundedCornerImageView(double width, int index) {
+    return Container(
+      margin: EdgeInsets.only(left: 10.w, top: 10.w),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(width / 10),
+        child: Baixing_CoverWidget(
+          mBaixing_url: widget.mBaixing_itemCoverUrlBuilder(context, index),
         ),
-        itemCount: widget.mBaixing_itemCount(context),
-        itemBuilder: (context, index) {
-          return LayoutBuilder(
+      ),
+    );
+  }
+
+  NullableIndexedWidgetBuilder _baixing_createItemBuilder() {
+    return (BuildContext context, int index) =>
+        LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               final double width = constraints.maxWidth / 2 - 10.w;
-              return Container(
-                margin: EdgeInsets.only(left: 10.w, top: 10.w),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(width / 10),
-                  child: Baixing_CoverWidget(
-                    mBaixing_url: widget.mBaixing_itemCoverUrlBuilder(context, index),
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      ),
+              return _baixing_getRoundedCornerImageView(width, index);
+            });
+  }
+
+  SliverGridDelegate _baixing_createGridDelegate() {
+    return const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+      childAspectRatio: 1.0,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverVisibility(
+            visible: true,
+            sliver: Container(
+              height: 30.w,
+              color: Color(0xffdddddd),
+              child: Center(
+                child: Text("到底了", style: TextStyle(color: Color(0xff333333), fontSize: 14.sp),),
+              ),
+            )
+        ),
+        SliverGrid.builder(
+            gridDelegate: _baixing_createGridDelegate(),
+            itemBuilder: _baixing_createItemBuilder(),
+            itemCount: widget.mBaixing_itemCount(context),
+        ),
+
+      ],
     );
   }
 }
