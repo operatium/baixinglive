@@ -1,8 +1,11 @@
+import 'package:baixinglive/entity/baixing_final_entity.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_debouncer/flutter_debouncer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 typedef Baixing_onRefreshBuilder = Future<void> Function(String data);
 typedef Baixing_onLoadBuilder = Future<bool> Function(String data);
@@ -38,7 +41,7 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
   bool _loading = false;
   final ScrollController _scrollController = ScrollController();
   bool _mBaixing_isBottom = false;
-  int _time = 0;
+  final _mBaixing_Debouncer = Debouncer();
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +78,10 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
       controller: _indicatorController,
       backgroundColor: Colors.white,
       durations: RefreshIndicatorDurations(
-        cancelDuration: const Duration(milliseconds: 300),
-        settleDuration: const Duration(milliseconds: 300),
-        finalizeDuration: const Duration(milliseconds: 300),
-        completeDuration: const Duration(milliseconds: 300),
+        cancelDuration: Baixing_300ms,
+        settleDuration: Baixing_300ms,
+        finalizeDuration: Baixing_300ms,
+        completeDuration: Baixing_300ms,
       ),
       child: child,
     );
@@ -88,7 +91,7 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
         _scrollController.offset + 30.w,
-        duration: Duration(milliseconds: 300),
+        duration: Baixing_300ms,
         curve: Curves.easeOut,
       );
     }
@@ -101,33 +104,26 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
   ) async {
     if (notification is ScrollEndNotification &&
         !_loading &&
-        notification.metrics.pixels == notification.metrics.maxScrollExtent) {
-      final t = DateTime.now().millisecondsSinceEpoch - _time;
-      if(t > 1000) {
-        _time = DateTime.now().millisecondsSinceEpoch;
-      } else {
-        return;
-      }
-      setState(() {
-        _loading = true;
-      });
-      if (_mBaixing_isBottom) {
-        Future.delayed(
-          Duration(milliseconds: 500),
-          () => setState(() {
+        notification.metrics.pixels ==
+            notification.metrics.maxScrollExtent) {
+      _mBaixing_Debouncer.debounce(
+        duration: Baixing_1000ms,
+        onDebounce: () async {
+          setState(() => _loading = true);
+          if (_mBaixing_isBottom) {
+            delay500(() => setState(() => _loading = false));
+            return;
+          }
+          bool r = await widget.mBaixing_onLoad(data);
+          if (r) {
+            scroll();
+          }
+          setState(() {
+            _mBaixing_isBottom = !r;
             _loading = false;
-          }),
-        );
-        return;
-      }
-      bool r = await widget.mBaixing_onLoad(data);
-      if (r) {
-        scroll();
-      }
-      setState(() {
-        _mBaixing_isBottom = !r;
-        _loading = false;
-      });
+          });
+        },
+      );
     }
   }
 
