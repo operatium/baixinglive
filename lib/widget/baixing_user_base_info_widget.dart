@@ -36,7 +36,7 @@ class Baixing_UserBaseInfo extends StatelessWidget {
                 // 用户昵称
                 Text(
                   model.baixing_getNickName(),
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 SizedBox(height: 4.w),
                 // 用户等级标签

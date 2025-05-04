@@ -28,6 +28,17 @@ class Baixing_BackGround {
     );
   }
 
+  //圆角 矩形 白色实体
+  static BoxDecoration baixing_getRoundedRectangular({
+    required double radius,
+    Color color = Colors.white,
+  }) {
+    return BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.all(Radius.circular(radius)),
+    );
+  }
+
   //不规则圆角 矩形 实体 竖直方向3色渐变
   static BoxDecoration baixing_getRoundedRectangular_K001() {
     return BoxDecoration(

@@ -97,8 +97,8 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor: Color(0xfff7f7f7),
               textTheme: TextTheme(
                 titleLarge: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w800,
                   color: Colors.black,
                 ),
                 titleMedium: TextStyle(
@@ -112,7 +112,7 @@ class MyApp extends StatelessWidget {
                   color: Colors.black,
                 ),
                 labelLarge: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
                 ),
