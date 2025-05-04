@@ -614,7 +614,7 @@
         <entry key="provider">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/provider-6.1.4/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/provider-6.1.5/lib" />
             </list>
           </value>
         </entry>
@@ -1098,7 +1098,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/platform-3.1.6/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pool-1.5.1/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/provider-6.1.4/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/provider-6.1.5/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pub_semver-2.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pubspec_parse-1.5.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib" />

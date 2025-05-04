@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:baixinglive/compat/baixing_persistence.dart';
 import 'package:baixinglive/entity/baixing_account_entity.dart';
 import 'package:baixinglive/entity/baixing_final_entity.dart';
+import 'package:baixinglive/provider/baixing_account_model.dart';
 import 'package:baixinglive/widget/Baixing_privacy_agreement_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Baixing_SplashScene extends StatefulWidget {
@@ -47,9 +49,6 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      Baixing_SharedPreferences.init();
-    });
   }
 
   @override
@@ -157,15 +156,13 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
     ],
   );
 
-  void _goNextScene(BuildContext context) {
-    String loginstring = Baixing_SharedPreferences.baixing_getString("login");
-    if (loginstring.isNotEmpty) {
-      var jsonmap = json.decode(loginstring);
-      Baixing_AccountEntity account = Baixing_AccountEntity.fromJson(jsonmap);
-      if(account.token.isNotEmpty) {
+  void _goNextScene(BuildContext context) async {
+    await Baixing_SharedPreferences.init();
+    final model = context.read<Baixing_AccountModel>();
+    model.resume();
+    if (model.baixing_current_account != null) {
         GoRouter.of(context).go("/home");
         return;
-      }
     }
     GoRouter.of(context).go("/selectLogin");
   }

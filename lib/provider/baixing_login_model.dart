@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:baixinglive/business/net/baixing_net_core_work.dart';
+import 'package:baixinglive/provider/baixing_account_model.dart';
 import 'package:flutter/foundation.dart';
 
 

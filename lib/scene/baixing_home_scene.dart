@@ -1,4 +1,5 @@
 import 'package:baixinglive/fragment/baixing_live_page_fragment.dart';
+import 'package:baixinglive/fragment/baixing_me_fragment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,14 +14,16 @@ class Baixing_HomeScene extends StatefulWidget {
 }
 
 class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
-  var _selectedIndex = 0;
+  var _selectedIndex = 1;
 
   Widget getPage(int index) {
     switch (index) {
       case 0:
         return const Baixing_LiveFragment();
+      case 1:
+        return const Baixing_MeFragment();
       default:
-        return const Baixing_HomeScene();
+        return Text("${index}");
     }
   }
 

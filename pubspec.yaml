@@ -15,7 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_swiper_null_safety: ^1.0.2
   dio: ^5.8.0
-  provider: ^6.0.5
+  provider: ^6.1.5
   go_router: ^15.1.1
   flutter_screenutil: ^5.9.3
   fluttertoast: ^8.2.11
@@ -48,16 +48,40 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - images/baixing_level9.webp
+    - images/baixing_level5.webp
     - images/baixing_weixin.webp
     - images/baixing_99zhibo_text.webp
+    - images/baixing_level_tag0.webp
+    - images/baixing_level4.webp
     - images/baixing_qq.webp
+    - images/baixing_level8.webp
+    - images/baixing_level3.webp
+    - images/baixing_level_icon9.png
+    - images/baixing_level_icon8.png
     - images/baixing_bg_jianbian.png
+    - images/baixing_level2.webp
+    - images/baixing_level_icon0.png
+    - images/baixing_level_icon1.png
+    - images/baixing_def_cover.jpg
+    - images/baixing_level1.webp
+    - images/baixing_level_icon3.png
+    - images/baixing_level_icon2.png
     - images/baixing_logo.svg
     - images/baixing_99.webp
+    - images/baixing_level_icon6.png
     - images/baixing_logo.webp
+    - images/baixing_level_icon7.png
+    - images/baixing_level0.webp
+    - images/baixing_level_icon5.png
     - images/baixing_weibo.webp
+    - images/baixing_level_icon4.png
+    - images/baixing_level7.webp
+    - images/baixing_level6.webp
     - images/baixing_girl_xxxl.jpg
-    - images/baixing_def_cover.jpg
+    - images/baixing_level_tag3.webp
+    - images/baixing_umbrella.png
+   
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

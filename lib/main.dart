@@ -94,7 +94,39 @@ class MyApp extends StatelessWidget {
             title: '99直播',
             theme: ThemeData(
               splashFactory: NoSplash.splashFactory,
-              scaffoldBackgroundColor: Color(0xffdddddd),
+              scaffoldBackgroundColor: Color(0xfff7f7f7),
+              textTheme: TextTheme(
+                titleLarge: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+                titleMedium: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+                titleSmall: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+                labelLarge: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+                labelMedium: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+                labelSmall: TextStyle(
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xff888888),
+                ),
+              )
             ),
           ),
         );
