@@ -38,10 +38,11 @@ class Baixing_RefreshListView extends StatefulWidget {
 
 class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
   final _indicatorController = IndicatorController();
-  bool _loading = false;
+  bool _mBaixing_isLoading = false;
   final ScrollController _scrollController = ScrollController();
   bool _mBaixing_isBottom = false;
   final _mBaixing_Debouncer = Debouncer();
+  bool _mBaixing_upScroll = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,7 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
           },
           child: _getRefreshIndicator(
             child: GridView.builder(
+              physics: const BouncingScrollPhysics(),
               controller: _scrollController,
               gridDelegate: widget.mBaixing_gridDelegate,
               itemBuilder: widget.mBaixing_itemBuilder,
@@ -98,20 +100,28 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
   }
 
   void _handleScroll(
-    BuildContext context,
-    ScrollNotification notification,
-    String data,
-  ) async {
-    if (notification is ScrollEndNotification &&
-        !_loading &&
-        notification.metrics.pixels ==
-            notification.metrics.maxScrollExtent) {
+      BuildContext context,
+      ScrollNotification notification,
+      String data,
+      ) async {
+    _mBaixing_Debouncer.debounce(duration: Baixing_1000ms,
+        onDebounce: () {
+          if (notification is ScrollUpdateNotification) {
+            final scrollDelta = notification.scrollDelta;
+            _mBaixing_upScroll = (scrollDelta != null && scrollDelta > 0); // 上拉
+          }
+        });
+    final bottomUp = notification.metrics.pixels >
+        notification.metrics.maxScrollExtent; //底部上滚
+    if (bottomUp && _mBaixing_upScroll && !_mBaixing_isLoading) {
       _mBaixing_Debouncer.debounce(
         duration: Baixing_1000ms,
+        type: BehaviorType.leadingEdge,
         onDebounce: () async {
-          setState(() => _loading = true);
+          print("yyx- 触发上拉2");
+          setState(() => _mBaixing_isLoading = true);
           if (_mBaixing_isBottom) {
-            delay500(() => setState(() => _loading = false));
+            delay500(() => setState(() => _mBaixing_isLoading = false));
             return;
           }
           bool r = await widget.mBaixing_onLoad(data);
@@ -120,7 +130,7 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
           }
           setState(() {
             _mBaixing_isBottom = !r;
-            _loading = false;
+            _mBaixing_isLoading = false;
           });
         },
       );
@@ -131,7 +141,7 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Visibility(
-        visible: _loading,
+        visible: _mBaixing_isLoading,
         child: Container(
           color: Colors.grey,
           height: 30.w,

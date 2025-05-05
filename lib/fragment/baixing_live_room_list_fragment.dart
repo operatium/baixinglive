@@ -156,7 +156,7 @@ class _Baixing_LiveRoomListFragmentState
       },
       mBaixing_gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 1.0,
+        // childAspectRatio: 1.0,
       ),
       mBaixing_onLoad: (String data) async {
         Tuple2<bool, List<Baixing_LiveRoomEntity>> result = await model

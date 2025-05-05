@@ -14,13 +14,13 @@ class Baixing_HomeScene extends StatefulWidget {
 }
 
 class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
-  var _selectedIndex = 1;
+  var _selectedIndex = 0;
 
   Widget getPage(int index) {
     switch (index) {
       case 0:
         return const Baixing_LiveFragment();
-      case 1:
+      case 3:
         return const Baixing_MeFragment();
       default:
         return Text("${index}");

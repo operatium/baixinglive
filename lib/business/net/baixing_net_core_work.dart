@@ -10,8 +10,8 @@ class Baixing_NetCoreWork {
   static bool success = true;
 
   static Future<int> randomDelay({
-    int maxMilliseconds = 500,
-    int minMilliseconds = 100,
+    int maxMilliseconds = 5000,
+    int minMilliseconds = 1000,
   }) async {
     final delayMilliseconds =
         random.nextInt(maxMilliseconds - minMilliseconds) + minMilliseconds;
