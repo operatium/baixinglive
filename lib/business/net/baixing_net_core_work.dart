@@ -29,9 +29,11 @@ class Baixing_NetCoreWork {
     return "user01";
   }
 
-  static Future<List<String>> getLiveSteamingColumn() async {
+  static Future<Tuple2<bool, List<String>>> getLiveSteamingColumn() async {
     await randomDelay();
-    return ["推荐","游戏","音乐","舞蹈","美食","旅游","体育","科技","教育","娱乐"];
+    success = !success;
+    final list = ["推荐","游戏","音乐","舞蹈","美食","旅游","体育","科技","教育","娱乐"];
+    return Tuple2(success, list);
   }
 
   static Future<Tuple2<bool, List<Baixing_LiveRoomEntity>>> getLiveRoomList({required String column, required int page}) async {

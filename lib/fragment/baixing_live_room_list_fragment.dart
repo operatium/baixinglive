@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:baixinglive/entity/baixing_live_room_entity.dart';
 import 'package:baixinglive/provider/baixing_live_room_list_model.dart';
 import 'package:baixinglive/widget/baixing_cover_widget.dart';
+import 'package:baixinglive/widget/baixing_empty_widget.dart';
 import 'package:baixinglive/widget/baixing_head_foot_grid_view.dart';
 import 'package:baixinglive/widget/baixing_refresh_list_view.dart';
 import 'package:easy_refresh/easy_refresh.dart';
@@ -30,125 +31,61 @@ class Baixing_LiveRoomListFragment extends StatefulWidget {
 
 class _Baixing_LiveRoomListFragmentState
     extends State<Baixing_LiveRoomListFragment> {
-  bool? _mBaixing_isLoading = true;
-  bool? _mBaixing_isEmpty = false;
-  bool? _mBaixing_isError = false;
-  bool? _mBaixing_showListView = false;
+  Baixing_EmptyControl mBaixing_EmptyControl = Baixing_EmptyControl();
 
   @override
   void initState() {
     super.initState();
     print("yyx- ${widget.mBaixing_title} initState");
-    _mBaixing_isLoading = _mBaixing_isLoading ?? true;
-    _mBaixing_isEmpty = _mBaixing_isEmpty ?? false;
-    _mBaixing_isError = _mBaixing_isEmpty ?? false;
-    _mBaixing_showListView = _mBaixing_showListView ?? false;
   }
 
   @override
   void dispose() {
     super.dispose();
     print("yyx- ${widget.mBaixing_title} dispose");
-    _mBaixing_isLoading = null;
-    _mBaixing_isError = null;
-    _mBaixing_isEmpty = null;
-    _mBaixing_showListView = null;
   }
 
   @override
   Widget build(BuildContext context) {
     print("yyx- ${widget.mBaixing_title} build");
-    if (_mBaixing_showListView == null) {
-      return const Placeholder();
-    }
     final title = widget.mBaixing_title;
     final nowList = context.read<Baixing_LiveRoomListModel>().getList(title);
     if (nowList.isEmpty) {
-      _baixing_initData(context);
+      _baixing_requestData(context);
     } else {
-      _setState(isListView: true);
+      mBaixing_EmptyControl.baixing_changeState(isContentLayout: true);
     }
-    return LayoutBuilder(
-      builder: (context, mConstraintType) {
-        return Stack(
-            children: [
-              Visibility(
-                visible: _mBaixing_isLoading!,
-                child: Center(child: CircularProgressIndicator(value: null)),
-              ),
-              Visibility(
-                visible: !_mBaixing_isLoading! && _mBaixing_showListView!,
-                child: _baixing_getListView(context, title),
-              ),
-              Visibility(
-                visible: !_mBaixing_isLoading! && _mBaixing_isError!,
-                child: _baixing_getHitPage("请求失败", "重试", () {
-                  _baixing_initData(context);
-                }),
-              ),
-              Visibility(
-                visible: !_mBaixing_isLoading! && _mBaixing_isEmpty!,
-                child: _baixing_getHitPage("没有内容", "刷新", () {
-                  _baixing_initData(context);
-                }),
-              ),
-            ],
-        );
+    return Baixing_EmptyWidget(
+      mBaixing_onPress: (str) {
+        _baixing_requestData(context);
       },
+      mBaixing_contentLayoutBuild:
+          (context) => _baixing_getListView(context, widget.mBaixing_title),
+      mBaixing_emptyControl: mBaixing_EmptyControl,
     );
   }
 
-  void _baixing_initData(BuildContext context) async {
+  void _baixing_requestData(BuildContext context) async {
     print("yyx- _baixing_initData title: ${widget.mBaixing_title}");
-    _setState(isLoading: true);
+    mBaixing_EmptyControl.baixing_changeState(isLoading: true);
     Baixing_LiveRoomListModel model = context.read();
     final result = await model.requestFirstLiveRoomList(widget.mBaixing_title);
-    if (_mBaixing_isLoading != null) {
-      if (result.item1 && result.item2.isEmpty) {
-        _setState(isEmpty: true);
-        return;
+    if (result.item1) {
+      if (result.item2.isEmpty) {
+        mBaixing_EmptyControl.baixing_changeState(isEmpty: true);
+      } else {
+        mBaixing_EmptyControl.baixing_changeState(isContentLayout: true);
       }
-      if (result.item1) {
-        _setState(isListView: true);
-        return;
-      }
-      _setState(isError: true);
+    } else {
+      mBaixing_EmptyControl.baixing_changeState(isError: true);
     }
-  }
-
-  Widget _baixing_getHitPage(
-    String message,
-    String button,
-    VoidCallback onPressed,
-  ) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset("images/baixing_99.webp"),
-          Text(message),
-          ElevatedButton(onPressed: onPressed, child: Text(button)),
-        ],
-      ),
-    );
   }
 
   Widget _baixing_getListView(BuildContext context, String title) {
     Baixing_LiveRoomListModel model = context.watch();
     return Baixing_HeadFootGridView(
       mBaixing_onRefresh: () async {
-        Tuple2<bool, List<Baixing_LiveRoomEntity>> result = await model
-            .requestFirstLiveRoomList(widget.mBaixing_title);
-        if (result.item1 && result.item2.isEmpty) {
-          _setState(isEmpty: true);
-          return;
-        }
-        if (result.item1) {
-          _setState();
-          return;
-        }
-        _setState(isError: true);
+        _baixing_requestData(context);
       },
       mBaixing_onLoad: () async {
         Tuple2<bool, List<Baixing_LiveRoomEntity>> result = await model
@@ -215,20 +152,5 @@ class _Baixing_LiveRoomListFragmentState
       }
     }
     return 0;
-  }
-
-  void _setState({
-    bool isLoading = false,
-    bool isError = false,
-    bool isEmpty = false,
-    bool isListView = false,
-  }) {
-    if (_mBaixing_showListView == null) return;
-    setState(() {
-      _mBaixing_isLoading = isLoading;
-      _mBaixing_isError = isError;
-      _mBaixing_isEmpty = isEmpty;
-      _mBaixing_showListView = isListView;
-    });
   }
 }
