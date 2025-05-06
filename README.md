@@ -1,16 +1,105 @@
-# baixinglive
+# 99直播 Android 客户端
 
-A new Flutter project.
+## 概述
 
-## Getting Started
+- 本项目是99直播的Android客户端应用。应用实现了直播观看、关注主播、搜索内容、账号管理等功能。
+- 资源文档很重要，需要及时更新和维护。
+是根据lib下所有目录都对应生成同名的md文件（doc目录下），md文件头部必须写清楚需要管理对应的目录的路径，并且进行讲解和维护。
+- 本文件9行以上不可以变。
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## 技术栈
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter 框架
+- Dart 编程语言
+- Provider 状态管理
+- SharedPreferences 本地存储
+- HTTP 网络请求
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 开发规范
+
+### 命名规范
+
+- 类的前缀是: Baixing_
+- 私有类的前缀是: Baixing_
+- 成员变量的前缀是: mBaixing_
+- 私有成员变量的前缀是: _mBaixing_
+- 函数的前缀是: baixing_
+- 私有函数的前缀是: _baixing_
+- 数据类的类名都以Entity结尾
+
+### 布局规范
+
+- 使用Flutter的响应式布局，确保在不同尺寸的设备上都能正常显示
+- 使用flutter_screenutil进行屏幕适配
+- 布局组件优先使用Column、Row、Stack等基础组件
+- 页面布局应遵循从上到下、从左到右的顺序
+- 颜色值统一使用Color对象，不直接使用颜色代码
+
+### 代码规范
+
+- 所有类必须在顶部添加标准注释（作者、日期、描述）格式必须是
+/**
+ * @author yuyuexing
+ * @date: 
+ * @description: 
+ */
+- 每一个类都必须创建一个新的文件
+- 每一个类都必须定义一个新的类
+- 代码缩进使用2个空格
+- 使用驼峰命名法
+- 避免过长的方法，一个方法最好不超过50行
+- 注释应该解释为什么这样做，而不是做了什么
+
+### 其他规范
+
+- 每次修改代码前必须将修改前的代码使用Git提交
+- 出现文件的增加和删除都要完善到工程索引.md文件里
+- 每次修改后需要更新changelog.txt文件，记录修改内容
+- 遵循Flutter的最佳实践和设计模式
+- 优先使用StatelessWidget，只在必要时使用StatefulWidget
+
+## 项目结构
+- [工程索引](./工程索引.md)
+
+## 维护文档
+
+### 文档目录
+
+项目文档位于`doc`目录下，所有lib下的所有目录都需对应生成同名md文档，详细说明各模块的功能、结构、主要类、关键方法和使用示例。
+
+- [UI组件](./doc/widget.md)：自定义控件、通用UI说明
+- [页面模块](./doc/page.md)：页面结构、导航、跳转
+- [业务模块](./doc/business.md)：核心业务逻辑、网络请求
+- [配置模块](./doc/config.md)：常量、环境、主题配置
+- [数据实体](./doc/entity.md)：数据结构、序列化
+- [Fragment模块](./doc/fragment.md)：页面片段、复用逻辑
+- [Provider模块](./doc/provider.md)：状态管理、数据流
+- [场景模块](./doc/scene.md)：业务场景、页面组合
+- [兼容性工具](./doc/compat.md)：持久化、Toast、振动等
+
+**每次目录结构或功能变更，必须同步维护上述文档。**
+
+### 文档模板
+
+每个模块文档应包含：
+- 管理目录路径
+- 概述
+- 目录结构（树状图）
+- 主要组件说明
+- 使用示例（可运行代码）
+- 注意事项
+- 未来计划
+- 更新日期与内容
+
+### 文档维护要求
+
+> **维护要求：**
+> - 所有文档需与实际代码、资源保持同步，变更时务必先更新文档再提交代码。
+> - 资源文档（如widget.md、page.md等）需详细描述用途、结构、注意事项，便于团队协作和后续维护。
+> - 变更文档需在changelog.txt记录时间和文件路径。
+> - 维护文档时，严格遵循各文档开头的"概述"与"维护流程"说明。
+> - 每次更新文档时，需在文档底部添加更新日期和更新内容。
+> - 重要API或结构变更必须在文档中明确标注。
+> - 文档中的示例代码必须可运行并符合项目代码规范。
+> - 当模块结构发生变化时，必须更新对应的目录结构图。
