@@ -128,6 +128,7 @@ class _Baixing_LiveFragmentState extends State<Baixing_LiveFragment>
           height: 40.w,
           child: TabBar(
             tabAlignment: TabAlignment.start,
+            dividerHeight: 0,
             tabs: _getTabs(model),
             controller: _tabController,
             isScrollable: true,

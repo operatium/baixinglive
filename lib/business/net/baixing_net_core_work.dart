@@ -31,7 +31,7 @@ class Baixing_NetCoreWork {
 
   static Future<Tuple2<bool, List<String>>> getLiveSteamingColumn() async {
     await randomDelay();
-    success = !success;
+    // success = !success;
     final list = ["推荐","游戏","音乐","舞蹈","美食","旅游","体育","科技","教育","娱乐"];
     return Tuple2(success, list);
   }

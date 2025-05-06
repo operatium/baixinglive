@@ -64,4 +64,23 @@ class Baixing_BackGround {
       ),
     );
   }
+
+  //圆角 矩形 实体 水平方向2色渐变
+  static BoxDecoration baixing_getRoundedRectangular_K002() {
+    return BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          Color(0xFF7F64F0),
+          Color(0xFFD984E9),
+        ],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        stops: [
+          0,
+          1,
+        ],
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+    );
+  }
 }
