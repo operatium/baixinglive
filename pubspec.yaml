@@ -32,6 +32,7 @@ dependencies:
   cached_network_image: ^3.4.1
   custom_refresh_indicator: ^4.0.1
   tuple: ^2.0.2
+  easy_refresh: ^3.4.0
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git

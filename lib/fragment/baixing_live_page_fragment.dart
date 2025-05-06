@@ -118,7 +118,7 @@ class _Baixing_LiveFragmentState extends State<Baixing_LiveFragment>
 
   List<Widget> _getPage(Baixing_LiveStraeamingColumnModel model) {
     return model.columnList
-        .map((String name) => Baixing_LiveRoomListFragment(mBaixing_title: name))
+        .map((String name) => Baixing_LiveRoomListFragment(mBaixing_title: name, mBaixing_minItemCount: 8))
         .toList();
   }
 }

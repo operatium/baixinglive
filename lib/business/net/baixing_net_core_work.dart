@@ -36,11 +36,11 @@ class Baixing_NetCoreWork {
 
   static Future<Tuple2<bool, List<Baixing_LiveRoomEntity>>> getLiveRoomList({required String column, required int page}) async {
     await randomDelay();
-    // success = !success;
-    if(page > 2) {
+    success = !success;
+    if(page > 6) {
       return Tuple2(success, []);
     }
-    final c = random.nextInt(10)+ 10;
+    final c = 8;
     if(success) {
       print("yyx- 生产Baixing_LiveRoomEntity: $c个");
     }
