@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
 # 项目规则
 ### 基本
 - 使用中文进行交流
@@ -11,7 +16,6 @@
 2025.04.25 14:29(当前时间)
 app/src/main/java/com/baixingkuaizu/live/android/Baixing_Config.kt
 ```
-
 ### 内容
 - 每次修改代码前必须将修改前的代码使用 Git 提交
 - 通过执行以下命令获取当前时间
