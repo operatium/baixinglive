@@ -113,6 +113,9 @@ class _Baixing_LiveRoomListFragmentState
   Widget _baixing_getItem(BuildContext context, int index) {
     Baixing_LiveRoomListModel model = context.watch();
     final list = model.getList(widget.mBaixing_title);
+    if (index >= list.length) {
+      return Container();
+    }
     final entity = list[index];
     return Baixing_LiveRoomEnterWidget(mBaixing_liveRoomEntity: entity);
   }

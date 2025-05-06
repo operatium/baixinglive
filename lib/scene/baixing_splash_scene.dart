@@ -157,9 +157,8 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
   );
 
   void _goNextScene(BuildContext context) async {
-    await Baixing_SharedPreferences.init();
     final model = context.read<Baixing_AccountModel>();
-    model.resume();
+    await model.resume();
     if (model.baixing_current_account != null) {
         GoRouter.of(context).go("/home");
         return;

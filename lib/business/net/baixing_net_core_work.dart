@@ -10,8 +10,8 @@ class Baixing_NetCoreWork {
   static bool success = true;
 
   static Future<int> randomDelay({
-    int maxMilliseconds = 5000,
-    int minMilliseconds = 1000,
+    int maxMilliseconds = 1000,
+    int minMilliseconds = 100,
   }) async {
     final delayMilliseconds =
         random.nextInt(maxMilliseconds - minMilliseconds) + minMilliseconds;
@@ -38,7 +38,7 @@ class Baixing_NetCoreWork {
 
   static Future<Tuple2<bool, List<Baixing_LiveRoomEntity>>> getLiveRoomList({required String column, required int page}) async {
     await randomDelay();
-    success = !success;
+    // success = !success;
     if(page > 6) {
       return Tuple2(success, []);
     }

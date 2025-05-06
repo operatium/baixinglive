@@ -13,7 +13,8 @@ class Baixing_AccountModel extends ChangeNotifier {
   Map<String, Baixing_AccountEntity> _baixing_history_accounts = {};
   static const String mBaixing_History_Key = "history_accounts";
 
-  void resume() {
+  Future<void> resume() async{
+    await Baixing_SharedPreferences.init();
     final str = Baixing_SharedPreferences.baixing_getString(mBaixing_Key);
     if(str.isNotEmpty) {
       final map = json.decode(str);
