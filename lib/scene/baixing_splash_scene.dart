@@ -4,6 +4,7 @@ import 'package:baixinglive/compat/baixing_persistence.dart';
 import 'package:baixinglive/entity/baixing_account_entity.dart';
 import 'package:baixinglive/entity/baixing_final_entity.dart';
 import 'package:baixinglive/provider/baixing_account_model.dart';
+import 'package:baixinglive/business/teenager/baixing_teenager_mode_util.dart';
 import 'package:baixinglive/widget/Baixing_privacy_agreement_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,11 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
   @override
   void initState() {
     super.initState();
+    
+    // 检查青少年模式状态
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Baixing_TeenagerModeUtil.instance.baixing_checkAndRedirectIfNeeded(context);
+    });
   }
 
   @override

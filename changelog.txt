@@ -1,0 +1,3 @@
+2025.05.06 23:17
+/Users/yuyuexing/myProject/code/flutter/baixing2live/lib/scene/baixing_teenager_mode_scene.dart
+修复了代码中的语法错误，删除了多余的右花括号。

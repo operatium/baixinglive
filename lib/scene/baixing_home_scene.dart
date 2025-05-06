@@ -1,8 +1,11 @@
 import 'package:baixinglive/fragment/baixing_live_page_fragment.dart';
 import 'package:baixinglive/fragment/baixing_me_fragment.dart';
+import 'package:baixinglive/scene/baixing_teenager_mode_scene.dart';
+import 'package:baixinglive/business/teenager/baixing_teenager_mode_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Baixing_HomeScene extends StatefulWidget {
@@ -16,6 +19,16 @@ class Baixing_HomeScene extends StatefulWidget {
 
 class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
   var _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    // 检查青少年模式状态
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Baixing_TeenagerModeUtil.instance.baixing_checkAndRedirectIfNeeded(context);
+    });
+  }
 
   Widget getPage(int index) {
     switch (index) {
@@ -136,9 +149,16 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
                     "进入青少年模式 >",
                     style: TextStyle(fontSize: 14.sp, color: Color(0xff8955F7)),
                   ),
-                  onTap: () {
+                  onTap: () async {
                     Navigator.of(context).pop();
-                    // 这里可以添加进入青少年模式的逻辑
+                    // 跳转到青少年模式设置页面
+                    final result = await context.push('/teenager?isInfoPage=true');
+
+                    
+                    // 如果成功开启青少年模式，刷新页面状态
+                    if (result == true) {
+                      setState(() {});
+                    }
                   },
                 ),
               ),

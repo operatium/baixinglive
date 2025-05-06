@@ -15,6 +15,7 @@
 - Provider 状态管理
 - SharedPreferences 本地存储
 - HTTP 网络请求
+- GoRouter 路由管理
 
 ## 开发规范
 
@@ -62,6 +63,49 @@
 ## 项目结构
 - [工程索引](./工程索引.md)
 
+## 路由配置
+
+应用使用 GoRouter 进行路由管理，主要路由配置如下：
+
+```dart
+GoRouter router = GoRouter(
+  initialLocation: '/splash',
+  routes: [
+    GoRoute(
+      path: '/splash',
+      builder: (context, state) => const Baixing_SplashScene(),
+    ),
+    GoRoute(
+      path: '/web',
+      builder: (context, state) {
+        final url = state.uri.queryParameters['url'] ?? "";
+        return Baixing_WebScene(url: url);
+      },
+    ),
+    GoRoute(
+      path: '/selectLogin',
+      builder: (context, state) => const Baixing_SelectLoginScene(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const Baixing_LoginScene(),
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const Baixing_HomeScene(),
+    ),
+  ],
+);
+```
+
+### 路由维护指南
+
+- 所有新增页面必须在路由表中注册
+- 路由路径应使用小写字母和下划线命名
+- 参数传递优先使用查询参数（如 url 参数）
+- 复杂页面跳转逻辑应封装在专门的导航服务中
+- 路由变更必须同步更新文档
+
 ## 维护文档
 
 ### 文档目录
@@ -77,6 +121,7 @@
 - [Provider模块](./doc/provider.md)：状态管理、数据流
 - [场景模块](./doc/scene.md)：业务场景、页面组合
 - [兼容性工具](./doc/compat.md)：持久化、Toast、振动等
+- [路由模块](./doc/router.md)：路由配置、页面导航、参数传递
 
 **每次目录结构或功能变更，必须同步维护上述文档。**
 
@@ -98,6 +143,8 @@
 > - 所有文档需与实际代码、资源保持同步，变更时务必先更新文档再提交代码。
 > - 资源文档（如widget.md、page.md等）需详细描述用途、结构、注意事项，便于团队协作和后续维护。
 > - 变更文档需在changelog.txt记录时间和文件路径。
+> - 路由变更必须同步更新README.md中的路由配置部分，确保路由表与实际代码保持一致。
+> - 路由使用示例应包含在相应页面的文档中，便于开发人员理解页面间的跳转关系。
 > - 维护文档时，严格遵循各文档开头的"概述"与"维护流程"说明。
 > - 每次更新文档时，需在文档底部添加更新日期和更新内容。
 > - 重要API或结构变更必须在文档中明确标注。
