@@ -171,18 +171,6 @@ class _Baixing_EnterTeenagerModeSceneState extends State<Baixing_EnterTeenagerMo
 
   // 进入青少年模式
   Future<void> _baixing_enterTeenagerMode() async {
-    // 跳转到设置密码页面
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Baixing_TeenagerModeScene(),
-      ),
-    );
     
-    // 如果成功设置密码并开启青少年模式，返回上一页
-    if (result == true) {
-      if (!mounted) return;
-      Navigator.of(context).pop(true);
-    }
   }
 }

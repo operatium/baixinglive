@@ -3,7 +3,6 @@
 - 使用中文进行交流
 - 这是 Flutter 项目
 - 编写 dart 代码
-- 如果没有仔细阅读README.md文件，必须仔细阅读README.md文件和内容中链接的md文件。
 - 出现文件的增加和删除都要完善到工程索引.md文件里。
 - changelog.txt已有内容不可变，只能进行内容追加。
 将每一次操作的当前时间，操作内容，修改过的文件都写入changelog.txt。
@@ -31,9 +30,10 @@ date '\n+%Y-%m-%d %H:%M:%S'
 * @description:
   */
 - 类的前缀是: Baixing_
-- 私有类的前缀是: Baixing_
+- 私有类的前缀是: _Baixing_
 - 成员变量的前缀是: mBaixing_
 - 私有成员变量的前缀是: _mBaixing_
 - 函数的前缀是: baixing_
 - 私有函数的前缀是: _baixing_
 - 数据类的类名都以Entity结尾
+- 持久化采用Baixing_SharedPreferences类

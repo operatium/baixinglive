@@ -1,3 +1,4 @@
+import 'package:baixinglive/compat/baixing_persistence.dart';
 import 'package:baixinglive/fragment/baixing_live_page_fragment.dart';
 import 'package:baixinglive/fragment/baixing_me_fragment.dart';
 import 'package:baixinglive/scene/baixing_teenager_mode_scene.dart';
@@ -94,9 +95,8 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
   }
 
   void _showTeenagersDialog() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var isHide = prefs.getBool("青少年模式") ?? false;
-    var showTime = prefs.getInt("青少年模式时间") ?? 0;
+    var isHide = Baixing_SharedPreferences.baixing_getBool("青少年模式");
+    var showTime = Baixing_SharedPreferences.baixing_getInt("青少年模式时间");
     final t = DateTime.now().millisecondsSinceEpoch - showTime;
     if (!isHide || t > 24 * 3600 * 1000) {
       showDialog(
@@ -105,8 +105,6 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
         barrierColor: Color(0x44ffffff), // 设置遮罩层颜色为透明
         builder: (BuildContext context) => _baixing_getTeenagersDialog(),
       );
-      await prefs.setBool("青少年模式", true);
-      await prefs.setInt("青少年模式时间", DateTime.now().millisecondsSinceEpoch);
     }
   }
 
@@ -152,20 +150,16 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
                   onTap: () async {
                     Navigator.of(context).pop();
                     // 跳转到青少年模式设置页面
-                    final result = await context.push('/teenager?isInfoPage=true');
-
-                    
-                    // 如果成功开启青少年模式，刷新页面状态
-                    if (result == true) {
-                      setState(() {});
-                    }
+                    GoRouter.of(context).push('/teenager');
                   },
                 ),
               ),
               // 我知道了按钮
               GestureDetector(
-                onTap: () {
+                onTap: () async {
                   Navigator.of(context).pop();
+                  await Baixing_SharedPreferences.baixing_setBool("青少年模式", true);
+                  await Baixing_SharedPreferences.baixing_setInt("青少年模式时间", DateTime.now().millisecondsSinceEpoch);
                 },
                 child: Container(
                   color: Color(0xff8955F7),

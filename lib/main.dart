@@ -4,6 +4,7 @@ import 'package:baixinglive/provider/baixing_account_model.dart';
 import 'package:baixinglive/provider/baixing_live_room_list_model.dart';
 import 'package:baixinglive/provider/baixing_live_streaming_column_model.dart';
 import 'package:baixinglive/provider/baixing_login_model.dart';
+import 'package:baixinglive/scene/baixing_enter_teenager_mode_scene.dart';
 import 'package:baixinglive/scene/baixing_home_scene.dart';
 import 'package:baixinglive/scene/baixing_login_scene.dart';
 import 'package:baixinglive/scene/baixing_select_login_scene.dart';
@@ -93,12 +94,7 @@ GoRouter router = GoRouter(
     GoRoute(
       path: '/teenager',
       builder: (context, state) {
-        final isInfoPage = state.uri.queryParameters['isInfoPage'] == 'true';
-        final isVerifying = state.uri.queryParameters['isVerifying'] == 'true';
-        return Baixing_TeenagerModeScene(
-          isInfoPage: isInfoPage,
-          isVerifying: isVerifying,
-        );
+        return Baixing_EnterTeenagerModeScene();
       },
     ),
   ],

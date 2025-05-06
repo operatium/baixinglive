@@ -36,3 +36,4 @@ date '\n+%Y-%m-%d %H:%M:%S'
 - 函数的前缀是: baixing_
 - 私有函数的前缀是: _baixing_
 - 数据类的类名都以Entity结尾
+- 持久化采用Baixing_SharedPreferences类
