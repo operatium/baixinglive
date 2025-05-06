@@ -85,9 +85,11 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
     var isHide = prefs.getBool("青少年模式") ?? false;
     var showTime = prefs.getInt("青少年模式时间") ?? 0;
     final t = DateTime.now().millisecondsSinceEpoch - showTime;
-    if (!isHide || t > 24 * 3600 * 1000 || true) {
-      showCupertinoDialog(
+    if (!isHide || t > 24 * 3600 * 1000) {
+      showDialog(
         context: context,
+        barrierDismissible: false,
+        barrierColor: Color(0x44ffffff), // 设置遮罩层颜色为透明
         builder: (BuildContext context) => _baixing_getTeenagersDialog(),
       );
       await prefs.setBool("青少年模式", true);
@@ -95,32 +97,74 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
     }
   }
 
-  CupertinoAlertDialog _baixing_getTeenagersDialog() {
-    return CupertinoAlertDialog(
-      title: Text("青少年模式"),
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "为了呵护未成年人健康成长，99直播特别推出青少年模式，该模式下部分功能无法正常使用。请监护人主动选择，并设置监护密码。",
+  Widget _baixing_getTeenagersDialog() {
+    return Dialog(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20.w),
+        child: Container(
+          width: 100.w,
+          color: Colors.white,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 10.w),
+              // 紫色雨伞图标
+              Image.asset(
+                'images/baixing_umbrella.png',
+                width: 50.w,
+                height: 50.w,
               ),
-            )
+              SizedBox(height: 6.w),
+              // 标题
+              Text(
+                "青少年模式",
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.w),
+                child: Text(
+                  "为了呵护未成年人健康成长，公众直播特别推出青少年模式，该模式下部分功能无法正常使用。请监护人主动选择，并设置监护密码。",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(fontSize: 14.sp, color: Colors.black87),
+                ),
+              ),
+              // 进入青少年模式链接
+              Padding(
+                padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
+                child: GestureDetector(
+                  child: Text(
+                    "进入青少年模式 >",
+                    style: TextStyle(fontSize: 14.sp, color: Color(0xff8955F7)),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    // 这里可以添加进入青少年模式的逻辑
+                  },
+                ),
+              ),
+              // 我知道了按钮
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  color: Color(0xff8955F7),
+                  width: double.infinity,
+                  height: 35.h,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "我知道了",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          GestureDetector(
-            child: Text(
-              "进入青少年模式 >",
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
