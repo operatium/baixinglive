@@ -1,18 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:baixinglive/compat/baixing_persistence.dart';
-import 'package:baixinglive/entity/baixing_account_entity.dart';
+import 'package:baixinglive/api/baixing_api_dialog.dart';
 import 'package:baixinglive/entity/baixing_final_entity.dart';
 import 'package:baixinglive/provider/baixing_account_model.dart';
-import 'package:baixinglive/business/teenager/baixing_teenager_mode_util.dart';
-import 'package:baixinglive/widget/Baixing_privacy_agreement_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Baixing_SplashScene extends StatefulWidget {
   const Baixing_SplashScene({super.key});
@@ -28,32 +23,14 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
     print(_TAG + 'State 构造函数被调用');
   }
 
-  void _initDialog(BuildContext context) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var isHide = prefs.getBool("个人信息保护指引")??false;
-    var showTime = prefs.getInt("个人信息保护指引时间")??0;
-    final t = DateTime.now().millisecondsSinceEpoch - showTime;
-    if (!isHide || t > 24 * 3600 * 1000) {
-      showCupertinoDialog(
-        context: context,
-        builder: (BuildContext context) => _createDialog(),
-      );
-      await prefs.setBool("个人信息保护指引", true);
-      await prefs.setInt("个人信息保护指引时间", DateTime
-          .now()
-          .millisecondsSinceEpoch);
-    } else {
-      delay500(() => _goNextScene(context));
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    
-    // 检查青少年模式状态
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Baixing_TeenagerModeUtil.instance.baixing_checkAndRedirectIfNeeded(context);
+      final isEnabled = await _baixing_checkTeenagerMode(context);
+      if (isEnabled) {
+        baixing_requestPermissionDialog(context: context, goNextScene: _goNextScene);
+      }
     });
   }
 
@@ -84,7 +61,6 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
   @override
   Widget build(BuildContext context) {
     print(_TAG + 'build 方法被调用');
-    _initDialog(context);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -133,42 +109,34 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
     );
   }
 
-  CupertinoAlertDialog _createDialog() => CupertinoAlertDialog(
-    title: const Text('个人信息保护指引'),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [BaixingPrivacyAgressmentText()],
-    ),
-    actions: [
-      CupertinoDialogAction(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        child: const Text('取消', style: TextStyle(color: Colors.black),),
-      ),
-      CupertinoDialogAction(
-        onPressed: () async {
-          Navigator.of(context).pop();
-          if (Platform.isAndroid || Platform.isIOS) {
-            await Permission.storage.request();
-            await Permission.camera.request();
-            await Permission.microphone.request();
-          }
-          _goNextScene(context);
-        },
-        isDefaultAction: true,
-        child: const Text('确认', style: TextStyle(color: Colors.black),),
-      ),
-    ],
-  );
-
   void _goNextScene(BuildContext context) async {
     final model = context.read<Baixing_AccountModel>();
     await model.resume();
     if (model.baixing_current_account != null) {
-        GoRouter.of(context).go("/home");
-        return;
+      GoRouter.of(context).go("/home");
+      return;
     }
     GoRouter.of(context).go("/selectLogin");
+  }
+
+  Future<bool> _baixing_checkTeenagerMode(BuildContext context) async {
+    await Baixing_SharedPreferences.init();
+    final isEnabled =
+      await Baixing_SharedPreferences.baixing_getBool("启用青少年模式");
+    if (isEnabled) {
+      // 检查当前时间是否在允许使用的时间范围内（6:00-22:00）
+      final now = DateTime.now();
+      final hour = now.hour;
+      if (hour >= 22 || hour < 6) {
+        // 在禁止使用时间段内
+        baixing_showTeenagerModeTimeoutDialog(context);
+        exit(0);
+      } else {
+        // 跳转到青少年模式内容页面
+        delay500(() => GoRouter.of(context).go("/teenagerContent"));
+      }
+      return false;
+    }
+    return true;
   }
 }

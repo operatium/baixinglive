@@ -1,13 +1,8 @@
-import 'package:baixinglive/compat/baixing_persistence.dart';
+import 'package:baixinglive/api/baixing_api_dialog.dart';
 import 'package:baixinglive/fragment/baixing_live_page_fragment.dart';
 import 'package:baixinglive/fragment/baixing_me_fragment.dart';
-import 'package:baixinglive/scene/baixing_teenager_mode_scene.dart';
-import 'package:baixinglive/business/teenager/baixing_teenager_mode_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Baixing_HomeScene extends StatefulWidget {
   const Baixing_HomeScene({super.key});
@@ -24,10 +19,8 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
   @override
   void initState() {
     super.initState();
-    
-    // 检查青少年模式状态
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Baixing_TeenagerModeUtil.instance.baixing_checkAndRedirectIfNeeded(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      baixing_showTeenagersHitDialog(context);
     });
   }
 
@@ -44,7 +37,6 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
 
   @override
   Widget build(BuildContext context) {
-    _showTeenagersDialog();
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -85,95 +77,6 @@ class _Baixing_HomeSceneState extends State<Baixing_HomeScene> {
                       _selectedIndex = index;
                     });
                   },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showTeenagersDialog() async {
-    var isHide = Baixing_SharedPreferences.baixing_getBool("青少年模式");
-    var showTime = Baixing_SharedPreferences.baixing_getInt("青少年模式时间");
-    final t = DateTime.now().millisecondsSinceEpoch - showTime;
-    if (!isHide || t > 24 * 3600 * 1000) {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        barrierColor: Color(0x44ffffff), // 设置遮罩层颜色为透明
-        builder: (BuildContext context) => _baixing_getTeenagersDialog(),
-      );
-    }
-  }
-
-  Widget _baixing_getTeenagersDialog() {
-    return Dialog(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20.w),
-        child: Container(
-          width: 100.w,
-          color: Colors.white,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 10.w),
-              // 紫色雨伞图标
-              Image.asset(
-                'images/baixing_umbrella.png',
-                width: 50.w,
-                height: 50.w,
-              ),
-              SizedBox(height: 6.w),
-              // 标题
-              Text(
-                "青少年模式",
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.w),
-                child: Text(
-                  "为了呵护未成年人健康成长，公众直播特别推出青少年模式，该模式下部分功能无法正常使用。请监护人主动选择，并设置监护密码。",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: 14.sp, color: Colors.black87),
-                ),
-              ),
-              // 进入青少年模式链接
-              Padding(
-                padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
-                child: GestureDetector(
-                  child: Text(
-                    "进入青少年模式 >",
-                    style: TextStyle(fontSize: 14.sp, color: Color(0xff8955F7)),
-                  ),
-                  onTap: () async {
-                    Navigator.of(context).pop();
-                    // 跳转到青少年模式设置页面
-                    GoRouter.of(context).push('/teenager');
-                  },
-                ),
-              ),
-              // 我知道了按钮
-              GestureDetector(
-                onTap: () async {
-                  Navigator.of(context).pop();
-                  await Baixing_SharedPreferences.baixing_setBool("青少年模式", true);
-                  await Baixing_SharedPreferences.baixing_setInt("青少年模式时间", DateTime.now().millisecondsSinceEpoch);
-                },
-                child: Container(
-                  color: Color(0xff8955F7),
-                  width: double.infinity,
-                  height: 35.h,
-                  alignment: Alignment.center,
-                  child: Text(
-                    "我知道了",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
                 ),
               ),
             ],

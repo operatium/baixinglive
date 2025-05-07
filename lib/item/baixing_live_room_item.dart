@@ -4,24 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'baixing_cover_widget.dart';
+import '../widget/baixing_cover_widget.dart';
 
-class Baixing_LiveRoomEnterWidget extends StatefulWidget {
+class Baixing_LiveRoomItem extends StatefulWidget {
   Baixing_LiveRoomEntity mBaixing_liveRoomEntity;
 
-  Baixing_LiveRoomEnterWidget({
-    Key? key,
-    required this.mBaixing_liveRoomEntity,
-  }) : super(key: key);
+  Baixing_LiveRoomItem({Key? key, required this.mBaixing_liveRoomEntity})
+    : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _Baixing_LiveRoomEnterWidgetState();
+    return _Baixing_LiveRoomItemState();
   }
 }
 
-class _Baixing_LiveRoomEnterWidgetState
-    extends State<Baixing_LiveRoomEnterWidget> {
+class _Baixing_LiveRoomItemState
+    extends State<Baixing_LiveRoomItem> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -36,8 +34,8 @@ class _Baixing_LiveRoomEnterWidgetState
                   _baixing_getTopTagView("跳舞Top10"),
                   const Spacer(),
                   _baixing_getUserView(
-                      widget.mBaixing_liveRoomEntity.mBaixing_room_name,
-                      widget.mBaixing_liveRoomEntity.mBaixing_girl_name,
+                    widget.mBaixing_liveRoomEntity.mBaixing_room_name,
+                    widget.mBaixing_liveRoomEntity.mBaixing_girl_name,
                     widget.mBaixing_liveRoomEntity.mBaixing_audience_count,
                   ),
                 ],
@@ -70,11 +68,9 @@ class _Baixing_LiveRoomEnterWidgetState
       child: IntrinsicWidth(
         child: Text(
           tag,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodySmall!
-              .copyWith(color: Colors.white),
+          style: Theme.of(
+            context,
+          ).textTheme.labelSmall!.copyWith(color: Colors.white, fontSize: 8.sp),
         ),
       ),
     );
@@ -84,43 +80,37 @@ class _Baixing_LiveRoomEnterWidgetState
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
-      decoration: BoxDecoration(
-        color: Color(0x33000000),
-      ),
+      decoration: BoxDecoration(color: Color(0x33000000)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(name, style: Theme
-              .of(context)
-              .textTheme
-              .labelMedium!
-              .copyWith(
-            color: Colors.white,
-          )),
+          Text(
+            name,
+            style: Theme.of(
+              context,
+            ).textTheme.labelMedium!.copyWith(color: Colors.white),
+          ),
           Row(
             children: [
-              Text(city, style: Theme
-                  .of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(
-                color: Colors.white,
-              )),
+              Text(
+                city,
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall!.copyWith(color: Colors.white),
+              ),
               const Spacer(),
-              Text(_getNumStr(audience), style: Theme
-                  .of(context)
-                  .textTheme
-                  .labelMedium!
-                  .copyWith(
-                color: Colors.white,
-              )),
-              Text("人观看", style: Theme
-                  .of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(
-                color: Colors.white,
-              )),
+              Text(
+                _getNumStr(audience),
+                style: Theme.of(
+                  context,
+                ).textTheme.labelMedium!.copyWith(color: Colors.white),
+              ),
+              Text(
+                "人观看",
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall!.copyWith(color: Colors.white),
+              ),
             ],
           ),
         ],

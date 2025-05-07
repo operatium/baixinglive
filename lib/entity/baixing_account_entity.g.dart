@@ -13,11 +13,9 @@ Baixing_AccountEntity _$Baixing_AccountEntityFromJson(
   password: json['password'] as String? ?? "",
   phone: json['phone'] as String,
   token: json['token'] as String? ?? "",
-  mBaixing_nickName: json['mBaixing_nickName'] as String? ?? "尊贵的客人",
-  mBaixing_id: json['mBaixing_id'] as String? ?? "7418964",
-  mBaixing_avatarUrl:
-      json['mBaixing_avatarUrl'] as String? ??
-      "https://picsum.photos/id/700/200/200",
+  mBaixing_nickName: json['mBaixing_nickName'] as String? ?? "",
+  mBaixing_id: json['mBaixing_id'] as String? ?? "",
+  mBaixing_avatarUrl: json['mBaixing_avatarUrl'] as String? ?? "",
   mBaixing_level: (json['mBaixing_level'] as num?)?.toInt() ?? 0,
   mBaixing_levelTimeoutHit: json['mBaixing_levelTimeoutHit'] as String? ?? "",
   mBaixing_levelUpdateHit: json['mBaixing_levelUpdateHit'] as String? ?? "",

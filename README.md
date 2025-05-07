@@ -16,6 +16,32 @@
 - SharedPreferences 本地存储
 - HTTP 网络请求
 - GoRouter 路由管理
+- JSON采用自动生成
+```shell
+flutter pub run build_runner build
+```
+
+## 字体风格规范
+
+本项目采用主流App常用的字体体系，主字体为“PingFang SC”，适配大部分中文移动端场景。各类型字体风格如下：
+
+- displayLarge: 32.sp，粗体，黑色
+- displayMedium: 28.sp，粗体，黑色
+- displaySmall: 24.sp，粗体，黑色
+- headlineLarge: 22.sp，半粗体，黑色
+- headlineMedium: 20.sp，半粗体，黑色
+- headlineSmall: 18.sp，中粗体，黑色
+- titleLarge: 18.sp，加粗，黑色
+- titleMedium: 16.sp，半粗体，黑色
+- titleSmall: 14.sp，中粗体，黑色
+- bodyLarge: 16.sp，常规，黑色87%
+- bodyMedium: 14.sp，常规，黑色87%
+- bodySmall: 12.sp，常规，黑色54%
+- labelLarge: 14.sp，常规，主题紫色
+- labelMedium: 12.sp，常规，灰色
+- labelSmall: 10.sp，常规，浅灰色
+
+所有字体均采用fontFamily: 'PingFang SC'，整体风格现代、易读，适配主流移动端UI。
 
 ## 开发规范
 
@@ -67,6 +93,15 @@
 
 应用使用 GoRouter 进行路由管理，主要路由配置如下：
 
+- /splash：启动页，对应 Baixing_SplashScene
+- /web：Web页面，对应 Baixing_WebScene，支持url参数
+- /selectLogin：选择登录方式页，对应 Baixing_SelectLoginScene
+- /login：登录页，对应 Baixing_LoginScene
+- /home：首页，对应 Baixing_HomeScene
+- /teenager：青少年模式入口页，对应 Baixing_EnterTeenagerModeScene
+
+路由表示例：
+
 ```dart
 GoRouter router = GoRouter(
   initialLocation: '/splash',
@@ -93,6 +128,12 @@ GoRouter router = GoRouter(
     GoRoute(
       path: '/home',
       builder: (context, state) => const Baixing_HomeScene(),
+    ),
+    GoRoute(
+      path: '/teenager',
+      builder: (context, state) {
+        return Baixing_EnterTeenagerModeScene();
+      },
     ),
   ],
 );

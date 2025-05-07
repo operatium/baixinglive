@@ -1,13 +1,51 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class BaixingPrivacyAgressmentText extends StatelessWidget {
-  const BaixingPrivacyAgressmentText({super.key});
+class Baixing_PrivacyAgressmentDialog extends StatelessWidget {
+  void Function(BuildContext) mbaixing_goNextScene;
+
+  Baixing_PrivacyAgressmentDialog({super.key, required this.mbaixing_goNextScene});
 
   @override
   Widget build(BuildContext context) {
+    return CupertinoAlertDialog(
+      title: const Text('个人信息保护指引'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildText(context)
+        ],
+      ),
+      actions: [
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('取消', style: TextStyle(color: Colors.black),),
+        ),
+        CupertinoDialogAction(
+          onPressed: () async {
+            Navigator.of(context).pop();
+            if (Platform.isAndroid || Platform.isIOS) {
+              await Permission.storage.request();
+              await Permission.camera.request();
+              await Permission.microphone.request();
+            }
+            mbaixing_goNextScene(context);
+          },
+          isDefaultAction: true,
+          child: const Text('确认', style: TextStyle(color: Colors.black),),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildText(BuildContext context) {
     return RichText(
       text: TextSpan(
         children: [
@@ -33,7 +71,7 @@ class BaixingPrivacyAgressmentText extends StatelessWidget {
           WidgetSpan(
             child: GestureDetector(
               onTap: () {
-                GoRouter.of(context).push("/web?url=https://www.233.tv");
+                GoRouter.of(context).push("/web?url=https://www.163.com");
               },
               child: Text(
                 '《隐私政策》',

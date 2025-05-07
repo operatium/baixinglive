@@ -1,13 +1,10 @@
 import 'dart:math' as math;
 
 import 'package:baixinglive/entity/baixing_live_room_entity.dart';
+import 'package:baixinglive/item/baixing_live_room_item.dart';
 import 'package:baixinglive/provider/baixing_live_room_list_model.dart';
-import 'package:baixinglive/widget/baixing_cover_widget.dart';
 import 'package:baixinglive/widget/baixing_empty_widget.dart';
 import 'package:baixinglive/widget/baixing_head_foot_grid_view.dart';
-import 'package:baixinglive/widget/baixing_live_room_enter_widget.dart';
-import 'package:baixinglive/widget/baixing_refresh_list_view.dart';
-import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -117,6 +114,6 @@ class _Baixing_LiveRoomListFragmentState
       return Container();
     }
     final entity = list[index];
-    return Baixing_LiveRoomEnterWidget(mBaixing_liveRoomEntity: entity);
+    return Baixing_LiveRoomItem(mBaixing_liveRoomEntity: entity);
   }
 }
