@@ -1,4 +1,3 @@
-import 'package:baixinglive/provider/baixing_generate_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 // 生成的代码文件

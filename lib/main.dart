@@ -1,13 +1,3 @@
-import 'dart:io';
-
-import 'package:baixinglive/provider/baixing_account_model.dart';
-import 'package:baixinglive/provider/baixing_live_room_list_model.dart';
-import 'package:baixinglive/provider/baixing_live_streaming_column_model.dart';
-import 'package:baixinglive/provider/baixing_login_model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
 
@@ -57,6 +47,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context) => Baixing_LiveStraeamingColumnModel()),
             ChangeNotifierProvider(create: (context) => Baixing_AccountModel()),
             ChangeNotifierProvider(create: (context) => Baixing_LiveRoomListModel()),
+            ChangeNotifierProvider(create: (context) => Baixing_TeenagerModeModel()),
           ],
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,

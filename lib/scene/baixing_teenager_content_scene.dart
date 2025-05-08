@@ -18,13 +18,7 @@ class Baixing_TeenagerContentScene extends StatefulWidget {
 
 class _Baixing_TeenagerContentSceneState
     extends State<Baixing_TeenagerContentScene>
-    with SingleTickerProviderStateMixin {
-  final int mBaixing_totalAllowedTime = 40 * 60 * 1000; // 40分钟（毫秒）
-  // 剩余使用时间（分钟）
-  int _mBaixing_remainingMinutes = 40;
-
-  // 已用时间（分钟）
-  int _mBaixing_usedMinutes = 0;
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
 
   // 分类标签
   final List<String> _mBaixing_tabs = ["全部", "教育", "科普", "自然", "历史", "动画"];
@@ -96,6 +90,8 @@ class _Baixing_TeenagerContentSceneState
     },
   ];
   Baixing_MessageDialog? _mBaixing_useTimeDialog;
+  Timer? _mBaixing_timer;
+  bool baixing_isLock = false;
 
   @override
   void initState() {
@@ -104,69 +100,90 @@ class _Baixing_TeenagerContentSceneState
       length: _mBaixing_tabs.length,
       vsync: this,
     );
-    _baixing_initTimer();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _baixing_checkUseTimeOut();
-    });
+    _baixing_timer(isStart: true);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _baixing_timer();
     _mBaixing_tabController.dispose();
     super.dispose();
   }
 
-  // 初始化计时器
-  Future<void> _baixing_initTimer() async {
-    await Baixing_SharedPreferences.init();
-    final usedTime = Baixing_SharedPreferences.baixing_getInt(KEY_teenager_mode_use_time); // 已使用时间（毫秒）
-    final remainingTime = mBaixing_totalAllowedTime - usedTime;
-    setState(() {
-      _mBaixing_usedMinutes = (usedTime / (60 * 1000)).floor();
-      _mBaixing_remainingMinutes = (remainingTime / (60 * 1000)).ceil();
-    });
-    // 每分钟更新一次剩余时间
-    Future.delayed(Baixing_1mi, () async {
-      if (!mounted) return;
-      _baixing_checkUseTimeOut();
-      await Baixing_SharedPreferences.baixing_setInt(KEY_teenager_mode_use_time, usedTime + 60 * 1000);
-      setState(() {
-        _mBaixing_usedMinutes++;
-        _mBaixing_remainingMinutes--;
-      });
-    });
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        _baixing_timer(isStart: true);
+        print('应用回到前台');
+        break;
+      case AppLifecycleState.inactive:
+        _baixing_timer();
+        print('应用处于非活动状态');
+        break;
+      case AppLifecycleState.paused:
+        _baixing_timer();
+        print('应用进入后台');
+        break;
+      case AppLifecycleState.detached:
+        _baixing_timer();
+        print('应用进程已分离');
+        break;
+      default:
+        break;
+    }
   }
 
-  bool _baixing_checkUseTimeOut() {
-    if (!mounted) return true;
-    final usedTime = Baixing_SharedPreferences.baixing_getInt(KEY_teenager_mode_use_time);
-    final result = usedTime > mBaixing_totalAllowedTime;
-    if (result) {
-      final route = GoRouter.of(context);
-      final currentLocation = route.state.fullPath;
-      if(currentLocation == "/video") {
-        route.go("/teenagerContent");
-        return true;
-      }
-      _mBaixing_useTimeDialog ??= baixing_showTeenagerModeTimeOutDialog(context, () {
-        baixing_continueTeenagerModeDialog(context, (password) {
-          final b = password == Baixing_SharedPreferences.baixing_getString(KEY_teenager_mode_password);
-          if (b) {
-            Baixing_SharedPreferences.baixing_setInt(KEY_teenager_mode_use_time, 0);
-            _baixing_initTimer();
-            final route = Navigator.of(context);
-            while(route.canPop()) {
-              route.pop();
-            }
-            _mBaixing_useTimeDialog = null;
+  void _baixing_timer({bool isStart = false}) {
+    if(isStart) {
+      _mBaixing_timer ??= Timer.periodic(Baixing_1mi, (timer) {
+        print("yyx 定时器开始");
+        if (_mBaixing_timer != null) {
+          Baixing_TeenagerModeModel model = context.read();
+          model.baixing_add1minuteToUsedTime();
+          if(mounted && model.baixing_remainingTime() <= 0) {
+            _baixing_handleUseTimeOut(context);
           }
-          return b;
-        });
+        }
+      });
+      delay300(() {
+        Baixing_TeenagerModeModel model = context.read();
+        if(mounted && model.baixing_remainingTime() <= 0) {
+          _baixing_handleUseTimeOut(context);
+        }
       });
     } else {
-      _baixing_initTimer();
+      _mBaixing_timer?.cancel();
+      _mBaixing_timer = null;
     }
-    return !result;
+  }
+
+  void _baixing_handleUseTimeOut(BuildContext context) {
+    final route = GoRouter.of(context);
+    final currentLocation = route.state.fullPath;
+    if (currentLocation == "/video") {
+      route.go("/teenagerContent");
+      return;
+    }
+    _mBaixing_useTimeDialog ??=
+        baixing_showTeenagerModeTimeOutDialog(context, () {
+          baixing_continueTeenagerModeDialog(context, (password) {
+            Baixing_TeenagerModeModel model = context.read();
+            final b = password == model.baixing_password;
+            if (b) {
+              model.baixing_setUseTime(0);
+              final route = Navigator.of(context);
+              while (route.canPop()) {
+                route.pop();
+              }
+              _mBaixing_useTimeDialog = null;
+            }
+            return b;
+          });
+        });
   }
 
   @override
@@ -186,10 +203,7 @@ class _Baixing_TeenagerContentSceneState
                 color: Colors.white,
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Center(
-                  child: Text(
-                    "今日已使用 ${(_mBaixing_usedMinutes > 40) ? 40: _mBaixing_usedMinutes} 分钟，剩余可用时长 ${(_mBaixing_remainingMinutes < 0)? 0: _mBaixing_remainingMinutes} 分钟",
-                    style: TextStyle(color: Color(0xffBDBDBD), fontSize: 14),
-                  ),
+                  child: _baixing_showUseTime(context),
                 ),
               ),
             ],
@@ -199,10 +213,19 @@ class _Baixing_TeenagerContentSceneState
     );
   }
 
+  Widget _baixing_showUseTime(BuildContext context) {
+    Baixing_TeenagerModeModel model = context.watch();
+    return Text(
+      "今日已使用 ${model.baixing_use_time / 60000} 分钟，剩余可用时长 ${model.baixing_remainingTime() / 60000} 分钟",
+      style: TextStyle(color: Color(0xffBDBDBD), fontSize: 14),
+    );
+  }
+
   // 退出青少年模式
   void _baixing_exitTeenagerMode(BuildContext context) {
+    Baixing_TeenagerModeModel model = context.read();
     baixing_exitTeenagerModeDialog(context, (password) {
-      final b = password == Baixing_SharedPreferences.baixing_getString(KEY_teenager_mode_password);
+      final b = password == model.baixing_password;
       if (b) {
         GoRouter.of(context).go("/home");
       }
@@ -250,13 +273,11 @@ class _Baixing_TeenagerContentSceneState
   Widget _baixing_item(Map<String, dynamic> item) {
     return GestureDetector(
       onTap: () {
-        if(_baixing_checkUseTimeOut()) {
-          Baixing_VideoEntity videoEntity = Baixing_VideoEntity(
-              mBaixing_VideoUrl: "https://hellokidweb.kouyujie.cn/long.mp4",
-              mBaixing_VideoName: item["title"]
-              );
-          GoRouter.of(context).push("/video", extra: videoEntity);
-        }
+        Baixing_VideoEntity videoEntity = Baixing_VideoEntity(
+            mBaixing_VideoUrl: "https://hellokidweb.kouyujie.cn/long.mp4",
+            mBaixing_VideoName: item["title"]
+        );
+        GoRouter.of(context).push("/video", extra: videoEntity);
       },
       child: Baixing_TeenModeItem(
         mBaixing_cover:

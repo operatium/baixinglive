@@ -113,17 +113,15 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
   }
 
   Future<bool> _baixing_checkTeenagerMode(BuildContext context) async {
-    await Baixing_SharedPreferences.init();
-    final isEnabled =
-      await Baixing_SharedPreferences.baixing_getBool(KEY_teenager_mode_enable);
-    if (isEnabled) {
+    Baixing_TeenagerModeModel model = context.read();
+    await model.resume();
+    if (model.baixing_enable) {
       // 检查当前时间是否在允许使用的时间范围内（6:00-22:00）
       final now = DateTime.now();
       final hour = now.hour;
       if (hour >= 22 || hour < 6) {
         // 在禁止使用时间段内
         baixing_showTeenagerModeTimeoutDialog(context);
-        exit(0);
       } else {
         // 跳转到青少年模式内容页面
         delay500(() => GoRouter.of(context).go("/teenagerContent"));

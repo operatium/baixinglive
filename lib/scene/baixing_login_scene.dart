@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:baixinglive/compat/baixing_persistence.dart';
 import 'package:baixinglive/compat/baixing_toast.dart';
 import 'package:baixinglive/compat/baixing_vibrate.dart';
 import 'package:baixinglive/entity/baixing_account_entity.dart';

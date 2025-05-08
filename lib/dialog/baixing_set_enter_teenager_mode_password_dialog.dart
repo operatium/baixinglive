@@ -194,11 +194,9 @@ class _Baixing_SetEnterTeenagerModePasswordDialogState
       return;
     }
     // 保存密码并启用青少年模式
-    await Baixing_SharedPreferences.init();
-    await Baixing_SharedPreferences.baixing_setString(KEY_teenager_mode_password, password1);
-    await Baixing_SharedPreferences.baixing_setBool(KEY_teenager_mode_enable, true);
-
-    if (!mounted) return;
+    Baixing_TeenagerModeModel model = context.read();
+    await model.baixing_setPassword(password1);
+    await model.baixing_setEnable(true);
 
     // 返回true表示成功设置密码并开启青少年模式
     Navigator.of(context).pop(true);

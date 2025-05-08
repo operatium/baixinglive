@@ -54,7 +54,8 @@ class Baixing_TeenagerModeHitDialog extends StatelessWidget{
             GestureDetector(
               onTap: () async {
                 Navigator.of(context).pop();
-                await Baixing_SharedPreferences.baixing_setInt(KEY_teenager_mode_dialog_time, DateTime.now().millisecondsSinceEpoch);
+                Baixing_TeenagerModeModel model = context.read();
+                await model.baixing_setEnterDialogLastTime(get_nowTime());
               },
               child: Container(
                 color: Color(0xff8955F7),

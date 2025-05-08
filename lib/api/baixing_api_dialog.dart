@@ -1,5 +1,4 @@
 import 'package:baixinglive/api/baixing_api.dart';
-import 'package:baixinglive/compat/baixing_persistence.dart';
 import 'package:baixinglive/dialog/baixing_continue_teenager_mode_dialog.dart';
 import 'package:baixinglive/dialog/baixing_exit_teenager_mode_dialog.dart';
 import 'package:baixinglive/dialog/baixing_message_dialog.dart';
@@ -8,22 +7,15 @@ import 'package:baixinglive/dialog/baixing_set_enter_teenager_mode_password_dial
 import 'package:baixinglive/dialog/baixing_teenager_mode_hit_dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
-
-const bool mBaixing_debug = true;
-
 // 显示青少年模式提示弹窗
 void baixing_showTeenagersHitDialog(BuildContext context) {
-  var isHide = Baixing_SharedPreferences.baixing_getBool(KEY_teenager_mode_enable);
-  var showTime = Baixing_SharedPreferences.baixing_getInt(KEY_teenager_mode_dialog_time);
-  final t = DateTime.now().millisecondsSinceEpoch - showTime;
-  if (!isHide || t > 24 * 3600 * 1000 || mBaixing_debug) {
+  Baixing_TeenagerModeModel model = context.read();
+  if (!model.baixing_enable || model.baixing_shouldShowEnterDialog() || mBaixing_debug) {
     showDialog(
       context: context,
       barrierDismissible: false,
       barrierColor: Colors.transparent,
-      builder:
-          (context) => Dialog(child: const Baixing_TeenagerModeHitDialog()),
+      builder: (context) => Dialog(child: const Baixing_TeenagerModeHitDialog()),
     );
   }
 }
@@ -45,7 +37,6 @@ void baixing_requestPermissionDialog({
   required BuildContext context,
   required FutureOr<void> Function() nextDo,
 }) async {
-  await Baixing_SharedPreferences.init();
   var camera = await Permission.camera.isGranted;
   var storage = await Permission.storage.isGranted;
   var microphone = await Permission.microphone.isGranted;
@@ -75,7 +66,7 @@ void baixing_showTeenagerModeTimeoutDialog(BuildContext context) {
             TextButton(
               onPressed: () {
                 // 退出应用
-                Navigator.of(context).pop();
+                exit(0);
               },
               child: Text("我知道了"),
             ),
