@@ -1,4 +1,3 @@
-
 import '../api/baixing_api.dart';
 import '../api/baixing_api_flutter.dart';
 import '../api/baixing_api_thirdapi.dart';
@@ -13,6 +12,8 @@ class Baixing_MeFragment extends StatefulWidget {
 }
 
 class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
+  final _baixing_debouncer = Debouncer();
+
   @override
   Widget build(BuildContext context) {
     print("yyx- Baixing_MeFragment build");
@@ -95,7 +96,7 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
         _getButton(event: "我要开播"),
         const Spacer(),
         GestureDetector(
-          onTap: _obtainClick("设置"),
+          onTap: _obtainClickListener("设置"),
           child: Padding(
             padding: EdgeInsets.all(6.w),
             child: Icon(Icons.settings_outlined, color: Colors.black),
@@ -146,7 +147,9 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
   }
 
   Widget _getButton({required String event, String icon = ""}) {
-    final textTheme = TextTheme.of(context).labelMedium!.copyWith(color: Colors.black);
+    final textTheme = TextTheme.of(
+      context,
+    ).labelMedium!.copyWith(color: Colors.black);
     Widget? view;
     if (event == "我要开播") {
       view = Container(
@@ -170,10 +173,7 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
           radius: 15.w,
           color: Colors.deepPurpleAccent,
         ),
-        child: Text(
-          '充值',
-          style: textTheme.copyWith(color: Colors.white),
-        ),
+        child: Text('充值', style: textTheme.copyWith(color: Colors.white)),
       );
     }
     view ??= SizedBox(
@@ -195,53 +195,46 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
         ],
       ),
     );
-    return GestureDetector(onTap: _obtainClick(event), child: view);
+    return GestureDetector(onTap: _obtainClickListener(event), child: view);
   }
 
-  VoidCallback? _obtainClick(String event) {
-    if (event == "我要开播") {
-      return () {
+  VoidCallback _obtainClickListener(String event) {
+    ontap() {
+      if (event == "我要开播") {
         baixing_toRealNameDialog(context, () {
           Navigator.of(context).pop();
           GoRouter.of(context).push("/realName");
         });
       };
+      if (event == "设置") {
+          GoRouter.of(context).push("/setting");
+      }
+      if (event == "充值") {
+          Baixing_Toast.show("充值");
+      }
+      if (event == "装扮") {
+          Baixing_Toast.show("装扮");
+      }
+      if (event == "神行百变") {
+          Baixing_Toast.show("神行百变");
+      }
+      if (event == "靓号") {
+          Baixing_Toast.show("靓号");
+      }
+      if (event == "炫彩昵称") {
+          Baixing_Toast.show("炫彩昵称");
+      }
+      if (event == "装扮") {
+          Baixing_Toast.show("装扮");
+      }
     }
-    if (event == "设置") {
-      return () {
-        Baixing_Toast.show("设置");
-      };
-    }
-    if (event == "充值") {
-      return () {
-        Baixing_Toast.show("充值");
-      };
-    }
-    if (event == "装扮") {
-      return () {
-        Baixing_Toast.show("装扮");
-      };
-    }
-    if (event == "神行百变") {
-      return () {
-        Baixing_Toast.show("神行百变");
-      };
-    }
-    if (event == "靓号") {
-      return () {
-        Baixing_Toast.show("靓号");
-      };
-    }
-    if (event == "炫彩昵称") {
-      return () {
-        Baixing_Toast.show("炫彩昵称");
-      };
-    }
-    if (event == "装扮") {
-      return () {
-        Baixing_Toast.show("装扮");
-      };
-    }
-    return null;
+    return () {
+      _baixing_debouncer.debounce(
+        duration: Baixing_dd500ms,
+        onDebounce: () {
+          ontap.call();
+        },
+      );
+    };
   }
 }

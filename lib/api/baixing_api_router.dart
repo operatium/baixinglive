@@ -1,9 +1,11 @@
+import '../scene/baixing_account_security_scene.dart';
 import '../scene/baixing_enter_teenager_mode_scene.dart';
 import '../scene/baixing_home_scene.dart';
 import '../scene/baixing_login_scene.dart';
 import '../scene/baixing_real_name_auth_scene.dart';
 import '../scene/baixing_select_login_scene.dart';
 import '../scene/baixing_set_anchor_phone_scene.dart';
+import '../scene/baixing_setting_scene.dart';
 import '../scene/baixing_splash_scene.dart';
 import '../scene/baixing_teenager_content_scene.dart';
 import '../scene/baixing_video_player_scene.dart';
@@ -67,6 +69,18 @@ GoRouter baixing_createGoRouter() {
         path: '/setAuthorPhone',
         builder: (context, state) {
           return Baixing_SetAnchorPhoneScene();
+        },
+      ),
+      GoRoute(
+        path: '/setting',
+        builder: (context, state) {
+          return Baixing_SettingScene();
+        },
+      ),
+      GoRoute(
+        path: '/account',
+        builder: (context, state) {
+          return Baixing_AccountSecurityScene();
         },
       ),
     ],

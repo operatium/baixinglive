@@ -12,3 +12,5 @@
 2025-05-08 17:54: 修改 lib/api/baixing_api_dialog.dart 中的 baixing_showGuildListDialog 函数，将 showBottomSheet 改为 showModalBottomSheet，修复了找不到 Scaffold 组件的错误。
 
 2025-05-08 20:36: 更新工程索引.md，添加api目录的详细说明，包含所有api文件的功能描述。
+
+2025-05-08 22:32: 新增 lib/scene/baixing_account_security_scene.dart 账号与安全界面，更新 lib/api/baixing_api_router.dart 添加路由，更新工程索引.md。

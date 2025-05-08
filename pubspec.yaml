@@ -83,6 +83,7 @@ flutter:
     - images/baixing_girl_xxxl.jpg
     - images/baixing_level_tag3.webp
     - images/baixing_umbrella.png
+    - images/baixing_safe.webp
    
 
   # An image asset can refer to one or more resolution-specific "variants", see
