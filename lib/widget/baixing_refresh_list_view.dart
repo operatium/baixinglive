@@ -1,5 +1,5 @@
 
-import 'package:baixinglive/api/baixing_api_config.dart';
+import 'package:baixinglive/api/baixing_api_time.dart';
 import 'package:baixinglive/api/baixing_api_flutter.dart';
 import 'package:baixinglive/api/baixing_api_thirdapi.dart';
 
@@ -103,10 +103,10 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
       controller: _headController,
       backgroundColor: Colors.white,
       durations: RefreshIndicatorDurations(
-        cancelDuration: Baixing_300ms,
-        settleDuration: Baixing_300ms,
-        finalizeDuration: Baixing_300ms,
-        completeDuration: Baixing_300ms,
+        cancelDuration: Baixing_dd300ms,
+        settleDuration: Baixing_dd300ms,
+        finalizeDuration: Baixing_dd300ms,
+        completeDuration: Baixing_dd300ms,
       ),
       child: child,
     );
@@ -116,7 +116,7 @@ class _Baixing_RefreshListViewState extends State<Baixing_RefreshListView> {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
         _scrollController.offset + 30.w,
-        duration: Baixing_300ms,
+        duration: Baixing_dd300ms,
         curve: Curves.easeOut,
       );
     }

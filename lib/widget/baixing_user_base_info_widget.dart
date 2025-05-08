@@ -72,7 +72,7 @@ class Baixing_UserBaseInfo extends StatelessWidget {
               decoration: Baixing_BackGround.baixing_getRoundedRectangularOutLine(),
               child: Text(
                 '切换账号和状态',
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme.of(context).textTheme.labelMedium,
               ),
             ),
           ),

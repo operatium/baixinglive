@@ -146,6 +146,7 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
   }
 
   Widget _getButton({required String event, String icon = ""}) {
+    final textTheme = TextTheme.of(context).labelMedium!.copyWith(color: Colors.black);
     Widget? view;
     if (event == "我要开播") {
       view = Container(
@@ -157,7 +158,7 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
           children: [
             Icon(Icons.video_call_outlined, color: Colors.black),
             SizedBox(width: 4.w),
-            Text('我要开播', style: TextTheme.of(context).titleSmall),
+            Text('我要开播', style: textTheme),
           ],
         ),
       );
@@ -171,13 +172,11 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
         ),
         child: Text(
           '充值',
-          style: TextTheme.of(
-            context,
-          ).titleMedium!.copyWith(color: Colors.white),
+          style: textTheme.copyWith(color: Colors.white),
         ),
       );
     }
-    view ??= Container(
+    view ??= SizedBox(
       width: 63.w,
       child: Column(
         children: [
@@ -192,7 +191,7 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
               ),
             ),
           ),
-          Text(event, style: Theme.of(context).textTheme.titleSmall),
+          Text(event, style: textTheme),
         ],
       ),
     );
@@ -202,7 +201,10 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
   VoidCallback? _obtainClick(String event) {
     if (event == "我要开播") {
       return () {
-        Baixing_Toast.show("我要开播");
+        baixing_toRealNameDialog(context, () {
+          Navigator.of(context).pop();
+          GoRouter.of(context).push("/realName");
+        });
       };
     }
     if (event == "设置") {

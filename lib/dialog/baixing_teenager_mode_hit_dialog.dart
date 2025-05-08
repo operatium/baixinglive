@@ -57,7 +57,7 @@ class Baixing_TeenagerModeHitDialog extends StatelessWidget{
               onTap: () async {
                 Navigator.of(context).pop();
                 Baixing_TeenagerModeModel model = context.read();
-                await model.baixing_setEnterDialogLastTime(get_nowTime());
+                await model.baixing_setEnterDialogLastTime(baixing_getNowTime());
               },
               child: Container(
                 color: Color(0xff8955F7),

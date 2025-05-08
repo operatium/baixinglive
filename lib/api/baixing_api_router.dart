@@ -1,7 +1,9 @@
 import '../scene/baixing_enter_teenager_mode_scene.dart';
 import '../scene/baixing_home_scene.dart';
 import '../scene/baixing_login_scene.dart';
+import '../scene/baixing_real_name_auth_scene.dart';
 import '../scene/baixing_select_login_scene.dart';
+import '../scene/baixing_set_anchor_phone_scene.dart';
 import '../scene/baixing_splash_scene.dart';
 import '../scene/baixing_teenager_content_scene.dart';
 import '../scene/baixing_video_player_scene.dart';
@@ -11,7 +13,7 @@ import 'baixing_api_thirdapi.dart';
 
 GoRouter baixing_createGoRouter() {
   return GoRouter(
-    initialLocation: '/splash',
+    initialLocation: '/setAuthorPhone',
     routes: [
       GoRoute(
         path: '/splash',
@@ -53,6 +55,18 @@ GoRouter baixing_createGoRouter() {
         builder: (context, state) {
           Baixing_VideoEntity videoEntity = state.extra as Baixing_VideoEntity;
           return Baixing_VideoPlayerScene(mBaixing_videoEntity: videoEntity);
+        },
+      ),
+      GoRoute(
+        path: '/realName',
+        builder: (context, state) {
+          return Baixing_RealNameAuthScene();
+        },
+      ),
+      GoRoute(
+        path: '/setAuthorPhone',
+        builder: (context, state) {
+          return Baixing_SetAnchorPhoneScene();
         },
       ),
     ],

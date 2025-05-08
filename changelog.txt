@@ -4,3 +4,7 @@
 修改文件：doc/config.md, doc/dialog.md, doc/item.md, doc/utils.md, README.md
 
 2025-05-08 08:01: 新增 lib/model/baixing_teenager_mode_model.dart，完善工程索引.md，持久化青少年模式相关数据。
+
+2025-05-08 14:11: 新增 lib/scene/baixing_real_name_auth_scene.dart 实名认证界面，更新工程索引.md和doc/scene.md文档。
+
+2025-05-08 15:18: 修改 lib/scene/baixing_real_name_auth_scene.dart，添加勾选框左右抖动动画效果。

@@ -49,7 +49,7 @@ class Baixing_TeenagerModeModel extends ChangeNotifier{
   int get baixing_enterDialogLastTime => _baixing_enter_dialog_last_time;
 
   bool baixing_shouldShowEnterDialog() {
-    return get_nowTime() - _baixing_enter_dialog_last_time >
+    return baixing_getNowTime() - _baixing_enter_dialog_last_time >
         mBaxing_enterDialogInterval;
   }
 
@@ -67,6 +67,10 @@ class Baixing_TeenagerModeModel extends ChangeNotifier{
       KEY_teenager_mode_enable,
       value,
     );
+    if(!value) {
+      baixing_setPassword("");
+      baixing_setUseTime(0);
+    }
     notifyListeners();
   }
 

@@ -1,6 +1,5 @@
 library baixing_api_flutter;
 
-export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:flutter/widgets.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter/cupertino.dart'

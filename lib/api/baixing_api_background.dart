@@ -1,5 +1,6 @@
 
-import 'package:flutter/material.dart';
+import 'package:baixinglive/api/baixing_api_flutter.dart';
+import 'package:baixinglive/api/baixing_api_thirdapi.dart';
 
 class Baixing_BackGround {
 
@@ -80,7 +81,7 @@ class Baixing_BackGround {
           1,
         ],
       ),
-      borderRadius: BorderRadius.all(Radius.circular(16)),
+      borderRadius: BorderRadius.all(Radius.circular(16.r)),
     );
   }
 }

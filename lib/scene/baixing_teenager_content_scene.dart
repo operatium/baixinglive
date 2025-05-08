@@ -139,7 +139,7 @@ class _Baixing_TeenagerContentSceneState
 
   void _baixing_timer({bool isStart = false}) {
     if(isStart) {
-      _mBaixing_timer ??= Timer.periodic(Baixing_1mi, (timer) {
+      _mBaixing_timer ??= Timer.periodic(Baixing_dd1mi, (timer) {
         print("yyx 定时器开始");
         if (_mBaixing_timer != null) {
           Baixing_TeenagerModeModel model = context.read();
@@ -227,6 +227,7 @@ class _Baixing_TeenagerContentSceneState
     baixing_exitTeenagerModeDialog(context, (password) {
       final b = password == model.baixing_password;
       if (b) {
+        model.baixing_setEnable(false);
         GoRouter.of(context).go("/home");
       }
       return b;

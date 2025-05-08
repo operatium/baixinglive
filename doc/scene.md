@@ -17,6 +17,7 @@ scene/
 ├── baixing_select_login_scene.dart   # 选择登录方式场景
 ├── baixing_splash_scene.dart         # 启动页场景
 ├── baixing_web_scene.dart            # Web页面场景
+├── baixing_real_name_auth_scene.dart   # 实名认证场景
 ```
 
 ## 主要场景说明
@@ -34,6 +35,9 @@ scene/
 
 ### baixing_web_scene.dart
 内嵌WebView页面，支持H5内容展示。
+
+### baixing_real_name_auth_scene.dart
+实名认证界面，用于用户提交真实姓名和身份证号进行实名认证。
 
 ## 使用示例
 ```dart

@@ -8,5 +8,6 @@ export 'package:flutter_debouncer/flutter_debouncer.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:window_size/window_size.dart';
+export 'package:flutter_screenutil/flutter_screenutil.dart';
 
 

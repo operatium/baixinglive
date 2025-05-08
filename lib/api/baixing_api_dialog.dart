@@ -1,3 +1,4 @@
+import 'package:baixinglive/api/baixing_api.dart';
 
 import '../dialog/baixing_continue_teenager_mode_dialog.dart';
 import '../dialog/baixing_exit_teenager_mode_dialog.dart';
@@ -125,4 +126,31 @@ void baixing_continueTeenagerModeDialog(
       return Baixing_ContinueTeenagerModeDialog(mBaixing_nextDo: next);
     },
   );
+}
+
+// 实名对话框
+void baixing_toRealNameDialog(BuildContext context, VoidCallback callback) {
+  Baixing_MessageDialog dialog = Baixing_MessageDialog(
+    mbaixing_title: "实名认证",
+    mbaixing_message: "根据法律法规要求，在平台申请开播前需完成身份认证",
+    mbaixing_buttonText: "去认证",
+    mbaixing_onPressed: callback,
+  );
+  showCupertinoDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) => dialog,
+  );
+}
+
+void baixing_showGuildListDialog(BuildContext context, void Function(String) callback) {
+  showBottomSheet(context: context, builder: (context)
+  {
+    return ListView.builder(
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return ListTile(title: Text("guild$index"));
+      },
+    );
+  });
 }

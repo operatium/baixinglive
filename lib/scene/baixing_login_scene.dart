@@ -273,7 +273,7 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
                           GestureDetector(
                             onTap: () {
                               _baixing_debouncer.debounce(
-                                duration: const Duration(milliseconds: 500),
+                                duration: Baixing_dd500ms,
                                 onDebounce: () => baixing_sendCode(loginModel),
                               );
                             },
