@@ -1,11 +1,4 @@
-import 'package:baixinglive/entity/baixing_final_entity.dart';
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_debouncer/flutter_debouncer.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:baixinglive/api/baixing_api.dart';
 
 typedef Baixing_onRefreshBuilder = Future<void> Function(String data);
 typedef Baixing_onLoadBuilder = Future<bool> Function(String data);

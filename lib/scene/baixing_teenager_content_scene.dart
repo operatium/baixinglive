@@ -1,14 +1,8 @@
-import 'dart:math';
-
 import 'package:baixinglive/compat/baixing_persistence.dart';
-import 'package:baixinglive/api/baixing_api_dialog.dart';
+import 'package:baixinglive/api/baixing_api.dart';
 import 'package:baixinglive/dialog/baixing_message_dialog.dart';
-import 'package:baixinglive/entity/baixing_final_entity.dart';
 import 'package:baixinglive/entity/baixing_video_entity.dart';
 import 'package:baixinglive/item/baixing_teen_mode_item.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 /**
  * @author yuyuexing
@@ -125,17 +119,17 @@ class _Baixing_TeenagerContentSceneState
   // 初始化计时器
   Future<void> _baixing_initTimer() async {
     await Baixing_SharedPreferences.init();
-    final usedTime = Baixing_SharedPreferences.baixing_getInt("青少年模式已使用时间"); // 已使用时间（毫秒）
+    final usedTime = Baixing_SharedPreferences.baixing_getInt(KEY_teenager_mode_use_time); // 已使用时间（毫秒）
     final remainingTime = mBaixing_totalAllowedTime - usedTime;
     setState(() {
       _mBaixing_usedMinutes = (usedTime / (60 * 1000)).floor();
       _mBaixing_remainingMinutes = (remainingTime / (60 * 1000)).ceil();
     });
     // 每分钟更新一次剩余时间
-    Future.delayed(Baixing_300ms, () async {
+    Future.delayed(Baixing_1mi, () async {
       if (!mounted) return;
       _baixing_checkUseTimeOut();
-      await Baixing_SharedPreferences.baixing_setInt("青少年模式已使用时间", usedTime + 60 * 1000);
+      await Baixing_SharedPreferences.baixing_setInt(KEY_teenager_mode_use_time, usedTime + 60 * 1000);
       setState(() {
         _mBaixing_usedMinutes++;
         _mBaixing_remainingMinutes--;
@@ -145,7 +139,7 @@ class _Baixing_TeenagerContentSceneState
 
   bool _baixing_checkUseTimeOut() {
     if (!mounted) return true;
-    final usedTime = Baixing_SharedPreferences.baixing_getInt("青少年模式已使用时间");
+    final usedTime = Baixing_SharedPreferences.baixing_getInt(KEY_teenager_mode_use_time);
     final result = usedTime > mBaixing_totalAllowedTime;
     if (result) {
       final route = GoRouter.of(context);
@@ -156,9 +150,9 @@ class _Baixing_TeenagerContentSceneState
       }
       _mBaixing_useTimeDialog ??= baixing_showTeenagerModeTimeOutDialog(context, () {
         baixing_continueTeenagerModeDialog(context, (password) {
-          final b = password == Baixing_SharedPreferences.baixing_getString("青少年模式密码");
+          final b = password == Baixing_SharedPreferences.baixing_getString(KEY_teenager_mode_password);
           if (b) {
-            Baixing_SharedPreferences.baixing_setInt("青少年模式已使用时间", 0);
+            Baixing_SharedPreferences.baixing_setInt(KEY_teenager_mode_use_time, 0);
             _baixing_initTimer();
             final route = Navigator.of(context);
             while(route.canPop()) {
@@ -208,7 +202,7 @@ class _Baixing_TeenagerContentSceneState
   // 退出青少年模式
   void _baixing_exitTeenagerMode(BuildContext context) {
     baixing_exitTeenagerModeDialog(context, (password) {
-      final b = password == Baixing_SharedPreferences.baixing_getString("青少年模式密码");
+      final b = password == Baixing_SharedPreferences.baixing_getString(KEY_teenager_mode_password);
       if (b) {
         GoRouter.of(context).go("/home");
       }
@@ -258,7 +252,7 @@ class _Baixing_TeenagerContentSceneState
       onTap: () {
         if(_baixing_checkUseTimeOut()) {
           Baixing_VideoEntity videoEntity = Baixing_VideoEntity(
-              mBaixing_VideoUrl: "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+              mBaixing_VideoUrl: "https://hellokidweb.kouyujie.cn/long.mp4",
               mBaixing_VideoName: item["title"]
               );
           GoRouter.of(context).push("/video", extra: videoEntity);

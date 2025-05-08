@@ -1,9 +1,6 @@
+import 'package:baixinglive/api/baixing_api.dart';
 import 'package:baixinglive/compat/baixing_persistence.dart';
 import 'package:baixinglive/widget/baixing_background.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /**
  * @author yuyuexing
@@ -196,18 +193,15 @@ class _Baixing_SetEnterTeenagerModePasswordDialogState
       });
       return;
     }
-
     // 保存密码并启用青少年模式
-    await Baixing_SharedPreferences.baixing_setString("青少年模式密码", password1);
-    await Baixing_SharedPreferences.baixing_setBool("启用青少年模式", true);
-    await Baixing_SharedPreferences.baixing_setInt(
-      "青少年模式启用时间",
-      DateTime.now().millisecondsSinceEpoch,
-    );
+    await Baixing_SharedPreferences.init();
+    await Baixing_SharedPreferences.baixing_setString(KEY_teenager_mode_password, password1);
+    await Baixing_SharedPreferences.baixing_setBool(KEY_teenager_mode_enable, true);
 
     if (!mounted) return;
 
     // 返回true表示成功设置密码并开启青少年模式
     Navigator.of(context).pop(true);
+    GoRouter.of(context).go('/teenagerContent');
   }
 }

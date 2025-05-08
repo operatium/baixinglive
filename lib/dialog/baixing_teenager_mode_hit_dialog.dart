@@ -1,7 +1,5 @@
+import 'package:baixinglive/api/baixing_api.dart';
 import 'package:baixinglive/compat/baixing_persistence.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class Baixing_TeenagerModeHitDialog extends StatelessWidget{
   const Baixing_TeenagerModeHitDialog({super.key});
@@ -56,12 +54,7 @@ class Baixing_TeenagerModeHitDialog extends StatelessWidget{
             GestureDetector(
               onTap: () async {
                 Navigator.of(context).pop();
-                await Baixing_SharedPreferences.baixing_setBool(
-                    "青少年模式", true);
-                await Baixing_SharedPreferences.baixing_setInt(
-                    "青少年模式时间", DateTime
-                    .now()
-                    .millisecondsSinceEpoch);
+                await Baixing_SharedPreferences.baixing_setInt(KEY_teenager_mode_dialog_time, DateTime.now().millisecondsSinceEpoch);
               },
               child: Container(
                 color: Color(0xff8955F7),

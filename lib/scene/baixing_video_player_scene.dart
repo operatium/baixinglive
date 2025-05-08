@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:baixinglive/entity/baixing_video_entity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
@@ -26,12 +27,11 @@ class _Baixing_VideoPlayerSceneState extends State<Baixing_VideoPlayerScene> {
   double _currentPosition = 0;
   double _totalDuration = 0;
   Timer? _hideControlsTimer;
+  bool _isInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    _initializeVideoPlayer();
-    _setOrientationPortrait();
   }
 
   /// 初始化视频播放器
@@ -41,6 +41,7 @@ class _Baixing_VideoPlayerSceneState extends State<Baixing_VideoPlayerScene> {
         setState(() {
           _totalDuration = _controller.value.duration.inMilliseconds.toDouble();
         });
+        _isInitialized = true;
         _startPlayback();
       });
 
@@ -150,143 +151,174 @@ class _Baixing_VideoPlayerSceneState extends State<Baixing_VideoPlayerScene> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: OrientationBuilder(
-        builder: (context, orientation) {
-          final isLandscape = orientation == Orientation.landscape;
-          return GestureDetector(
-            onTap: _showControlsOverlay,
-            child: Stack(
-              children: [
-                // 视频播放器
-                Center(
-                  child: _controller.value.isInitialized
-                      ? AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(_controller),
-                        )
-                      : const CircularProgressIndicator(),
-                ),
-                
-                // 控制层
-                if (_showControls)
-                  Container(
-                    color: Colors.black.withOpacity(0.4),
-                    child: Column(
-                      children: [
-                        // 顶部栏
-                        Container(
-                          padding: EdgeInsets.only(
-                            top: isLandscape ? 8 : MediaQuery.of(context).padding.top + 8,
-                            left: 16,
-                            right: 16,
-                            bottom: 8,
-                          ),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.arrow_back, color: Colors.white),
-                                onPressed: () {
-                                  if (_isFullScreen) {
-                                    _toggleFullScreen();
-                                  } else {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                              ),
-                              Expanded(
-                                child: Text(
-                                  widget.mBaixing_videoEntity.mBaixing_VideoName,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        
-                        const Spacer(),
-                        
-                        // 底部控制栏
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              // 进度条
-                              SliderTheme(
-                                data: SliderThemeData(
-                                  trackHeight: 2,
-                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
-                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 12),
-                                  activeTrackColor: Colors.purple,
-                                  inactiveTrackColor: Colors.grey[300],
-                                  thumbColor: Colors.purple,
-                                  overlayColor: Colors.purple.withOpacity(0.3),
-                                ),
-                                child: Slider(
-                                  value: _currentPosition,
-                                  min: 0,
-                                  max: _totalDuration,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _currentPosition = value;
-                                    });
-                                  },
-                                  onChangeEnd: (value) {
-                                    _controller.seekTo(Duration(milliseconds: value.toInt()));
-                                  },
-                                ),
-                              ),
-                              
-                              // 时间和控制按钮
-                              Row(
-                                children: [
-                                  // 当前时间/总时间
-                                  Text(
-                                    "${_formatDuration(Duration(milliseconds: _currentPosition.toInt()))} / ${_formatDuration(Duration(milliseconds: _totalDuration.toInt()))}",
-                                    style: const TextStyle(color: Colors.white, fontSize: 12),
-                                  ),
-                                  
-                                  const Spacer(),
-                                  
-                                  // 播放/暂停按钮
-                                  IconButton(
-                                    icon: Icon(
-                                      _isPlaying ? Icons.pause : Icons.play_arrow,
-                                      color: Colors.white,
-                                      size: 32,
-                                    ),
-                                    onPressed: _togglePlayPause,
-                                  ),
-                                  
-                                  // 全屏按钮
-                                  IconButton(
-                                    icon: Icon(
-                                      _isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: _toggleFullScreen,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+    if (!_isInitialized) {
+      _initializeVideoPlayer();
+      _setOrientationPortrait();
+      return Container(
+        color: Colors.white,
+        child: Center(
+          child: CupertinoActivityIndicator(
+            color: Colors.black,
+          ),
+        ),
+      );
+    } else {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            final isLandscape = orientation == Orientation.landscape;
+            return GestureDetector(
+              onTap: _showControlsOverlay,
+              child: Stack(
+                children: [
+                  // 视频播放器
+                  Center(
+                    child: _controller.value.isInitialized
+                        ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )
+                        : const CircularProgressIndicator(),
                   ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
+
+                  // 控制层
+                  if (_showControls)
+                    Container(
+                      color: Colors.black.withOpacity(0.4),
+                      child: Column(
+                        children: [
+                          // 顶部栏
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: isLandscape ? 8 : MediaQuery
+                                  .of(context)
+                                  .padding
+                                  .top + 8,
+                              left: 16,
+                              right: 16,
+                              bottom: 8,
+                            ),
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                      Icons.arrow_back, color: Colors.white),
+                                  onPressed: () {
+                                    if (_isFullScreen) {
+                                      _toggleFullScreen();
+                                    } else {
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    widget.mBaixing_videoEntity
+                                        .mBaixing_VideoName,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const Spacer(),
+
+                          // 底部控制栏
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                // 进度条
+                                SliderTheme(
+                                  data: SliderThemeData(
+                                    trackHeight: 2,
+                                    thumbShape: const RoundSliderThumbShape(
+                                        enabledThumbRadius: 6),
+                                    overlayShape: const RoundSliderOverlayShape(
+                                        overlayRadius: 12),
+                                    activeTrackColor: Colors.purple,
+                                    inactiveTrackColor: Colors.grey[300],
+                                    thumbColor: Colors.purple,
+                                    overlayColor: Colors.purple.withOpacity(
+                                        0.3),
+                                  ),
+                                  child: Slider(
+                                    value: _currentPosition,
+                                    min: 0,
+                                    max: _totalDuration,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _currentPosition = value;
+                                      });
+                                    },
+                                    onChangeEnd: (value) {
+                                      _controller.seekTo(Duration(
+                                          milliseconds: value.toInt()));
+                                    },
+                                  ),
+                                ),
+
+                                // 时间和控制按钮
+                                Row(
+                                  children: [
+                                    // 当前时间/总时间
+                                    Text(
+                                      "${_formatDuration(Duration(
+                                          milliseconds: _currentPosition
+                                              .toInt()))} / ${_formatDuration(
+                                          Duration(milliseconds: _totalDuration
+                                              .toInt()))}",
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 12),
+                                    ),
+
+                                    const Spacer(),
+
+                                    // 播放/暂停按钮
+                                    IconButton(
+                                      icon: Icon(
+                                        _isPlaying ? Icons.pause : Icons
+                                            .play_arrow,
+                                        color: Colors.white,
+                                        size: 32,
+                                      ),
+                                      onPressed: _togglePlayPause,
+                                    ),
+
+                                    // 全屏按钮
+                                    IconButton(
+                                      icon: Icon(
+                                        _isFullScreen
+                                            ? Icons.fullscreen_exit
+                                            : Icons.fullscreen,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: _toggleFullScreen,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    }
   }
 }

@@ -1,11 +1,29 @@
 # 99直播 Android 客户端
 
 ## 概述
+- 路由配置必须检查，保证与lib/main.dart保持一致和正确。
+- 必须检查根据lib下所有目录都对应生成同名的md文件（doc目录下），md文件头部必须写清楚需要管理对应的目录的路径，并且进行讲解和维护。
+- 本文件23行以上不可以变。
 
-- 本项目是99直播的Android客户端应用。应用实现了直播观看、关注主播、搜索内容、账号管理等功能。
-- 资源文档很重要，需要及时更新和维护。
-是根据lib下所有目录都对应生成同名的md文件（doc目录下），md文件头部必须写清楚需要管理对应的目录的路径，并且进行讲解和维护。
-- 本文件9行以上不可以变。
+## 工程设计思路
+- 入口函数在lib/main.dart
+- 路由表定义在lib/main.dart
+- 字体风格定义在lib/main.dart
+- Provider类定义在lib/main.dart
+- api目录下的代码定义所有的业务入口
+- 启动页：
+  - Baixing_SplashScene，对应/splash路由
+  - 判断是否启用青少年模式，如果启用，跳转到青少年模式入口页，否则跳转到主页
+  - 判断是否登录，如果登录，跳转到主页，否则跳转到登录页
+
+- 青少年模式：
+  - 入口函数 baixing_showTeenagersHitDialog
+  - 入口页 Baixing_EnterTeenagerModeScene
+  - 内容页 Baixing_TeenagerContentScene
+  - 视频播放页 Baixing_VideoPlayerScene，需传递 Baixing_VideoEntity 实例（通过 extra 参数）
+  - 视频实体 Baixing_VideoEntity
+  - 逻辑 设置密码 -> 青少年内容页 -> 单次使用不超过40分钟 -> 弹窗输入密码续时间 -> 输入密码退出
+  - 注意 启用青少年模式后，杀死应用后再次启动，直接进入青少年模式，需要输入密码才能退出青少年模式
 
 
 ## 技术栈
@@ -20,6 +38,7 @@
 ```shell
 flutter pub run build_runner build
 ```
+
 
 ## 字体风格规范
 
@@ -78,14 +97,6 @@ flutter pub run build_runner build
 - 注释应该解释为什么这样做，而不是做了什么
 - 持久化采用Baixing_SharedPreferences类
 
-### 其他规范
-
-- 每次修改代码前必须将修改前的代码使用Git提交
-- 出现文件的增加和删除都要完善到工程索引.md文件里
-- 每次修改后需要更新changelog.txt文件，记录修改内容
-- 遵循Flutter的最佳实践和设计模式
-- 优先使用StatelessWidget，只在必要时使用StatefulWidget
-
 ## 项目结构
 - [工程索引](./工程索引.md)
 
@@ -94,60 +105,13 @@ flutter pub run build_runner build
 应用使用 GoRouter 进行路由管理，主要路由配置如下：
 
 - /splash：启动页，对应 Baixing_SplashScene
-- /web：Web页面，对应 Baixing_WebScene，支持url参数
+- /web：Web页面，对应 Baixing_WebScene，支持 url 参数
 - /selectLogin：选择登录方式页，对应 Baixing_SelectLoginScene
 - /login：登录页，对应 Baixing_LoginScene
 - /home：首页，对应 Baixing_HomeScene
 - /teenager：青少年模式入口页，对应 Baixing_EnterTeenagerModeScene
-
-路由表示例：
-
-```dart
-GoRouter router = GoRouter(
-  initialLocation: '/splash',
-  routes: [
-    GoRoute(
-      path: '/splash',
-      builder: (context, state) => const Baixing_SplashScene(),
-    ),
-    GoRoute(
-      path: '/web',
-      builder: (context, state) {
-        final url = state.uri.queryParameters['url'] ?? "";
-        return Baixing_WebScene(url: url);
-      },
-    ),
-    GoRoute(
-      path: '/selectLogin',
-      builder: (context, state) => const Baixing_SelectLoginScene(),
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const Baixing_LoginScene(),
-    ),
-    GoRoute(
-      path: '/home',
-      builder: (context, state) => const Baixing_HomeScene(),
-    ),
-    GoRoute(
-      path: '/teenager',
-      builder: (context, state) {
-        return Baixing_EnterTeenagerModeScene();
-      },
-    ),
-  ],
-);
-```
-
-### 路由维护指南
-
-- 所有新增页面必须在路由表中注册
-- 路由路径应使用小写字母和下划线命名
-- 参数传递优先使用查询参数（如 url 参数）
-- 复杂页面跳转逻辑应封装在专门的导航服务中
-- 路由变更必须同步更新文档
-
-## 维护文档
+- /teenagerContent：青少年模式内容页，对应 Baixing_TeenagerContentScene
+- /video：视频播放页，对应 Baixing_VideoPlayerScene，需传递 Baixing_VideoEntity 实例（通过 extra 参数）
 
 ### 文档目录
 
@@ -157,37 +121,12 @@ GoRouter router = GoRouter(
 - [页面模块](./doc/page.md)：页面结构、导航、跳转
 - [业务模块](./doc/business.md)：核心业务逻辑、网络请求
 - [配置模块](./doc/config.md)：常量、环境、主题配置
+- [弹窗模块](./doc/dialog.md)：各类业务弹窗组件
+- [条目组件](./doc/item.md)：页面/业务条目组件
+- [工具模块](./doc/utils.md)：通用工具类与辅助函数
 - [数据实体](./doc/entity.md)：数据结构、序列化
 - [Fragment模块](./doc/fragment.md)：页面片段、复用逻辑
 - [Provider模块](./doc/provider.md)：状态管理、数据流
 - [场景模块](./doc/scene.md)：业务场景、页面组合
 - [兼容性工具](./doc/compat.md)：持久化、Toast、振动等
 - [路由模块](./doc/router.md)：路由配置、页面导航、参数传递
-
-**每次目录结构或功能变更，必须同步维护上述文档。**
-
-### 文档模板
-
-每个模块文档应包含：
-- 管理目录路径
-- 概述
-- 目录结构（树状图）
-- 主要组件说明
-- 使用示例（可运行代码）
-- 注意事项
-- 未来计划
-- 更新日期与内容
-
-### 文档维护要求
-
-> **维护要求：**
-> - 所有文档需与实际代码、资源保持同步，变更时务必先更新文档再提交代码。
-> - 资源文档（如widget.md、page.md等）需详细描述用途、结构、注意事项，便于团队协作和后续维护。
-> - 变更文档需在changelog.txt记录时间和文件路径。
-> - 路由变更必须同步更新README.md中的路由配置部分，确保路由表与实际代码保持一致。
-> - 路由使用示例应包含在相应页面的文档中，便于开发人员理解页面间的跳转关系。
-> - 维护文档时，严格遵循各文档开头的"概述"与"维护流程"说明。
-> - 每次更新文档时，需在文档底部添加更新日期和更新内容。
-> - 重要API或结构变更必须在文档中明确标注。
-> - 文档中的示例代码必须可运行并符合项目代码规范。
-> - 当模块结构发生变化时，必须更新对应的目录结构图。

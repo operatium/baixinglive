@@ -1,16 +1,6 @@
-2025.05.06 23:17
-/Users/yuyuexing/myProject/code/flutter/baixing2live/lib/scene/baixing_teenager_mode_scene.dart
-修复了代码中的语法错误，删除了多余的右花括号。
 
-2025-05-07 07:23:11
-/Users/yuyuexing/myProject/code/flutter/baixing2live/lib/scene/baixing_enter_teenager_mode_scene.dart
-新增青少年模式入口场景类，用于展示青少年模式的说明和限制。
+2025-05-07 20:27:00
+补全 doc 目录下 config.md、dialog.md、item.md、utils.md 文档，维护 README.md 文档目录映射，确保与 lib 目录结构一致。
+修改文件：doc/config.md, doc/dialog.md, doc/item.md, doc/utils.md, README.md
 
-2025-05-07 07:27:10
-/Users/yuyuexing/myProject/code/flutter/baixing2live/lib/dialog/baixing_set_enter_teenager_mode_password_dialog.dart
-新增设置青少年模式监护密码的对话框类，用于设置和验证青少年模式密码。
-
-2025-05-07 18:16:52 添加视频播放功能
-- 新增Baixing_VideoPlayerScene类，实现视频播放界面，支持视频名称显示、返回按钮、基础播放控制和横竖屏切换
-- 新增Baixing_VideoTestScene类，用于测试视频播放功能
-- 更新路由配置，添加/videotest路由
+2025-05-08 08:01: 新增 lib/model/baixing_teenager_mode_model.dart，完善工程索引.md，持久化青少年模式相关数据。

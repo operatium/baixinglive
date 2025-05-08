@@ -22,9 +22,12 @@
           <set>
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_vibrate-1.3.0/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/fluttertoast-8.2.12/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.17/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_android-13.0.1/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_android-2.4.10/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter_android-4.4.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/sqflite_android-2.4.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/video_player_android-2.8.3/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter_android-4.4.2/android" />
             <option value="$USER_HOME$/myLibs/flutter/packages/flutter_tools/gradle" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />

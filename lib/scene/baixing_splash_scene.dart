@@ -1,13 +1,6 @@
-import 'dart:io';
 import 'package:baixinglive/compat/baixing_persistence.dart';
-import 'package:baixinglive/api/baixing_api_dialog.dart';
-import 'package:baixinglive/entity/baixing_final_entity.dart';
 import 'package:baixinglive/provider/baixing_account_model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
+import 'package:baixinglive/api/baixing_api.dart';
 
 class Baixing_SplashScene extends StatefulWidget {
   const Baixing_SplashScene({super.key});
@@ -17,7 +10,7 @@ class Baixing_SplashScene extends StatefulWidget {
 }
 
 class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
-  String _TAG = "yyx @_Baixing_SplashSceneState: ";
+  String _TAG = "yyx _Baixing_SplashSceneState: ";
 
   _Baixing_SplashSceneState() {
     print(_TAG + 'State 构造函数被调用');
@@ -29,7 +22,7 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final isEnabled = await _baixing_checkTeenagerMode(context);
       if (isEnabled) {
-        baixing_requestPermissionDialog(context: context, goNextScene: _goNextScene);
+        baixing_requestPermissionDialog(context: context, nextDo: _goNextScene);
       }
     });
   }
@@ -109,7 +102,7 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
     );
   }
 
-  void _goNextScene(BuildContext context) async {
+  FutureOr<void> _goNextScene() async {
     final model = context.read<Baixing_AccountModel>();
     await model.resume();
     if (model.baixing_current_account != null) {
@@ -122,7 +115,7 @@ class _Baixing_SplashSceneState extends State<Baixing_SplashScene> {
   Future<bool> _baixing_checkTeenagerMode(BuildContext context) async {
     await Baixing_SharedPreferences.init();
     final isEnabled =
-      await Baixing_SharedPreferences.baixing_getBool("启用青少年模式");
+      await Baixing_SharedPreferences.baixing_getBool(KEY_teenager_mode_enable);
     if (isEnabled) {
       // 检查当前时间是否在允许使用的时间范围内（6:00-22:00）
       final now = DateTime.now();

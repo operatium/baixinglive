@@ -127,13 +127,16 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
   void didChangeMetrics() {
     final bottomInset = View.of(context).viewInsets.bottom;
     setState(() {
+      if(!mounted) return;
       _height = max(230.w - bottomInset, 10.w);
       if(bottomInset > 0 && _move == false) {
         _move = true;
         Future.delayed(Duration(milliseconds: 300), () {
+          if(!mounted) return;
           _scrollController?.animateTo(80.w, duration: Duration(milliseconds: 500), curve: Curves.linear);
         });
         Future.delayed(Duration(milliseconds: 1000), () {
+          if(!mounted) return;
           if(_move == true) {
             _move = false;
           }

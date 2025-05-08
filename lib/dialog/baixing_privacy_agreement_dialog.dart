@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -7,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Baixing_PrivacyAgressmentDialog extends StatelessWidget {
-  void Function(BuildContext) mbaixing_goNextScene;
+  FutureOr<void> Function() mbaixing_goNextScene;
 
   Baixing_PrivacyAgressmentDialog({super.key, required this.mbaixing_goNextScene});
 
@@ -36,7 +37,7 @@ class Baixing_PrivacyAgressmentDialog extends StatelessWidget {
               await Permission.camera.request();
               await Permission.microphone.request();
             }
-            mbaixing_goNextScene(context);
+            mbaixing_goNextScene();
           },
           isDefaultAction: true,
           child: const Text('确认', style: TextStyle(color: Colors.black),),
