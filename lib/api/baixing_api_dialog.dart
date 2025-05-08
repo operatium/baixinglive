@@ -15,9 +15,8 @@ import 'baixing_api_config.dart';
 // 显示青少年模式提示弹窗
 void baixing_showTeenagersHitDialog(BuildContext context) {
   Baixing_TeenagerModeModel model = context.read();
-  if (!model.baixing_enable ||
-      model.baixing_shouldShowEnterDialog() ||
-      mBaixing_debug) {
+  if ((!model.baixing_enable && model.baixing_shouldShowEnterDialog())
+      || mBaixing_debug) {
     showDialog(
       context: context,
       barrierDismissible: false,

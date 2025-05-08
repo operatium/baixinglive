@@ -12,9 +12,18 @@ class Baixing_WebScene extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(_TAG + 'build 方法被调用');
-    return CupertinoPageScaffold(
-      child: SafeArea(
-        child: WebViewWidget(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(url),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+        body: WebViewWidget(
           controller:
               WebViewController()
                 ..setJavaScriptMode(JavaScriptMode.unrestricted)

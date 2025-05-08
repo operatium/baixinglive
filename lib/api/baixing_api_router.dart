@@ -13,7 +13,7 @@ import 'baixing_api_thirdapi.dart';
 
 GoRouter baixing_createGoRouter() {
   return GoRouter(
-    initialLocation: '/setAuthorPhone',
+    initialLocation: '/splash',
     routes: [
       GoRoute(
         path: '/splash',

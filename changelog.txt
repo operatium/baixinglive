@@ -10,3 +10,5 @@
 2025-05-08 15:18: 修改 lib/scene/baixing_real_name_auth_scene.dart，添加勾选框左右抖动动画效果。
 
 2025-05-08 17:54: 修改 lib/api/baixing_api_dialog.dart 中的 baixing_showGuildListDialog 函数，将 showBottomSheet 改为 showModalBottomSheet，修复了找不到 Scaffold 组件的错误。
+
+2025-05-08 20:36: 更新工程索引.md，添加api目录的详细说明，包含所有api文件的功能描述。
