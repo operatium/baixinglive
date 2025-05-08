@@ -1,5 +1,7 @@
-import 'package:baixinglive/api/baixing_api.dart';
-import 'package:baixinglive/compat/baixing_persistence.dart';
+import 'package:baixinglive/api/baixing_api_flutter.dart';
+import 'package:baixinglive/api/baixing_api_thirdapi.dart';
+import 'package:baixinglive/api/baixing_api_provider.dart';
+import 'package:baixinglive/api/baixing_api_time.dart';
 
 class Baixing_TeenagerModeHitDialog extends StatelessWidget{
   const Baixing_TeenagerModeHitDialog({super.key});

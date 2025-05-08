@@ -1,14 +1,7 @@
-import 'package:baixinglive/compat/baixing_toast.dart';
-import 'package:baixinglive/provider/baixing_account_model.dart';
-import 'package:baixinglive/widget/baixing_background.dart';
-import 'package:baixinglive/widget/baixing_cover_widget.dart';
-import 'package:baixinglive/widget/baixing_icon_widget.dart';
-import 'package:baixinglive/widget/baixing_user_base_info_widget.dart';
-import 'package:baixinglive/widget/baixing_user_level_card_widget.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
+
+import '../api/baixing_api.dart';
+import '../api/baixing_api_flutter.dart';
+import '../api/baixing_api_thirdapi.dart';
 
 class Baixing_MeFragment extends StatefulWidget {
   const Baixing_MeFragment({super.key});

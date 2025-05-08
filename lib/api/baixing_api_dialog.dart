@@ -1,21 +1,28 @@
-import 'package:baixinglive/api/baixing_api.dart';
-import 'package:baixinglive/dialog/baixing_continue_teenager_mode_dialog.dart';
-import 'package:baixinglive/dialog/baixing_exit_teenager_mode_dialog.dart';
-import 'package:baixinglive/dialog/baixing_message_dialog.dart';
-import 'package:baixinglive/dialog/baixing_privacy_agreement_dialog.dart';
-import 'package:baixinglive/dialog/baixing_set_enter_teenager_mode_password_dialog.dart';
-import 'package:baixinglive/dialog/baixing_teenager_mode_hit_dialog.dart';
-import 'package:permission_handler/permission_handler.dart';
+
+import '../dialog/baixing_continue_teenager_mode_dialog.dart';
+import '../dialog/baixing_exit_teenager_mode_dialog.dart';
+import '../dialog/baixing_message_dialog.dart';
+import '../dialog/baixing_privacy_agreement_dialog.dart';
+import '../dialog/baixing_set_enter_teenager_mode_password_dialog.dart';
+import '../dialog/baixing_teenager_mode_hit_dialog.dart';
+
+import 'baixing_api_flutter.dart';
+import 'baixing_api_thirdapi.dart';
+import 'baixing_api_provider.dart';
+import 'baixing_api_config.dart';
 
 // 显示青少年模式提示弹窗
 void baixing_showTeenagersHitDialog(BuildContext context) {
   Baixing_TeenagerModeModel model = context.read();
-  if (!model.baixing_enable || model.baixing_shouldShowEnterDialog() || mBaixing_debug) {
+  if (!model.baixing_enable ||
+      model.baixing_shouldShowEnterDialog() ||
+      mBaixing_debug) {
     showDialog(
       context: context,
       barrierDismissible: false,
       barrierColor: Colors.transparent,
-      builder: (context) => Dialog(child: const Baixing_TeenagerModeHitDialog()),
+      builder:
+          (context) => Dialog(child: const Baixing_TeenagerModeHitDialog()),
     );
   }
 }
@@ -49,7 +56,7 @@ void baixing_requestPermissionDialog({
     barrierDismissible: false,
     builder:
         (context) =>
-        Baixing_PrivacyAgressmentDialog(mbaixing_goNextScene: nextDo),
+            Baixing_PrivacyAgressmentDialog(mbaixing_goNextScene: nextDo),
   );
 }
 

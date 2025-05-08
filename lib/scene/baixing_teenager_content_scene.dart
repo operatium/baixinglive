@@ -1,8 +1,8 @@
-import 'package:baixinglive/compat/baixing_persistence.dart';
-import 'package:baixinglive/api/baixing_api.dart';
-import 'package:baixinglive/dialog/baixing_message_dialog.dart';
-import 'package:baixinglive/entity/baixing_video_entity.dart';
-import 'package:baixinglive/item/baixing_teen_mode_item.dart';
+
+import '../api/baixing_api.dart';
+import '../api/baixing_api_flutter.dart';
+import '../api/baixing_api_thirdapi.dart';
+import '../dialog/baixing_message_dialog.dart';
 
 /**
  * @author yuyuexing

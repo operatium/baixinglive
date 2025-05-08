@@ -1,7 +1,8 @@
-import 'package:baixinglive/widget/baixing_background.dart';
 import 'package:baixinglive/widget/baixing_icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../api/baixing_api_background.dart';
 
 class Baixing_TeenModeItem extends StatelessWidget {
   String mBaixing_cover;

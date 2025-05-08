@@ -1,9 +1,10 @@
-import 'package:baixinglive/provider/baixing_account_model.dart';
-import 'package:baixinglive/provider/baixing_level.dart';
-import 'package:baixinglive/widget/baixing_icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import '../provider/baixing_account_model.dart';
+import '../provider/baixing_level.dart';
+import 'baixing_icon_widget.dart';
 
 class Baixing_UserLevelCardWidget extends StatelessWidget {
   @override

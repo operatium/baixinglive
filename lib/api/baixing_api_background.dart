@@ -1,6 +1,5 @@
 
-
-import 'package:baixinglive/api/baixing_api.dart';
+import 'package:flutter/material.dart';
 
 class Baixing_BackGround {
 

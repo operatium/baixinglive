@@ -1,6 +1,5 @@
 import 'package:baixinglive/api/baixing_api.dart';
-import 'package:baixinglive/fragment/baixing_live_page_fragment.dart';
-import 'package:baixinglive/fragment/baixing_me_fragment.dart';
+import 'package:baixinglive/api/baixing_api_flutter.dart';
 
 class Baixing_HomeScene extends StatefulWidget {
   const Baixing_HomeScene({super.key});

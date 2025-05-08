@@ -1,10 +1,11 @@
-import 'package:baixinglive/provider/baixing_account_model.dart';
-import 'package:baixinglive/widget/baixing_background.dart';
-import 'package:baixinglive/widget/baixing_cover_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
+import '../api/baixing_api_background.dart';
+import '../api/baixing_api_flutter.dart';
+import '../api/baixing_api_provider.dart';
+import '../api/baixing_api_thirdapi.dart';
+
+
+import 'baixing_cover_widget.dart';
 import 'baixing_icon_widget.dart';
 
 class Baixing_UserBaseInfo extends StatelessWidget {

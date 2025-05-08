@@ -1,5 +1,6 @@
-
 import 'dart:async';
+
+const bool mBaixing_debug = true;
 
 const Duration Baixing_300ms = Duration(milliseconds: 300);
 const Duration Baixing_500ms = Duration(milliseconds: 500);

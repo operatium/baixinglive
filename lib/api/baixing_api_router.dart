@@ -1,6 +1,3 @@
-import 'package:go_router/go_router.dart';
-
-import '../entity/baixing_video_entity.dart';
 import '../scene/baixing_enter_teenager_mode_scene.dart';
 import '../scene/baixing_home_scene.dart';
 import '../scene/baixing_login_scene.dart';
@@ -9,6 +6,8 @@ import '../scene/baixing_splash_scene.dart';
 import '../scene/baixing_teenager_content_scene.dart';
 import '../scene/baixing_video_player_scene.dart';
 import '../scene/baixing_web_scene.dart';
+import 'baixing_api.dart';
+import 'baixing_api_thirdapi.dart';
 
 GoRouter baixing_createGoRouter() {
   return GoRouter(

@@ -1,4 +1,6 @@
-import 'package:baixinglive/api/baixing_api.dart';
+import 'package:flutter/cupertino.dart' show CupertinoAlertDialog;
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Baixing_MessageDialog extends StatelessWidget {
 

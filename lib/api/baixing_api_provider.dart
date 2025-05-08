@@ -1,4 +1,4 @@
-library baixing_api;
+library baixing_api_provider;
 
 export 'package:baixinglive/provider/baixing_account_model.dart';
 export 'package:baixinglive/provider/baixing_live_room_list_model.dart';

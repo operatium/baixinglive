@@ -1,6 +1,7 @@
-import 'package:baixinglive/compat/baixing_persistence.dart';
-import 'package:baixinglive/provider/baixing_account_model.dart';
-import 'package:baixinglive/api/baixing_api.dart';
+
+import '../api/baixing_api.dart';
+import '../api/baixing_api_flutter.dart';
+import '../api/baixing_api_thirdapi.dart';
 
 class Baixing_SplashScene extends StatefulWidget {
   const Baixing_SplashScene({super.key});

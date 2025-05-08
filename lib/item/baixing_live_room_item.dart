@@ -1,10 +1,9 @@
 import 'package:baixinglive/entity/baixing_live_room_entity.dart';
-import 'package:baixinglive/widget/baixing_background.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../widget/baixing_cover_widget.dart';
+import '../api/baixing_api_background.dart';
+import '../api/baixing_api_widget.dart';
 
 class Baixing_LiveRoomItem extends StatefulWidget {
   Baixing_LiveRoomEntity mBaixing_liveRoomEntity;
