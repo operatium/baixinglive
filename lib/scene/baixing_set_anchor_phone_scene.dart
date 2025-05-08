@@ -21,7 +21,7 @@ class _Baixing_SetAnchorPhoneSceneState
     with SingleTickerProviderStateMixin {
   final TextEditingController _mBaixing_nameController =
       TextEditingController();
-  final TextEditingController _mBaixing_idCardController =
+  final TextEditingController _mBaixing_guildController =
       TextEditingController();
   bool _mBaixing_isAgree = true;
 
@@ -61,7 +61,7 @@ class _Baixing_SetAnchorPhoneSceneState
   @override
   void dispose() {
     _mBaixing_nameController.dispose();
-    _mBaixing_idCardController.dispose();
+    _mBaixing_guildController.dispose();
     _mBaixing_animationController.dispose();
     super.dispose();
   }
@@ -122,38 +122,24 @@ class _Baixing_SetAnchorPhoneSceneState
                     ),
                     SizedBox(height: 20.h),
                     Text("公会", style: textTheme.titleSmall),
-                    SizedBox(height: 10.h),
-                    Container(
-                      color: Colors.blue,
-                      height: 25.h,
-                      child: Stack(
-                        children: [
-                          CupertinoTextField(
-                            style: TextStyle(fontSize: 14.sp),
-                            placeholder: "请选择公会（经纪人）",
-                            controller: _mBaixing_idCardController,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(18),
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9Xx]'),
-                              ),
-                            ],
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: IconButton(
-                              onPressed: () {
-                                baixing_showGuildListDialog(
-                                  context,
-                                  (string) {},
-                                );
-                              },
-                              icon: Icon(Icons.keyboard_arrow_down_sharp),
-                            ),
-                          ),
-                        ],
-                      ),
+                    SizedBox(height: 5.h),
+                    Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        CupertinoTextField(
+                          style: TextStyle(fontSize: 14.sp),
+                          placeholder: "请选择公会（经纪人）",
+                          controller: _mBaixing_guildController,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            baixing_showGuildListDialog(context, (string) {
+                              _mBaixing_guildController.text = string;
+                            });
+                          },
+                          icon: Icon(Icons.keyboard_arrow_down_sharp),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 20.h),
                     AnimatedBuilder(

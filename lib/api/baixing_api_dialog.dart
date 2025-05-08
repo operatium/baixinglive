@@ -144,13 +144,24 @@ void baixing_toRealNameDialog(BuildContext context, VoidCallback callback) {
 }
 
 void baixing_showGuildListDialog(BuildContext context, void Function(String) callback) {
-  showBottomSheet(context: context, builder: (context)
-  {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return ListTile(title: Text("guild$index"));
-      },
-    );
-  });
+  showModalBottomSheet(
+    context: context, 
+    builder: (context) {
+      return SizedBox(
+        height: 300,
+        child: ListView.builder(
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text("公会$index"),
+              onTap: () {
+                callback("公会$index");
+                Navigator.pop(context);
+              },
+            );
+          },
+        ),
+      );
+    }
+  );
 }
