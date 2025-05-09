@@ -35,7 +35,7 @@ class Baixing_LoginModel extends ChangeNotifier {
     _baixing_userin_code = code;
     var result = await Baixing_NetCoreWork.login(phoneNumber: phoneNumber, code: code);
     _baixing_netin_userToken = result;
-    return result == "user01";
+    return result.isNotEmpty;
   }
 
   void _startTime() {

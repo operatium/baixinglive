@@ -4,6 +4,8 @@ import 'package:baixinglive/entity/baixing_live_room_entity.dart';
 
 import 'package:baixinglive/api/baixing_api_thirdapi.dart';
 
+import '../../api/baixing_api_time.dart';
+
 
 class Baixing_NetCoreWork {
   static var _TAG = "Baixing_NetCoreWork";
@@ -28,7 +30,7 @@ class Baixing_NetCoreWork {
 
   static Future<String> login({required String phoneNumber, required String code,}) async {
     await randomDelay();
-    return "user01";
+    return baixing_getNowTime().toString();
   }
 
   static Future<Tuple2<bool, List<String>>> getLiveSteamingColumn() async {

@@ -99,6 +99,22 @@ class Baixing_AccountModel extends ChangeNotifier {
     return _baixing_current_account?.mBaixing_nickName ?? "";
   }
 
+  String baixing_getGender() {
+    return _baixing_current_account?.mBaixing_gender ?? "";
+  }
+
+  String baixing_getBirthday() {
+    return _baixing_current_account?.mBaixing_birthday ?? "";
+  }
+
+  String baixing_getCity() {
+    return _baixing_current_account?.mBaixing_city ?? "";
+  }
+
+  String baixing_getConstellation() {
+    return _baixing_current_account?.mBaixing_constellation ?? "";
+  }
+
   String baixing_getAvatar() {
     String url = _baixing_current_account?.mBaixing_avatarUrl?? "";
     if(url.isEmpty) {

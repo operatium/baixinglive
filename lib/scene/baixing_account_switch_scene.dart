@@ -22,7 +22,6 @@ class _Baixing_AccountSwitchSceneState
   Widget build(BuildContext context) {
     Baixing_AccountModel accountModel = context.watch();
     return Scaffold(
-      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,

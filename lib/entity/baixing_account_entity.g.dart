@@ -19,6 +19,10 @@ Baixing_AccountEntity _$Baixing_AccountEntityFromJson(
   mBaixing_level: (json['mBaixing_level'] as num?)?.toInt() ?? 0,
   mBaixing_levelTimeoutHit: json['mBaixing_levelTimeoutHit'] as String? ?? "",
   mBaixing_levelUpdateHit: json['mBaixing_levelUpdateHit'] as String? ?? "",
+  mBaixing_gender: json['mBaixing_gender'] as String? ?? "",
+  mBaixing_constellation: json['mBaixing_constellation'] as String? ?? "",
+  mBaixing_city: json['mBaixing_city'] as String? ?? "",
+  mBaixing_birthday: json['mBaixing_birthday'] as String? ?? "",
 );
 
 Map<String, dynamic> _$Baixing_AccountEntityToJson(
@@ -34,4 +38,8 @@ Map<String, dynamic> _$Baixing_AccountEntityToJson(
   'mBaixing_level': instance.mBaixing_level,
   'mBaixing_levelTimeoutHit': instance.mBaixing_levelTimeoutHit,
   'mBaixing_levelUpdateHit': instance.mBaixing_levelUpdateHit,
+  'mBaixing_gender': instance.mBaixing_gender,
+  'mBaixing_constellation': instance.mBaixing_constellation,
+  'mBaixing_city': instance.mBaixing_city,
+  'mBaixing_birthday': instance.mBaixing_birthday,
 };

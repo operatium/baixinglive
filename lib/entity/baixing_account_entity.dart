@@ -16,6 +16,10 @@ class Baixing_AccountEntity {
   int mBaixing_level;
   String mBaixing_levelTimeoutHit;
   String mBaixing_levelUpdateHit;
+  String mBaixing_gender;
+  String mBaixing_constellation;
+  String mBaixing_city;
+  String mBaixing_birthday;
   
   Baixing_AccountEntity({
     this.username = "",
@@ -28,6 +32,10 @@ class Baixing_AccountEntity {
     this.mBaixing_level = 0,
     this.mBaixing_levelTimeoutHit = "",
     this.mBaixing_levelUpdateHit = "",
+    this.mBaixing_gender = "",
+    this.mBaixing_constellation = "",
+    this.mBaixing_city = "",
+    this.mBaixing_birthday = "",
   });
 
   // 工厂方法，用于从 JSON 数据创建 Baixing_AccountEntity 实例

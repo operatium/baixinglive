@@ -32,8 +32,8 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
     if (result) {
       final account = Baixing_AccountEntity(phone: _baixing_phoneNumberController.text)
         ..token = baixing_loginModel.baixing_netin_userToken
-        ..mBaixing_nickName = "尊敬的用户${Random().nextInt(100)}"
-        ..mBaixing_level = 4
+        ..mBaixing_nickName = "尊敬的用户${baixing_getNowTime()}"
+        ..mBaixing_level = baixing_getNowTime() % 9
         ..mBaixing_avatarUrl = "https://picsum.photos/200/200?random=${Random().nextInt(1000)}"
         ..mBaixing_id = baixing_getNowTime().toString()
         ..mBaixing_levelTimeoutHit = "2027-01-01"
@@ -147,13 +147,20 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
   @override
   Widget build(BuildContext context) {
     var loginModel = Provider.of<Baixing_LoginModel>(context);
+    final Baixing_AccountModel accountModel = context.read();
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (bool didPop, dynamic result) {
         if (didPop) {
           print('返回操作已执行');
         } else {
-          Baixing_Toast.show("请用home键切后台");
+          if(accountModel.baixing_current_account == null) {
+            Baixing_Toast.show("请用home键切后台");
+          } else {
+            if(Navigator.canPop(context)) {
+              Navigator.of(context).pop();
+            }
+          }
         }
       },
       child: Scaffold(
