@@ -117,12 +117,24 @@ class Baixing_AccountModel extends ChangeNotifier {
 
   String baixing_getAvatar() {
     String url = _baixing_current_account?.mBaixing_avatarUrl?? "";
+    print("yyx- 头像：$url");
     if(url.isEmpty) {
       url = Baixing_GenerateModel
           .baixing_generateRandomAvatarUrls(1)
           .first;
     }
     return url;
+  }
+
+  void baixing_updataAvatar(String url) {
+    print("yyx- set头像：$url");
+    if(url.isEmpty) {
+      url = Baixing_GenerateModel
+          .baixing_generateRandomAvatarUrls(1)
+          .first;
+    }
+    _baixing_current_account?.mBaixing_avatarUrl = url;
+    notifyListeners();
   }
 
   String baixing_getUserId() {

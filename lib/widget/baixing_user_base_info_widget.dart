@@ -17,8 +17,8 @@ class Baixing_UserBaseInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<Baixing_AccountModel>();
-    return SizedBox(
-      height: 80.w,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -42,10 +42,9 @@ class Baixing_UserBaseInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // 用户昵称
                 Text(
                   model.baixing_getNickName(),
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
                 SizedBox(height: 4.w),
                 // 用户等级标签
@@ -66,26 +65,24 @@ class Baixing_UserBaseInfo extends StatelessWidget {
                 // 用户 ID
                 Text(
                   "ID:${model.baixing_getUserId()}",
-                  style: Theme.of(context).textTheme.labelSmall,
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                    color: Colors.black
+                  ),
                 ),
               ],
             ),
           ),
           // 切换账号按钮
-          Align(
-            alignment: Alignment.bottomRight,
-            child: GestureDetector(
+            GestureDetector(
               onTap: mBaixing_clickSwichAccount,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.w),
-                margin: EdgeInsets.only(bottom: 15.w),
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.w),
                 decoration: Baixing_BackGround.baixing_getRoundedRectangularOutLine(),
                 child: Text(
-                  '切换账号和状态',
+                  '切换账号',
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
-            ),
           ),
         ],
       ),

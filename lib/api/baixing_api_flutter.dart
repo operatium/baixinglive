@@ -3,7 +3,9 @@ library baixing_api_flutter;
 export 'package:flutter/widgets.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter/cupertino.dart'
-    show CupertinoAlertDialog, CupertinoTextField, showCupertinoDialog, CupertinoActivityIndicator, CupertinoCheckbox;
+    show CupertinoAlertDialog, CupertinoTextField, showCupertinoDialog,
+    CupertinoActivityIndicator, CupertinoCheckbox, CupertinoActionSheet,
+    CupertinoActionSheetAction, showCupertinoModalPopup;
 export 'package:flutter/services.dart';
 export 'package:flutter/foundation.dart';
 export 'package:flutter/rendering.dart';

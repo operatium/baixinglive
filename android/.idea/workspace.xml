@@ -10,35 +10,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec3edb2-d2c0-4c5d-b053-3368a3e4f788" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../lib/api/baixing_api.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lib/api/baixing_api_local_file.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lib/api/baixing_api_router.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$USER_HOME$/myLibs/flutter/packages/flutter_tools/gradle/build.gradle.kts" beforeDir="false" afterPath="$USER_HOME$/myLibs/flutter/packages/flutter_tools/gradle/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/caches/deviceStreaming.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/baixing2live.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/baixing2live.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../changelog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../changelog.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/api/baixing_api_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/api/baixing_api_dialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/business/net/baixing_net_core_work.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/business/net/baixing_net_core_work.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/business/teenager/baixing_teenager_mode_util.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/dialog/baixing_message_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/dialog/baixing_message_dialog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/api/baixing_api_thirdapi.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/api/baixing_api_thirdapi.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/dialog/baixing_privacy_agreement_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/dialog/baixing_privacy_agreement_dialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/dialog/baixing_set_enter_teenager_mode_password_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/dialog/baixing_set_enter_teenager_mode_password_dialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/dialog/baixing_teenager_mode_hit_dialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/dialog/baixing_teenager_mode_hit_dialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/entity/baixing_final_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/entity/baixing_const_entity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/scene/baixing_login_scene.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/scene/baixing_login_scene.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/scene/baixing_splash_scene.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/scene/baixing_splash_scene.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/scene/baixing_teenager_content_scene.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/scene/baixing_teenager_content_scene.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/scene/baixing_video_player_scene.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/scene/baixing_video_player_scene.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/widget/baixing_background.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/widget/baixing_background.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/widget/baixing_refresh_list_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/widget/baixing_refresh_list_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../rules.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../rules.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../工程索引.md" beforeDir="false" afterPath="$PROJECT_DIR$/../工程索引.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/scene/baixing_change_user_info_scene.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/scene/baixing_change_user_info_scene.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +61,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "com.codeium.enabled": "true",
@@ -80,10 +70,17 @@
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "android",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "AndroidSdkUpdater",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi" />

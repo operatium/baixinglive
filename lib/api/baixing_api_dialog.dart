@@ -1,5 +1,6 @@
 import 'package:baixinglive/api/baixing_api.dart';
 
+import '../dialog/baixing_take_picture_dialog.dart';
 import '../dialog/baixing_continue_teenager_mode_dialog.dart';
 import '../dialog/baixing_exit_teenager_mode_dialog.dart';
 import '../dialog/baixing_message_dialog.dart';
@@ -44,10 +45,11 @@ void baixing_requestPermissionDialog({
   required BuildContext context,
   required FutureOr<void> Function() nextDo,
 }) async {
-  var camera = await Permission.camera.isGranted;
-  var storage = await Permission.storage.isGranted;
-  var microphone = await Permission.microphone.isGranted;
-  if (camera && storage && microphone) {
+  final camera = await Permission.camera.isGranted;
+  final storage = await Permission.storage.isGranted;
+  final microphone = await Permission.microphone.isGranted;
+  final photos = await Permission.photos.isGranted;
+  if (camera && storage && microphone && photos) {
     delay500(() => nextDo());
     return;
   }
@@ -142,6 +144,7 @@ void baixing_toRealNameDialog(BuildContext context, VoidCallback callback) {
   );
 }
 
+// 公会列表弹窗
 void baixing_showGuildListDialog(BuildContext context, void Function(String) callback) {
   showModalBottomSheet(
     context: context, 
@@ -162,5 +165,15 @@ void baixing_showGuildListDialog(BuildContext context, void Function(String) cal
         ),
       );
     }
+  );
+}
+
+// 显示选择头像的底部弹窗
+void baixing_selectPictureDialog(BuildContext context, void Function(Widget) callback) {
+  showCupertinoModalPopup<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return Baixing_TakePictureDialog(mBaixing_callbackImage: callback);
+    },
   );
 }

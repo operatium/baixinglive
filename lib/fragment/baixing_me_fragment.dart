@@ -19,83 +19,65 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
     print("yyx- Baixing_MeFragment build");
     final model = context.watch<Baixing_AccountModel>();
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(
-          children: [
-            _baixing_getTopLayout(context),
-            GestureDetector(
-              onTap: _obtainClickListener("切换账号和状态"),
-              child: Baixing_UserBaseInfo(
-                mBaixing_clickSwichAccount: () {
-                  GoRouter.of(context).push("/accountSwitch");
-                },
-                mBaixing_clickAvtar: () {
-                  GoRouter.of(context).push("/changeUserInfo");
-                },
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('images/baixing_bg_jianbian.png'),
+                fit: BoxFit.fill,
               ),
             ),
-            Baixing_UserLevelCardWidget(),
-            _baixing_walletLayout(context, model),
-            Container(
-              decoration: Baixing_BackGround.baixing_getRoundedRectangular(
-                radius: 16.w,
-              ),
-              padding: EdgeInsets.all(16.w),
-              margin: EdgeInsets.only(top: 16.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _getButton(event: "装扮", icon: "images/baixing_99.webp"),
-                  _getButton(event: "神行百变", icon: "images/baixing_99.webp"),
-                  _getButton(event: "靓号", icon: "images/baixing_99.webp"),
-                  _getButton(event: "炫彩昵称", icon: "images/baixing_99.webp"),
-                ],
-              ),
-            ),
-            Container(
-              decoration: Baixing_BackGround.baixing_getRoundedRectangular(
-                radius: 16.w,
-              ),
-              padding: EdgeInsets.all(16.w),
-              margin: EdgeInsets.only(top: 16.w),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getButton(event: "我看过的", icon: "images/baixing_99.webp"),
-                      _getButton(event: "99家族", icon: "images/baixing_99.webp"),
-                      _getButton(
-                        event: "公会长申请",
-                        icon: "images/baixing_99.webp",
-                      ),
-                      _getButton(event: "联系客服", icon: "images/baixing_99.webp"),
-                    ],
+                  _baixing_getTopLayout(context),
+                  SizedBox(height: 10.h),
+                  GestureDetector(
+                    onTap: _obtainClickListener("切换账号和状态"),
+                    child: Baixing_UserBaseInfo(
+                      mBaixing_clickSwichAccount: () {
+                        GoRouter.of(context).push("/accountSwitch");
+                      },
+                      mBaixing_clickAvtar: () {
+                        GoRouter.of(context).push("/changeUserInfo");
+                      },
+                    ),
                   ),
-                  SizedBox.fromSize(size: const Size(0, 16)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getButton(event: "帮助说明", icon: "images/baixing_99.webp"),
-                      _getButton(event: "99公益", icon: "images/baixing_99.webp"),
-                      _getButton(event: "礼品卡", icon: "images/baixing_99.webp"),
-                      _getButton(event: "平台公告", icon: "images/baixing_99.webp"),
-                    ],
-                  ),
-                  SizedBox.fromSize(size: const Size(0, 16)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _getButton(event: "版权投诉", icon: "images/baixing_99.webp"),
-                    ],
-                  ),
+                  SizedBox(height: 10.h),
+                  Baixing_UserLevelCardWidget(),
+                  _baixing_walletLayout(context, model),
+                  SizedBox(height: 10.h),
                 ],
               ),
             ),
-            SizedBox.fromSize(size: const Size(0, 16)),
-          ],
-        ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              children: [
+                Container(
+                  decoration: Baixing_BackGround.baixing_getRoundedRectangular(
+                    radius: 16.w,
+                  ),
+                  padding: EdgeInsets.all(16.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _getButton(event: "装扮", icon: "images/baixing_99.webp"),
+                      _getButton(event: "神行百变", icon: "images/baixing_99.webp"),
+                      _getButton(event: "靓号", icon: "images/baixing_99.webp"),
+                      _getButton(event: "炫彩昵称", icon: "images/baixing_99.webp"),
+                    ],
+                  ),
+                ),
+                _getButtonList(),
+                SizedBox(height: 16.h),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -150,6 +132,46 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
           Align(
             alignment: Alignment.bottomRight,
             child: _getButton(event: "充值"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getButtonList() {
+    return Container(
+      decoration: Baixing_BackGround.baixing_getRoundedRectangular(
+        radius: 16.w,
+      ),
+      padding: EdgeInsets.all(16.w),
+      margin: EdgeInsets.only(top: 16.w),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _getButton(event: "我看过的", icon: "images/baixing_99.webp"),
+              _getButton(event: "99家族", icon: "images/baixing_99.webp"),
+              _getButton(event: "公会长申请", icon: "images/baixing_99.webp"),
+              _getButton(event: "联系客服", icon: "images/baixing_99.webp"),
+            ],
+          ),
+          SizedBox(height: 16.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _getButton(event: "帮助说明", icon: "images/baixing_99.webp"),
+              _getButton(event: "99公益", icon: "images/baixing_99.webp"),
+              _getButton(event: "礼品卡", icon: "images/baixing_99.webp"),
+              _getButton(event: "平台公告", icon: "images/baixing_99.webp"),
+            ],
+          ),
+          SizedBox(height: 16.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _getButton(event: "版权投诉", icon: "images/baixing_99.webp"),
+            ],
           ),
         ],
       ),
