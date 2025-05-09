@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:baixinglive/compat/baixing_persistence.dart';
 import 'package:baixinglive/entity/baixing_account_entity.dart';
 import 'package:baixinglive/provider/baixing_generate_model.dart';
-import 'package:flutter/foundation.dart';
 
 import 'baixing_level.dart';
+import '../api/baixing_api_flutter.dart';
 
 class Baixing_AccountModel extends ChangeNotifier {
   Baixing_AccountEntity? _baixing_current_account;
@@ -29,22 +27,72 @@ class Baixing_AccountModel extends ChangeNotifier {
 
   Baixing_AccountEntity? get baixing_current_account => _baixing_current_account;
 
-  set baixing_current_account(Baixing_AccountEntity? value) {
+  Future<void> baixing_setCurrentAccount(Baixing_AccountEntity? value) async {
     if(_baixing_current_account != null) {
-      _baixing_history_accounts[_baixing_current_account!.mBaixing_id] = _baixing_current_account!;
-      final map = _baixing_history_accounts.map((key, value) => MapEntry(key, value.toJson()));
-      final jsonStr = json.encode(map);
-      Baixing_SharedPreferences.baixing_setString(mBaixing_History_Key, jsonStr);
+      await baixing_addHistoryAccount(_baixing_current_account!);
     }
     _baixing_current_account = value;
     if(value == null) {
-      Baixing_SharedPreferences.baixing_setString(mBaixing_Key, "");
+      await Baixing_SharedPreferences.baixing_remove(mBaixing_Key);
     } else {
-      final map = _baixing_current_account!.toJson();
-      final str = json.encode(map);
-      Baixing_SharedPreferences.baixing_setString(mBaixing_Key, str);
+      await baixing_saveCurrentAccount();
     }
     notifyListeners();
+  }
+
+  Future<void> baixing_updateCurrentAccount(Baixing_AccountEntity account) async {
+    if(_baixing_current_account != null) {
+      _baixing_current_account = account;
+      await baixing_saveCurrentAccount();
+    }
+    notifyListeners();
+  }
+
+  Future<void> baixing_saveCurrentAccount() async {
+    if(_baixing_current_account != null) {
+      final jsonStr = json.encode(_baixing_current_account!.toJson());
+      await Baixing_SharedPreferences.baixing_setString(mBaixing_Key, jsonStr);
+    }
+  }
+
+  Future<void> baixing_addHistoryAccount(Baixing_AccountEntity account) async {
+    _baixing_history_accounts[account.mBaixing_id] = account;
+    await baixing_saveHisoryAccounts();
+    notifyListeners();
+  }
+
+  Future<void> baixing_removeHistoryAccount(String id) async {
+    _baixing_history_accounts.remove(id);
+    await baixing_saveHisoryAccounts();
+    notifyListeners();
+  }
+
+  Future<void> baixing_clearHistoryAccounts() async {
+    _baixing_history_accounts.clear();
+    await Baixing_SharedPreferences.baixing_remove(mBaixing_History_Key);
+    notifyListeners();
+  }
+
+  Future<void> baixing_saveHisoryAccounts() async {
+    print("yyx 保存历史账号${_baixing_history_accounts.length}");
+    final map = _baixing_history_accounts.map((key, value) => MapEntry(key, value.toJson()));
+    final jsonStr = json.encode(map);
+    await Baixing_SharedPreferences.baixing_setString(mBaixing_History_Key, jsonStr);
+  }
+
+  List<Baixing_AccountEntity> baixing_getHistoryAccounts() {
+    if(_baixing_current_account != null && _baixing_history_accounts.isNotEmpty) {
+      _baixing_history_accounts.remove(_baixing_current_account!.mBaixing_id);
+    }
+    return _baixing_history_accounts.values.toList();
+  }
+
+  List<Baixing_AccountEntity> baixing_getAllAccounts() {
+    if (_baixing_current_account == null) {
+      return baixing_getHistoryAccounts();
+    } else {
+      return [_baixing_current_account!] + baixing_getHistoryAccounts();
+    }
   }
 
   String baixing_getNickName() {

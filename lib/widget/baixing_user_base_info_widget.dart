@@ -9,6 +9,11 @@ import 'baixing_cover_widget.dart';
 import 'baixing_icon_widget.dart';
 
 class Baixing_UserBaseInfo extends StatelessWidget {
+  final VoidCallback mBaixing_clickSwichAccount;
+  final VoidCallback mBaixing_clickAvtar;
+
+  Baixing_UserBaseInfo({super.key, required this.mBaixing_clickSwichAccount, required this.mBaixing_clickAvtar});
+
   @override
   Widget build(BuildContext context) {
     final model = context.watch<Baixing_AccountModel>();
@@ -18,13 +23,16 @@ class Baixing_UserBaseInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // 用户头像
-          Container(
-            width: 60.w,
-            height: 60.w,
-            decoration: Baixing_BackGround.baixing_getCircle(),
-            child: ClipOval(
-              child: Baixing_CoverWidget(
-                mBaixing_url: model.baixing_getAvatar(),
+          GestureDetector(
+            onTap: mBaixing_clickAvtar,
+            child: Container(
+              width: 60.w,
+              height: 60.w,
+              decoration: Baixing_BackGround.baixing_getCircle(),
+              child: ClipOval(
+                child: Baixing_CoverWidget(
+                  mBaixing_url: model.baixing_getAvatar(),
+                ),
               ),
             ),
           ),
@@ -66,13 +74,16 @@ class Baixing_UserBaseInfo extends StatelessWidget {
           // 切换账号按钮
           Align(
             alignment: Alignment.bottomRight,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.w),
-              margin: EdgeInsets.only(bottom: 15.w),
-              decoration: Baixing_BackGround.baixing_getRoundedRectangularOutLine(),
-              child: Text(
-                '切换账号和状态',
-                style: Theme.of(context).textTheme.labelMedium,
+            child: GestureDetector(
+              onTap: mBaixing_clickSwichAccount,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.w),
+                margin: EdgeInsets.only(bottom: 15.w),
+                decoration: Baixing_BackGround.baixing_getRoundedRectangularOutLine(),
+                child: Text(
+                  '切换账号和状态',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
               ),
             ),
           ),

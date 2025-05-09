@@ -35,10 +35,10 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
         ..mBaixing_nickName = "尊敬的用户${Random().nextInt(100)}"
         ..mBaixing_level = 4
         ..mBaixing_avatarUrl = "https://picsum.photos/200/200?random=${Random().nextInt(1000)}"
-        ..mBaixing_id = "00014314132555"
+        ..mBaixing_id = baixing_getNowTime().toString()
         ..mBaixing_levelTimeoutHit = "2027-01-01"
         ..mBaixing_levelUpdateHit = "保级成功！距离白银还需充值80.0元";
-      context.read<Baixing_AccountModel>().baixing_current_account = account;
+      context.read<Baixing_AccountModel>().baixing_setCurrentAccount(account);
       Baixing_Toast.show("登录成功");
       GoRouter.of(context).go("/home");
     } else {

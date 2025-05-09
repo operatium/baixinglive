@@ -24,7 +24,17 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
         child: Column(
           children: [
             _baixing_getTopLayout(context),
-            Baixing_UserBaseInfo(),
+            GestureDetector(
+              onTap: _obtainClickListener("切换账号和状态"),
+              child: Baixing_UserBaseInfo(
+                mBaixing_clickSwichAccount: () {
+                  GoRouter.of(context).push("/accountSwitch");
+                },
+                mBaixing_clickAvtar: () {
+                  GoRouter.of(context).push("/changeUserInfo");
+                },
+              ),
+            ),
             Baixing_UserLevelCardWidget(),
             _baixing_walletLayout(context, model),
             Container(
@@ -98,7 +108,7 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
         GestureDetector(
           onTap: _obtainClickListener("设置"),
           child: Padding(
-            padding: EdgeInsets.all(6.w),
+            padding: EdgeInsets.all(10.w),
             child: Icon(Icons.settings_outlined, color: Colors.black),
           ),
         ),
@@ -205,29 +215,34 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
           Navigator.of(context).pop();
           GoRouter.of(context).push("/realName");
         });
-      };
+      }
+      ;
       if (event == "设置") {
-          GoRouter.of(context).push("/setting");
+        GoRouter.of(context).push("/setting");
+      }
+      if (event == "切换账号和状态") {
+        GoRouter.of(context).push("/accountSwitch");
       }
       if (event == "充值") {
-          Baixing_Toast.show("充值");
+        Baixing_Toast.show("充值");
       }
       if (event == "装扮") {
-          Baixing_Toast.show("装扮");
+        Baixing_Toast.show("装扮");
       }
       if (event == "神行百变") {
-          Baixing_Toast.show("神行百变");
+        Baixing_Toast.show("神行百变");
       }
       if (event == "靓号") {
-          Baixing_Toast.show("靓号");
+        Baixing_Toast.show("靓号");
       }
       if (event == "炫彩昵称") {
-          Baixing_Toast.show("炫彩昵称");
+        Baixing_Toast.show("炫彩昵称");
       }
       if (event == "装扮") {
-          Baixing_Toast.show("装扮");
+        Baixing_Toast.show("装扮");
       }
     }
+
     return () {
       _baixing_debouncer.debounce(
         duration: Baixing_dd500ms,

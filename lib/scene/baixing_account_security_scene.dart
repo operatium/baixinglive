@@ -29,7 +29,7 @@ class _Baixing_AccountSecuritySceneState extends State<Baixing_AccountSecuritySc
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text("账号与安全"),
@@ -89,7 +89,7 @@ class _Baixing_AccountSecuritySceneState extends State<Baixing_AccountSecuritySc
             child: Column(
               children: [
                 _buildActionItem("切换账号", onTap: () {
-                  // 切换账号逻辑
+                  GoRouter.of(context).push("/accountSwitch");
                 }),
                 Divider(height: 1, indent: 16, endIndent: 16),
                 _buildActionItem("注销账号", onTap: () {
@@ -106,7 +106,7 @@ class _Baixing_AccountSecuritySceneState extends State<Baixing_AccountSecuritySc
             child: GestureDetector(
               onTap: () {
                 Baixing_AccountModel accountModel = context.read();
-                accountModel.baixing_current_account = null;
+                accountModel.baixing_setCurrentAccount(null);
                 GoRouter.of(context).go('/selectLogin');
               },
               child: Center(

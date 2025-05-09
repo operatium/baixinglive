@@ -1,4 +1,5 @@
 import '../scene/baixing_account_security_scene.dart';
+import '../scene/baixing_account_switch_scene.dart';
 import '../scene/baixing_enter_teenager_mode_scene.dart';
 import '../scene/baixing_home_scene.dart';
 import '../scene/baixing_login_scene.dart';
@@ -81,6 +82,18 @@ GoRouter baixing_createGoRouter() {
         path: '/account',
         builder: (context, state) {
           return Baixing_AccountSecurityScene();
+        },
+      ),
+      GoRoute(
+        path: "/accountSwitch",
+        builder: (context, state) {
+          return Baixing_AccountSwitchScene();
+        },
+      ),
+      GoRoute(
+        path: "/changeUserInfo",
+        builder: (context, state) {
+          return Baixing_AccountSwitchScene();
         },
       ),
     ],
