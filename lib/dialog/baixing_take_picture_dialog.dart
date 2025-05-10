@@ -1,7 +1,6 @@
 import 'package:baixinglive/api/baixing_api.dart';
 import 'package:baixinglive/api/baixing_api_flutter.dart';
 import 'package:baixinglive/api/baixing_api_thirdapi.dart';
-import 'package:image_picker/image_picker.dart';
 
 /*
  * 选择头像弹窗
@@ -32,24 +31,13 @@ class _Baixing_TakePictureDialogState extends State<Baixing_TakePictureDialog> {
           CupertinoActionSheetAction(
             child: Text('相册', style: textTheme.bodyMedium),
             onPressed: () {
-              _baixing_debouncer.debounce(
-                duration: Baixing_dd500ms,
-                onDebounce: () {
-                  Navigator.pop(context);
-                  _baixing_pickImageFromGallery();
-                },
-              );
+              _baixing_pickImage(ImageSource.gallery);
             },
           ),
           CupertinoActionSheetAction(
             child: Text('拍照', style: textTheme.bodyMedium),
             onPressed: () {
-              _baixing_debouncer.debounce(
-                duration: Baixing_dd500ms,
-                onDebounce: () {
-                  _baixing_pickImageFromGallery();
-                },
-              );
+              _baixing_pickImage(ImageSource.camera);
             },
           ),
         ],
@@ -68,17 +56,23 @@ class _Baixing_TakePictureDialogState extends State<Baixing_TakePictureDialog> {
   }
 
   // 从相册选择图片
-  Future<void> _baixing_pickImageFromGallery() async {
-    final XFile? pickedFile = await _picker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 500,
-      maxHeight: 500,
-      imageQuality: 100,
+  void _baixing_pickImage(ImageSource source) {
+    _baixing_debouncer.debounce(
+      duration: Baixing_dd500ms,
+      onDebounce: () async {
+        Navigator.pop(context);
+        final XFile? pickedFile = await _picker.pickImage(
+          source: source,
+          maxWidth: 800,
+          maxHeight: 800,
+          imageQuality: 100,
+        );
+        if (pickedFile != null) {
+          widget.mBaixing_callbackImage(
+              Image.file(File(pickedFile.path), fit: BoxFit.cover)
+          );
+        }
+      },
     );
-    if (pickedFile != null) {
-      widget.mBaixing_callbackImage(
-          Image.file(File(pickedFile.path), fit: BoxFit.cover)
-      );
-    }
   }
 }

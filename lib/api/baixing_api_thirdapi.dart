@@ -9,7 +9,6 @@ export 'package:shared_preferences/shared_preferences.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:window_size/window_size.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
-export 'package:wechat_assets_picker/wechat_assets_picker.dart';
 export 'package:image_picker/image_picker.dart';
 
 
