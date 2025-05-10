@@ -3,13 +3,13 @@ import 'package:baixinglive/api/baixing_api_thirdapi.dart';
 import '../api/baixing_api_flutter.dart';
 
 class Baixing_SelectConstellationDialog extends StatefulWidget {
-  final ValueChanged<int>? onSelected;
-  final int initialIndex;
+  final ValueChanged<String> onSelected;
+  final String initialIndex;
 
   const Baixing_SelectConstellationDialog({
     Key? key,
-    this.onSelected,
-    this.initialIndex = 0,
+    required this.onSelected,
+    required this.initialIndex,
   }) : super(key: key);
 
   @override
@@ -21,9 +21,6 @@ class _Baixing_SelectConstellationDialogState
     extends State<Baixing_SelectConstellationDialog> {
   late FixedExtentScrollController _scrollController;
   int _selectedIndex = 0;
-
-  static const double itemHeight = 100.0;
-  static const double itemExtent = 120.0;
 
   final List<Map<String, dynamic>> constellations = [
     {'name': '白羊座', 'icon': Icons.star, 'start': '3/21', 'end': '4/19'},
@@ -43,7 +40,9 @@ class _Baixing_SelectConstellationDialogState
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.initialIndex.clamp(4, constellations.length - 1);
+    _selectedIndex = constellations.indexWhere(
+      (item) => item['name'] == widget.initialIndex,
+    );
     _scrollController = FixedExtentScrollController(
       initialItem: _selectedIndex,
     );
@@ -58,59 +57,60 @@ class _Baixing_SelectConstellationDialogState
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final Color accentColor = Colors.black;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('选择星座', style: textTheme.titleMedium),
-        leading: null,
-        elevation: 0,
-        centerTitle: true,
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: Text('完成', style: textTheme.bodyMedium),
-          ),
-        ],
-      ),
-      body: Container(
-        color: Colors.white,
-        child: CupertinoPicker(
-          itemExtent: 65.h,
-          diameterRatio: 1.05,
-          backgroundColor: Colors.transparent,
-          scrollController: FixedExtentScrollController(
-            initialItem: _selectedIndex,
-          ),
-          onSelectedItemChanged: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-            widget.onSelected?.call(index);
-          },
-          children:
-              constellations.map((item) {
-                return Container(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(item['icon'], size: 28.w),
-                      SizedBox(height: 4.h),
-                      Text(
-                        item['name'],
-                        style: textTheme.bodyMedium,
-                      ),
-                      Text(
-                        "${item['start']} - ${item['end']}",
-                        style: textTheme.labelMedium,
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
+    return Column(
+      children: [
+        AppBar(
+          title: Text('选择星座', style: textTheme.titleMedium),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                widget.onSelected(constellations[_selectedIndex]['name']);
+              },
+              child: Text('完成', style: textTheme.bodyLarge),
+            ),
+          ],
         ),
-      ),
+        Expanded(
+          child: Container(
+            color: Colors.white,
+            child: CupertinoPicker(
+              itemExtent: 65.h,
+              diameterRatio: 1.05,
+              backgroundColor: Colors.transparent,
+              scrollController: FixedExtentScrollController(
+                initialItem: _selectedIndex,
+              ),
+              onSelectedItemChanged: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              children:
+                  constellations.map((item) {
+                    return Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(item['icon'], size: 28.w),
+                          SizedBox(height: 4.h),
+                          Text(item['name'], style: textTheme.bodyMedium),
+                          Text(
+                            "${item['start']} - ${item['end']}",
+                            style: textTheme.labelMedium,
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

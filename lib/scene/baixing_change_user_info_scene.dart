@@ -115,9 +115,7 @@ class _Baixing_ChangeUserInfoSceneState
   }
 
   void _message(String str) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(str)),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(str)));
   }
 
   VoidCallback _obtainClickListener(String event) {
@@ -142,11 +140,20 @@ class _Baixing_ChangeUserInfoSceneState
           });
           break;
         case "星座":
-          baixing_selectConstellationDialog(context,(String constellation){
-            _message("$constellation已保存");
-          });
+          baixing_selectConstellationDialog(
+            context,
+            model.baixing_getConstellation(),
+            (String constellation) {
+              model.baixing_setConstellation(constellation);
+              _message("$constellation已保存");
+            },
+          );
           break;
         case "城市":
+          baixing_selectCityDialog(context, (province, city) {
+            model.baixing_setCity(province + city);
+            _message("$province$city已保存");
+          });
           break;
         case "生日":
           break;

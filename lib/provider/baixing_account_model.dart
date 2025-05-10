@@ -115,9 +115,18 @@ class Baixing_AccountModel extends ChangeNotifier {
   String baixing_getCity() {
     return _baixing_current_account?.mBaixing_city ?? "";
   }
+  void baixing_setCity(String value) {
+    _baixing_current_account?.mBaixing_city = value;
+    notifyListeners();
+  }
 
   String baixing_getConstellation() {
     return _baixing_current_account?.mBaixing_constellation ?? "";
+  }
+
+  void baixing_setConstellation(String value) {
+    _baixing_current_account?.mBaixing_constellation = value;
+    notifyListeners();
   }
 
   String baixing_getAvatar() {

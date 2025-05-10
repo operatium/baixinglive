@@ -1,5 +1,6 @@
 import 'package:baixinglive/api/baixing_api.dart';
 
+import '../dialog/baixing_select_city_dialog.dart';
 import '../dialog/baixing_select_constellation_dialog.dart';
 import '../dialog/baixing_select_gender_dialog.dart';
 import '../dialog/baixing_take_picture_dialog.dart';
@@ -202,14 +203,30 @@ void baixing_selectGenderDialog(
 // 显示选择星座的底部弹窗
 void baixing_selectConstellationDialog(
   BuildContext context,
+  String constellation,
   void Function(String) callback,
 ) {
-  showModalBottomSheet(
-    context: context,
-    builder: (context) {
-      return Baixing_SelectConstellationDialog();
-    },
+  showModalBottomSheet(context: context,
     enableDrag: false,
+    builder: (context) {
+      return Baixing_SelectConstellationDialog(
+          initialIndex: constellation,
+          onSelected: (index) {
+            callback(index);
+          }
+      );
+    },
+  );
+}
 
+void baixing_selectCityDialog(
+  BuildContext context,
+  void Function(String, String) callback,
+) {
+  showModalBottomSheet<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return Baixing_SelectCityDialog(mBaixing_citySelected: callback);
+    },
   );
 }
