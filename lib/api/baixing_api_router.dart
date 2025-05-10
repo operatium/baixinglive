@@ -5,6 +5,7 @@ import '../scene/baixing_enter_teenager_mode_scene.dart';
 import '../scene/baixing_home_scene.dart';
 import '../scene/baixing_login_scene.dart';
 import '../scene/baixing_nick_name_edit_scene.dart';
+import '../scene/baixing_player_privilege_screen.dart';
 import '../scene/baixing_real_name_auth_scene.dart';
 import '../scene/baixing_select_login_scene.dart';
 import '../scene/baixing_set_anchor_phone_scene.dart';
@@ -102,6 +103,12 @@ GoRouter baixing_createGoRouter() {
         path: "/nickNameEdit",
         builder: (context, state) {
           return Baixing_NickNameEditScene();
+        },
+      ),
+      GoRoute(
+        path: "/playerPrivilege",
+        builder: (context, state) {
+          return Baixing_PlayerPrivilegeScreen();
         },
       ),
     ],

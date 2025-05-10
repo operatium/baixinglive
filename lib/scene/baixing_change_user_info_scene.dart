@@ -119,7 +119,7 @@ class _Baixing_ChangeUserInfoSceneState
   }
 
   VoidCallback _obtainClickListener(String event) {
-    ontap() {
+    ontap() async {
       final model = context.read<Baixing_AccountModel>();
       switch (event) {
         case "头像":
@@ -156,6 +156,12 @@ class _Baixing_ChangeUserInfoSceneState
           });
           break;
         case "生日":
+          final birthday = await baixing_selectBirthdayDialog(context);
+          if (birthday != null) {
+            String str = "${birthday.year}/${birthday.month}/${birthday.day}";
+            model.baixing_setBirthday(str);
+            _message("$str已保存");
+          }
           break;
         default:
           Baixing_Toast.show(event);

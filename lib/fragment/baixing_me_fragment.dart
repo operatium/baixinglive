@@ -35,18 +35,17 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
                   _baixing_getTopLayout(context),
                   SizedBox(height: 10.h),
                   GestureDetector(
-                    onTap: _obtainClickListener("切换账号和状态"),
+                    onTap: _obtainClickListener("修改用户信息"),
                     child: Baixing_UserBaseInfo(
-                      mBaixing_clickSwichAccount: () {
-                        GoRouter.of(context).push("/accountSwitch");
-                      },
-                      mBaixing_clickAvtar: () {
-                        GoRouter.of(context).push("/changeUserInfo");
-                      },
+                      mBaixing_clickSwichAccount: _obtainClickListener("切换账号"),
+                      mBaixing_clickAvtar: _obtainClickListener("修改用户信息"),
                     ),
                   ),
                   SizedBox(height: 10.h),
-                  Baixing_UserLevelCardWidget(),
+                  GestureDetector(
+                    onTap: _obtainClickListener("玩家特权"),
+                    child: Baixing_UserLevelCardWidget(),
+                  ),
                   _baixing_walletLayout(context, model),
                   SizedBox(height: 10.h),
                 ],
@@ -242,8 +241,14 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
       if (event == "设置") {
         GoRouter.of(context).push("/setting");
       }
-      if (event == "切换账号和状态") {
+      if (event == "切换账号") {
         GoRouter.of(context).push("/accountSwitch");
+      }
+      if (event == "修改用户信息") {
+        GoRouter.of(context).push("/changeUserInfo");
+      }
+      if (event == "玩家特权") {
+        GoRouter.of(context).push("/playerPrivilege");
       }
       if (event == "充值") {
         Baixing_Toast.show("充值");

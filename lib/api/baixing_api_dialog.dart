@@ -1,5 +1,6 @@
 import 'package:baixinglive/api/baixing_api.dart';
 
+import '../dialog/baixing_select_birthday_dialog.dart';
 import '../dialog/baixing_select_city_dialog.dart';
 import '../dialog/baixing_select_constellation_dialog.dart';
 import '../dialog/baixing_select_gender_dialog.dart';
@@ -219,6 +220,7 @@ void baixing_selectConstellationDialog(
   );
 }
 
+// 显示选择城市的底部弹窗
 void baixing_selectCityDialog(
   BuildContext context,
   void Function(String, String) callback,
@@ -227,6 +229,17 @@ void baixing_selectCityDialog(
     context: context,
     builder: (BuildContext context) {
       return Baixing_SelectCityDialog(mBaixing_citySelected: callback);
+    },
+  );
+}
+
+// 显示选择生日的底部弹窗
+Future<DateTime?> baixing_selectBirthdayDialog(BuildContext context) async{
+  return showModalBottomSheet<DateTime>(
+    context: context,
+    backgroundColor: Colors.transparent,
+    builder: (BuildContext context) {
+      return Baixing_SelectBirthdayDialog();
     },
   );
 }
