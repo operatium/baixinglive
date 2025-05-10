@@ -103,6 +103,11 @@ class Baixing_AccountModel extends ChangeNotifier {
     return _baixing_current_account?.mBaixing_gender ?? "";
   }
 
+  void baixing_setGender(String value) {
+    _baixing_current_account?.mBaixing_gender = value;
+    notifyListeners();
+  }
+
   String baixing_getBirthday() {
     return _baixing_current_account?.mBaixing_birthday ?? "";
   }

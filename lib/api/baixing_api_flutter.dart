@@ -5,7 +5,7 @@ export 'package:flutter/material.dart';
 export 'package:flutter/cupertino.dart'
     show CupertinoAlertDialog, CupertinoTextField, showCupertinoDialog,
     CupertinoActivityIndicator, CupertinoCheckbox, CupertinoActionSheet,
-    CupertinoActionSheetAction, showCupertinoModalPopup;
+    CupertinoActionSheetAction, showCupertinoModalPopup, CupertinoPicker;
 export 'package:flutter/services.dart';
 export 'package:flutter/foundation.dart';
 export 'package:flutter/rendering.dart';

@@ -3,6 +3,11 @@ import 'package:baixinglive/api/baixing_api.dart';
 import '../api/baixing_api_thirdapi.dart';
 import '../api/baixing_api_flutter.dart';
 
+/*
+ * @Date: 2020-09-08 15:56:43
+ * @Author: yuyuexing
+ * @Description: 修改用户信息
+ */
 class Baixing_ChangeUserInfoScene extends StatefulWidget {
   @override
   _Baixing_ChangeUserInfoSceneState createState() =>
@@ -95,12 +100,12 @@ class _Baixing_ChangeUserInfoSceneState
       onTap: _obtainClickListener(title),
       child: Container(
         color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
         child: Row(
           children: [
             Text(title, style: Theme.of(context).textTheme.titleSmall),
             const Spacer(),
-            Text(value(), style: Theme.of(context).textTheme.bodySmall),
+            Text(value(), style: Theme.of(context).textTheme.bodyMedium),
             SizedBox(width: 10.w),
             Icon(Icons.arrow_forward_ios),
           ],
@@ -109,68 +114,37 @@ class _Baixing_ChangeUserInfoSceneState
     );
   }
 
-  // 使用相机拍照
-  Future<void> _baixing_pickImageFromCamera() async {
-    // 请求相机权限
-    var status = await Permission.camera.request();
-    if (status.isGranted) {
-      // 这里模拟拍照，实际项目中应使用image_picker等插件
-      // 生成随机头像URL
-
-      // _baixing_updateAvatar(newAvatarUrl);
-    } else {
-      Baixing_Toast.show('需要相机权限才能拍照');
-    }
-  }
-
-  // 更新头像
-  void _baixing_updateAvatar(String newAvatarUrl) {
-    Baixing_AccountModel model = context.read();
-    if (model.baixing_current_account != null) {
-      // 创建新的账户实体并更新头像
-      Baixing_AccountEntity updatedAccount = Baixing_AccountEntity(
-        username: model.baixing_current_account!.username,
-        password: model.baixing_current_account!.password,
-        phone: model.baixing_current_account!.phone,
-        token: model.baixing_current_account!.token,
-        mBaixing_nickName: model.baixing_current_account!.mBaixing_nickName,
-        mBaixing_id: model.baixing_current_account!.mBaixing_id,
-        mBaixing_avatarUrl: newAvatarUrl,
-        // 更新头像URL
-        mBaixing_level: model.baixing_current_account!.mBaixing_level,
-        mBaixing_levelTimeoutHit:
-            model.baixing_current_account!.mBaixing_levelTimeoutHit,
-        mBaixing_levelUpdateHit:
-            model.baixing_current_account!.mBaixing_levelUpdateHit,
-        mBaixing_gender: model.baixing_current_account!.mBaixing_gender,
-        mBaixing_constellation:
-            model.baixing_current_account!.mBaixing_constellation,
-        mBaixing_city: model.baixing_current_account!.mBaixing_city,
-        mBaixing_birthday: model.baixing_current_account!.mBaixing_birthday,
-      );
-
-      // 更新当前账户
-      model.baixing_updateCurrentAccount(updatedAccount);
-      Baixing_Toast.show('头像更新成功');
-    }
+  void _message(String str) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(str)),
+    );
   }
 
   VoidCallback _obtainClickListener(String event) {
     ontap() {
+      final model = context.read<Baixing_AccountModel>();
       switch (event) {
         case "头像":
           baixing_selectPictureDialog(context, (Widget image) {
-            print("yyx- image: $image");
             setState(() {
               mBaixing_avtar = image;
             });
+            _message("头像已保存");
           });
           break;
         case "昵称":
+          GoRouter.of(context).push('/nickNameEdit');
           break;
         case "性别":
+          baixing_selectGenderDialog(context, (String gender) {
+            model.baixing_setGender(gender);
+            _message("性别已保存");
+          });
           break;
         case "星座":
+          baixing_selectConstellationDialog(context,(String constellation){
+            _message("$constellation已保存");
+          });
           break;
         case "城市":
           break;

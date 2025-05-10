@@ -1,5 +1,7 @@
 import 'package:baixinglive/api/baixing_api.dart';
 
+import '../dialog/baixing_select_constellation_dialog.dart';
+import '../dialog/baixing_select_gender_dialog.dart';
 import '../dialog/baixing_take_picture_dialog.dart';
 import '../dialog/baixing_continue_teenager_mode_dialog.dart';
 import '../dialog/baixing_exit_teenager_mode_dialog.dart';
@@ -16,8 +18,8 @@ import 'baixing_api_config.dart';
 // 显示青少年模式提示弹窗
 void baixing_showTeenagersHitDialog(BuildContext context) {
   Baixing_TeenagerModeModel model = context.read();
-  if ((!model.baixing_enable && model.baixing_shouldShowEnterDialog())
-      || mBaixing_debug) {
+  if ((!model.baixing_enable && model.baixing_shouldShowEnterDialog()) ||
+      mBaixing_debug) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -145,9 +147,12 @@ void baixing_toRealNameDialog(BuildContext context, VoidCallback callback) {
 }
 
 // 公会列表弹窗
-void baixing_showGuildListDialog(BuildContext context, void Function(String) callback) {
+void baixing_showGuildListDialog(
+  BuildContext context,
+  void Function(String) callback,
+) {
   showModalBottomSheet(
-    context: context, 
+    context: context,
     builder: (context) {
       return SizedBox(
         height: 300,
@@ -164,16 +169,47 @@ void baixing_showGuildListDialog(BuildContext context, void Function(String) cal
           },
         ),
       );
-    }
+    },
   );
 }
 
 // 显示选择头像的底部弹窗
-void baixing_selectPictureDialog(BuildContext context, void Function(Widget) callback) {
+void baixing_selectPictureDialog(
+  BuildContext context,
+  void Function(Widget) callback,
+) {
   showCupertinoModalPopup<void>(
     context: context,
     builder: (BuildContext context) {
       return Baixing_TakePictureDialog(mBaixing_callbackImage: callback);
     },
+  );
+}
+
+// 显示选择性别的底部弹窗
+void baixing_selectGenderDialog(
+  BuildContext context,
+  void Function(String) callback,
+) {
+  showCupertinoModalPopup<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return Baixing_SelectGenderDialog(mBaixing_callback: callback);
+    },
+  );
+}
+
+// 显示选择星座的底部弹窗
+void baixing_selectConstellationDialog(
+  BuildContext context,
+  void Function(String) callback,
+) {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      return Baixing_SelectConstellationDialog();
+    },
+    enableDrag: false,
+
   );
 }
