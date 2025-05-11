@@ -84,4 +84,22 @@ class Baixing_BackGround {
       borderRadius: BorderRadius.all(Radius.circular(16.r)),
     );
   }
+
+  //矩形 实体 垂直方向2色渐变
+  static BoxDecoration baixing_getRectangularGradient() {
+    return BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          Color(0xFF41403C),
+          Color(0xFF232323),
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        stops: [
+          0,
+          1,
+        ],
+      ),
+    );
+  }
 }

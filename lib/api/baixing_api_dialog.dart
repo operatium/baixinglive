@@ -1,4 +1,6 @@
 import 'package:baixinglive/api/baixing_api.dart';
+import 'package:baixinglive/scene/baixing_local_web_scene.dart';
+import 'package:baixinglive/scene/baixing_web_scene.dart';
 
 import '../dialog/baixing_select_birthday_dialog.dart';
 import '../dialog/baixing_select_city_dialog.dart';
@@ -207,14 +209,15 @@ void baixing_selectConstellationDialog(
   String constellation,
   void Function(String) callback,
 ) {
-  showModalBottomSheet(context: context,
+  showModalBottomSheet(
+    context: context,
     enableDrag: false,
     builder: (context) {
       return Baixing_SelectConstellationDialog(
-          initialIndex: constellation,
-          onSelected: (index) {
-            callback(index);
-          }
+        initialIndex: constellation,
+        onSelected: (index) {
+          callback(index);
+        },
       );
     },
   );
@@ -234,12 +237,20 @@ void baixing_selectCityDialog(
 }
 
 // 显示选择生日的底部弹窗
-Future<DateTime?> baixing_selectBirthdayDialog(BuildContext context) async{
+Future<DateTime?> baixing_selectBirthdayDialog(BuildContext context) async {
   return showModalBottomSheet<DateTime>(
     context: context,
     backgroundColor: Colors.transparent,
     builder: (BuildContext context) {
       return Baixing_SelectBirthdayDialog();
     },
+  );
+}
+
+// 显示网页
+void baixing_showUrlDialog(BuildContext context, String url) {
+  showModalBottomSheet<void>(
+    context: context,
+    builder: (context) => Baixing_WebScene(url: url),
   );
 }

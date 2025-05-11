@@ -79,14 +79,12 @@ flutter:
     - images/baixing_level_icon5.png
     - images/baixing_weibo.webp
     - images/baixing_level_icon4.png
+    - images/baixing_safe.webp
     - images/baixing_level7.webp
     - images/baixing_level6.webp
     - images/baixing_girl_xxxl.jpg
     - images/baixing_level_tag3.webp
     - images/baixing_umbrella.png
-    - images/baixing_safe.webp
-   
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

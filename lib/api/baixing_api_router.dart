@@ -3,6 +3,7 @@ import '../scene/baixing_account_switch_scene.dart';
 import '../scene/baixing_change_user_info_scene.dart';
 import '../scene/baixing_enter_teenager_mode_scene.dart';
 import '../scene/baixing_home_scene.dart';
+import '../scene/baixing_local_web_scene.dart';
 import '../scene/baixing_login_scene.dart';
 import '../scene/baixing_nick_name_edit_scene.dart';
 import '../scene/baixing_player_privilege_screen.dart';
@@ -109,6 +110,15 @@ GoRouter baixing_createGoRouter() {
         path: "/playerPrivilege",
         builder: (context, state) {
           return Baixing_PlayerPrivilegeScreen();
+        },
+      ),
+      GoRoute(
+        path: "/localWeb",
+        builder: (context, state) {
+          List<String> params = state.extra as List<String>;
+          String title = params[0];
+          String html = params[1];
+          return Baixing_LocalWebScene(mBaixing_title: title, mBaixing_htmlCode: html);
         },
       ),
     ],

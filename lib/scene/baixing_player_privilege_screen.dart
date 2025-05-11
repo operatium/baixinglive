@@ -2,6 +2,7 @@ import 'package:baixinglive/api/baixing_api.dart';
 import 'package:baixinglive/api/baixing_api_thirdapi.dart';
 
 import '../api/baixing_api_flutter.dart';
+import '../fragment/baixing_player_privilege_recharge_fragment.dart';
 
 class Baixing_PlayerPrivilegeScreen extends StatefulWidget {
   const Baixing_PlayerPrivilegeScreen({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class _Baixing_PlayerPrivilegeScreenState
           children: [
             // 按钮切换组
            ClipRRect(
-             borderRadius: BorderRadius.circular(100.r),
+             borderRadius: BorderRadius.circular(30.r),
              child:  Container(
                height: 30.h,
                color: Color(0xFF333333),
@@ -65,7 +66,7 @@ class _Baixing_PlayerPrivilegeScreenState
                    color: Colors.white,
                    selectedColor: Colors.black,
                    fillColor: Color(0xFFFFD97A),
-                   borderRadius: BorderRadius.circular(100.r),
+                   borderRadius: BorderRadius.circular(30.r),
                    children: [
                      Container(
                        padding: EdgeInsets.symmetric(
@@ -83,7 +84,7 @@ class _Baixing_PlayerPrivilegeScreenState
                ),
              ),
            ),
-
+            SizedBox(height: 10.h),
             // ViewPager2
             Expanded(
               child: PageView(
@@ -96,13 +97,7 @@ class _Baixing_PlayerPrivilegeScreenState
                 children: [
                   // 充值页面内容
                   Container(
-                    color: Colors.black,
-                    child: Center(
-                      child: Text(
-                        '充值页面内容',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+                    child: Baixing_PlayerPrivilegeRechargeFragment(),
                   ),
                   // 消费页面内容
                   Container(
