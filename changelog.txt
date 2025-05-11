@@ -22,3 +22,9 @@
 2025-05-11 16:07: 修改 lib/widget/baixing_tag_widget.dart，根据图片更新待解锁标签组件样式，添加圆形灰色背景、音量图标、底部锁定标签和升级通知文字。
 
 2025-05-11 21:56: 创建 lib/widget/baixing_wealth_title_widget.dart 财富称号控件，实现带有图标、标题、解锁条件和右箭头的横向卡片布局，并更新工程索引.md。
+
+2025.05.11 23:05
+创建钱包充值页面，实现了余额显示、充值选项、协议同意等功能
+lib/scene/baixing_wallet_recharge_scene.dart
+lib/api/baixing_api_router.dart
+lib/fragment/baixing_me_fragment.dart

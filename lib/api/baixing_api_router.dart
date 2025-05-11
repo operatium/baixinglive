@@ -14,6 +14,7 @@ import '../scene/baixing_setting_scene.dart';
 import '../scene/baixing_splash_scene.dart';
 import '../scene/baixing_teenager_content_scene.dart';
 import '../scene/baixing_video_player_scene.dart';
+import '../scene/baixing_wallet_recharge_scene.dart';
 import '../scene/baixing_web_scene.dart';
 import 'baixing_api.dart';
 import 'baixing_api_thirdapi.dart';
@@ -98,6 +99,12 @@ GoRouter baixing_createGoRouter() {
         path: "/changeUserInfo",
         builder: (context, state) {
           return Baixing_ChangeUserInfoScene();
+        },
+      ),
+      GoRoute(
+        path: "/walletRecharge",
+        builder: (context, state) {
+          return Baixing_WalletRechargeScene();
         },
       ),
       GoRoute(

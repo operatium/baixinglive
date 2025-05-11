@@ -86,7 +86,10 @@ class Baixing_BackGround {
   }
 
   //矩形 实体 垂直方向2色渐变
-  static BoxDecoration baixing_getRectangularGradient() {
+  static BoxDecoration baixing_getRectangularGradient({
+    required Color startColor,
+    required Color endColor,
+}) {
     return BoxDecoration(
       gradient: LinearGradient(
         colors: [

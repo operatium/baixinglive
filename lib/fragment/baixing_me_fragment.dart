@@ -251,7 +251,7 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
         GoRouter.of(context).push("/playerPrivilege");
       }
       if (event == "充值") {
-        Baixing_Toast.show("充值");
+        GoRouter.of(context).push("/walletRecharge");
       }
       if (event == "装扮") {
         Baixing_Toast.show("装扮");
