@@ -20,3 +20,5 @@
 2025-05-11 11:37: 实现 lib/fragment/baixing_player_privilege_recharge_fragment.dart 玩家特权充值界面，根据图片添加青铜特权卡片、升级特权卡片、基础特权和福利礼包等内容。
 
 2025-05-11 16:07: 修改 lib/widget/baixing_tag_widget.dart，根据图片更新待解锁标签组件样式，添加圆形灰色背景、音量图标、底部锁定标签和升级通知文字。
+
+2025-05-11 21:56: 创建 lib/widget/baixing_wealth_title_widget.dart 财富称号控件，实现带有图标、标题、解锁条件和右箭头的横向卡片布局，并更新工程索引.md。
