@@ -12,15 +12,17 @@ class Baixing_AccountSecurityScene extends StatefulWidget {
   const Baixing_AccountSecurityScene({super.key});
 
   @override
-  State<Baixing_AccountSecurityScene> createState() => _Baixing_AccountSecuritySceneState();
+  State<Baixing_AccountSecurityScene> createState() =>
+      _Baixing_AccountSecuritySceneState();
 }
 
-class _Baixing_AccountSecuritySceneState extends State<Baixing_AccountSecurityScene> {
+class _Baixing_AccountSecuritySceneState
+    extends State<Baixing_AccountSecurityScene> {
   // 模拟数据
   final String _mBaixing_userId = "31365117";
   final String _mBaixing_phoneNumber = "18888702717";
   final String _mBaixing_gameName = "未实名";
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,13 +62,10 @@ class _Baixing_AccountSecuritySceneState extends State<Baixing_AccountSecuritySc
                     ),
                   ),
                   SizedBox(height: 8),
-                  Text(
-                    "暂未发现安全隐患",
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  Text("暂未发现安全隐患", style: TextStyle(fontSize: 16)),
                 ],
               ),
-            )
+            ),
           ),
           SizedBox(height: 20),
           // 账号信息列表
@@ -78,7 +77,11 @@ class _Baixing_AccountSecuritySceneState extends State<Baixing_AccountSecuritySc
                 Divider(height: 1, indent: 16, endIndent: 16),
                 _buildInfoItem("手机号", _mBaixing_phoneNumber),
                 Divider(height: 1, indent: 16, endIndent: 16),
-                _buildInfoItem("游戏实名", _mBaixing_gameName, textColor: Colors.red),
+                _buildInfoItem(
+                  "游戏实名",
+                  _mBaixing_gameName,
+                  textColor: Colors.red,
+                ),
               ],
             ),
           ),
@@ -88,13 +91,32 @@ class _Baixing_AccountSecuritySceneState extends State<Baixing_AccountSecuritySc
             color: Colors.white,
             child: Column(
               children: [
-                _buildActionItem("切换账号", onTap: () {
-                  GoRouter.of(context).push("/accountSwitch");
-                }),
+                _buildActionItem(
+                  "切换账号",
+                  onTap: () {
+                    GoRouter.of(context).push("/accountSwitch");
+                  },
+                ),
                 Divider(height: 1, indent: 16, endIndent: 16),
-                _buildActionItem("注销账号", onTap: () {
-                  // 注销账号逻辑
-                }),
+                _buildActionItem(
+                  "注销账号",
+                  onTap: () async {
+                    final bool isContinue = await baixing_isContinueDialog(
+                      context,
+                      "确定要注销当前账号吗？",
+                      "注销账号",
+                      "取消",
+                    );
+                    if (isContinue) {
+                      final model = context.read<Baixing_AccountModel>();
+                      final id = model.baixing_current_account!.mBaixing_id;
+                      model
+                        ..baixing_setCurrentAccount(null)
+                        ..baixing_removeHistoryAccount(id);
+                      GoRouter.of(context).go('/selectLogin');
+                    }
+                  },
+                ),
               ],
             ),
           ),
@@ -104,10 +126,18 @@ class _Baixing_AccountSecuritySceneState extends State<Baixing_AccountSecuritySc
             width: double.infinity,
             height: 35.h,
             child: GestureDetector(
-              onTap: () {
-                Baixing_AccountModel accountModel = context.read();
-                accountModel.baixing_setCurrentAccount(null);
-                GoRouter.of(context).go('/selectLogin');
+              onTap: () async {
+                final bool isContinue = await baixing_isContinueDialog(
+                  context,
+                  "确定要退出登录吗？",
+                  "退出登录",
+                  "取消",
+                );
+                if (isContinue) {
+                  Baixing_AccountModel accountModel = context.read();
+                  accountModel.baixing_setCurrentAccount(null);
+                  GoRouter.of(context).go('/selectLogin');
+                }
               },
               child: Center(
                 child: Text(
