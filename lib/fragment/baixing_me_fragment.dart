@@ -12,7 +12,6 @@ class Baixing_MeFragment extends StatefulWidget {
 }
 
 class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
-  final _baixing_debouncer = Debouncer();
 
   @override
   Widget build(BuildContext context) {
@@ -270,13 +269,6 @@ class _Baixing_MeFragmentState extends State<Baixing_MeFragment> {
       }
     }
 
-    return () {
-      _baixing_debouncer.debounce(
-        duration: Baixing_dd500ms,
-        onDebounce: () {
-          ontap.call();
-        },
-      );
-    };
+    return baixing_setClick(ontap);
   }
 }

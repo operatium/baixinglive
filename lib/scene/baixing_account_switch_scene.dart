@@ -18,8 +18,11 @@ class Baixing_AccountSwitchScene extends StatefulWidget {
 
 class _Baixing_AccountSwitchSceneState
     extends State<Baixing_AccountSwitchScene> {
+  bool _mBaixing_delete = false;
+
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     Baixing_AccountModel accountModel = context.watch();
     return Scaffold(
       appBar: AppBar(
@@ -31,6 +34,22 @@ class _Baixing_AccountSwitchSceneState
         ),
         title: Text("账号切换"),
         centerTitle: true,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _mBaixing_delete = !_mBaixing_delete;
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.all(12.w),
+              child: Text(
+                _mBaixing_delete ? "删除" : "切换",
+                style: textTheme.titleMedium!.copyWith(color: Colors.black),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.w),
@@ -51,17 +70,12 @@ class _Baixing_AccountSwitchSceneState
               child: Card(
                 color: Colors.white,
                 margin: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Center(
-                  child: view,
-                ),
+                child: Center(child: view),
               ),
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              height: 10.h,
-              color: Colors.transparent,
-            );
+            return Divider(height: 10.h, color: Colors.transparent);
           },
         ),
       ),
@@ -90,15 +104,27 @@ class _Baixing_AccountSwitchSceneState
               ? null
               : Container(
                 decoration:
-                    Baixing_BackGround.baixing_getRoundedRectangular_K002(),
+                    _mBaixing_delete
+                        ? Baixing_BackGround.baixing_getRoundedRectangular_C001()
+                        : Baixing_BackGround.baixing_getRoundedRectangular_K002(),
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                 child: Text(
-                  "切换账号",
+                  _mBaixing_delete ? "删除账号" : "切换账号",
                   style: textTheme.labelMedium!.copyWith(color: Colors.white),
                 ),
               ),
-      onTap: () {
-        accountModel.baixing_setCurrentAccount(entity);
+      onTap: () async {
+        final bool isContinue = await baixing_isContinueDialog(
+          context,
+          _mBaixing_delete ? "删除账号" : "切换账号",
+          "确认",
+          "取消",
+        );
+        if (isContinue) {
+          _mBaixing_delete
+              ? accountModel.baixing_removeHistoryAccount(entity.mBaixing_id)
+              : accountModel.baixing_setCurrentAccount(entity);
+        }
       },
     );
   }
@@ -108,7 +134,7 @@ class _Baixing_AccountSwitchSceneState
       title: Text("登录新账号"),
       leading: Icon(Icons.add_circle_outline),
       onTap: () {
-        GoRouter.of(context).push("/login");
+        baixing_showLoginDialog(context);
       },
     );
   }

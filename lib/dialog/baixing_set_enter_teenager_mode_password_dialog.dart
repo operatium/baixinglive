@@ -205,7 +205,7 @@ class _Baixing_SetEnterTeenagerModePasswordDialogState
     await model.baixing_setEnable(true);
 
     // 返回true表示成功设置密码并开启青少年模式
-    Navigator.of(context).pop(true);
+    Navigator.of(context).pop();
     GoRouter.of(context).go('/teenagerContent');
   }
 }

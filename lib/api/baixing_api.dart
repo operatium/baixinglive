@@ -11,7 +11,6 @@ export 'baixing_api_config.dart';
 export 'baixing_api_background.dart';
 export 'baixing_api_item.dart';
 export 'baixing_api_entity.dart';
-export 'baixing_api_thirdapi.dart';
 export 'baixing_api_fragment.dart';
 export 'baixing_api_color.dart';
 

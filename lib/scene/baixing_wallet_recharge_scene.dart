@@ -1,3 +1,4 @@
+import '../api/baixing_api_thirdapi.dart';
 import '../api/baixing_api.dart';
 import '../api/baixing_api_flutter.dart';
 
@@ -15,7 +16,6 @@ class Baixing_WalletRechargeScene extends StatefulWidget {
 
 class _Baixing_WalletRechargeSceneState
     extends State<Baixing_WalletRechargeScene> {
-  final _baixing_debouncer = Debouncer();
   bool _mBaixing_agreementChecked = true;
   int _mBaixing_selectedOption = 1000;
   int _mBaixing_selectedPrice = 10;

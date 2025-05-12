@@ -1,5 +1,5 @@
 import 'package:baixinglive/api/baixing_api.dart';
-import 'package:baixinglive/scene/baixing_local_web_scene.dart';
+import 'package:baixinglive/scene/baixing_login_scene.dart';
 import 'package:baixinglive/scene/baixing_web_scene.dart';
 
 import '../dialog/baixing_select_birthday_dialog.dart';
@@ -265,7 +265,7 @@ void baixing_showRechargeConfirmDialog({
 }) {
   showModalBottomSheet(
     context: context,
-    isScrollControlled: true,
+    enableDrag: false,
     backgroundColor: Colors.transparent,
     builder: (context) => Baixing_RechargeConfirmDialog(
       mBaixing_amount: amount,
@@ -275,5 +275,56 @@ void baixing_showRechargeConfirmDialog({
         onConfirm(paymentMethod);
       },
     ),
+  );
+}
+
+// 显示登录对话框
+void baixing_showLoginDialog(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    enableDrag: false,
+    isScrollControlled: true,
+    constraints: BoxConstraints(
+      maxHeight: MediaQuery.of(context).size.height * 0.7,
+    ),
+    builder: (context) => Baixing_LoginScene(mBaixing_isDialogStyle: true,),
+  );
+}
+
+// 弹窗是否继续
+Future<bool> baixing_isContinueDialog(
+    BuildContext context,
+    String title,
+    String selectLeft,
+    String selectRight
+    ) async {
+  return await showCupertinoDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return CupertinoAlertDialog(
+        title: Text(title),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            child: Text(
+              selectLeft,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+            child: Text(
+              selectRight,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ),
+        ],
+      );
+    },
   );
 }

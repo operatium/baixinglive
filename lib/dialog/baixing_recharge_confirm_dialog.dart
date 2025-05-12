@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
-import '../api/baixing_api.dart';
+import 'package:baixinglive/api/baixing_api_thirdapi.dart';
+
+import '../api/baixing_api_background.dart';
 import '../api/baixing_api_flutter.dart';
+import '../compat/baixing_toast.dart';
 
 /**
 * @author yuyuexing
@@ -45,7 +47,7 @@ class _Baixing_RechargeConfirmDialogState extends State<Baixing_RechargeConfirmD
           Divider(height: 1, color: Colors.grey[200]),
           _baixing_buildCouponSection(),
           _baixing_buildConfirmButton(),
-          SizedBox(height: 20.h),
+          const Spacer(),
         ],
       ),
     );
@@ -83,7 +85,9 @@ class _Baixing_RechargeConfirmDialogState extends State<Baixing_RechargeConfirmD
               SizedBox(width: 10.w),
               Text(
                 '${widget.mBaixing_lemonAmount}柠檬',
-                style: textTheme.bodyMedium,
+                style: textTheme.bodyMedium!.copyWith(
+                  color: Colors.grey,
+                ),
               ),
             ],
           ),
@@ -196,24 +200,21 @@ class _Baixing_RechargeConfirmDialogState extends State<Baixing_RechargeConfirmD
 
   // 确认按钮
   Widget _baixing_buildConfirmButton() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: ElevatedButton(
-        onPressed: () {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 10.h),
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      decoration: Baixing_BackGround.baixing_getRoundedRectangular_K002(
+        radius: 36.w,
+      ),
+      child: GestureDetector(
+        onTap: () {
           widget.mBaixing_onConfirm(_mBaixing_selectedPayment);
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.purple,
-          minimumSize: Size(double.infinity, 50.h),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25.w),
-          ),
-        ),
         child: Text(
           '确认支付',
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             color: Colors.white,
           ),
         ),

@@ -16,7 +16,6 @@ class Baixing_ChangeUserInfoScene extends StatefulWidget {
 
 class _Baixing_ChangeUserInfoSceneState
     extends State<Baixing_ChangeUserInfoScene> {
-  final _baixing_debouncer = Debouncer();
   Widget? mBaixing_avtar;
 
   @override
@@ -119,7 +118,7 @@ class _Baixing_ChangeUserInfoSceneState
   }
 
   VoidCallback _obtainClickListener(String event) {
-    ontap() async {
+    ontap() async{
       final model = context.read<Baixing_AccountModel>();
       switch (event) {
         case "头像":
@@ -166,16 +165,9 @@ class _Baixing_ChangeUserInfoSceneState
         default:
           Baixing_Toast.show(event);
           break;
-      }
+      };
     }
 
-    return () {
-      _baixing_debouncer.debounce(
-        duration: Baixing_dd500ms,
-        onDebounce: () {
-          ontap.call();
-        },
-      );
-    };
+    return baixing_setClick(ontap);
   }
 }

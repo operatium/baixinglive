@@ -3,7 +3,9 @@ import '../api/baixing_api_flutter.dart';
 import '../api/baixing_api_thirdapi.dart';
 
 class Baixing_LoginScene extends StatefulWidget {
-  const Baixing_LoginScene({super.key});
+  final bool mBaixing_isDialogStyle;
+
+  const Baixing_LoginScene({super.key, this.mBaixing_isDialogStyle = false});
 
   @override
   State<Baixing_LoginScene> createState() => _Baixing_LoginSceneState();
@@ -19,7 +21,7 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
   late AnimationController _controller;
   late Animation<double> _animation;
   var _animationCount = 5;
-  var _height = 230.w;
+  var _height = 200.w;
   ScrollController? _scrollController = ScrollController();
   bool? _move = false;
 
@@ -30,17 +32,23 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
       code: _baixing_codeController.text,
     );
     if (result) {
-      final account = Baixing_AccountEntity(phone: _baixing_phoneNumberController.text)
-        ..token = baixing_loginModel.baixing_netin_userToken
-        ..mBaixing_nickName = "尊敬的用户${baixing_getNowTime()}"
-        ..mBaixing_level = baixing_getNowTime() % 9
-        ..mBaixing_avatarUrl = "https://picsum.photos/200/200?random=${Random().nextInt(1000)}"
-        ..mBaixing_id = baixing_getNowTime().toString()
-        ..mBaixing_levelTimeoutHit = "2027-01-01"
-        ..mBaixing_levelUpdateHit = "保级成功！距离白银还需充值80.0元";
+      final account =
+          Baixing_AccountEntity(phone: _baixing_phoneNumberController.text)
+            ..token = baixing_loginModel.baixing_netin_userToken
+            ..mBaixing_nickName = "尊敬的用户${baixing_getNowTime()}"
+            ..mBaixing_level = baixing_getNowTime() % 9
+            ..mBaixing_avatarUrl =
+                "https://picsum.photos/200/200?random=${Random().nextInt(1000)}"
+            ..mBaixing_id = baixing_getNowTime().toString()
+            ..mBaixing_levelTimeoutHit = "2027-01-01"
+            ..mBaixing_levelUpdateHit = "保级成功！距离白银还需充值80.0元";
       context.read<Baixing_AccountModel>().baixing_setCurrentAccount(account);
       Baixing_Toast.show("登录成功");
-      GoRouter.of(context).go("/home");
+      if (!widget.mBaixing_isDialogStyle) {
+        GoRouter.of(context).go("/home");
+      } else {
+        Navigator.of(context).pop();
+      }
     } else {
       Baixing_Toast.show("登录失败");
     }
@@ -78,6 +86,7 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
       _animationCount = 20;
       _controller.forward();
       Baixing_Vibrate.vibrate();
+      FocusManager.instance.primaryFocus?.unfocus();
       Baixing_Toast.showCenter("请同意用户协议");
     }
     return false;
@@ -113,17 +122,21 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
   void didChangeMetrics() {
     final bottomInset = View.of(context).viewInsets.bottom;
     setState(() {
-      if(!mounted) return;
-      _height = max(230.w - bottomInset, 10.w);
-      if(bottomInset > 0 && _move == false) {
+      if (!mounted || widget.mBaixing_isDialogStyle) return;
+      _height = max(200.w - bottomInset, 10.w);
+      if (bottomInset > 0 && _move == false) {
         _move = true;
         Future.delayed(Duration(milliseconds: 300), () {
-          if(!mounted) return;
-          _scrollController?.animateTo(80.w, duration: Duration(milliseconds: 500), curve: Curves.linear);
+          if (!mounted) return;
+          _scrollController?.animateTo(
+            80.w,
+            duration: Duration(milliseconds: 500),
+            curve: Curves.linear,
+          );
         });
         Future.delayed(Duration(milliseconds: 1000), () {
-          if(!mounted) return;
-          if(_move == true) {
+          if (!mounted) return;
+          if (_move == true) {
             _move = false;
           }
         });
@@ -154,296 +167,334 @@ class _Baixing_LoginSceneState extends State<Baixing_LoginScene>
         if (didPop) {
           print('返回操作已执行');
         } else {
-          if(accountModel.baixing_current_account == null) {
+          if (accountModel.baixing_current_account == null) {
             Baixing_Toast.show("请用home键切后台");
           } else {
-            if(Navigator.canPop(context)) {
+            if (Navigator.canPop(context)) {
               Navigator.of(context).pop();
             }
           }
         }
       },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          controller: _scrollController,
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: EdgeInsets.only(right: 10.w, top: 30.w),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text("联系客服", style: TextStyle(color: Colors.black, fontSize: 14.sp),),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(20.w)),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            controller: _scrollController,
+            child: Column(
+              children: [
+                widget.mBaixing_isDialogStyle
+                    ? AppBar(
+                  title: Text("登录"),
+                  centerTitle: true,
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                )
+                    : SizedBox.shrink(),
+                widget.mBaixing_isDialogStyle
+                    ? SizedBox.shrink()
+                    : Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10.w, top: 30.w),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "联系客服",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    Container(
-                      width: 158.w,
-                      height: 50.w,
-                      margin: EdgeInsets.only(top: 120.w),
-                      child: Image.asset("images/baixing_99zhibo_text.webp"),
-                    ),
-                    Container(
-                      width: 300.w,
-                      height: 50.w,
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25.w),
-                        border: Border.all(color: Color(0xffECECEC), width: 1.w),
-                      ),
-                      margin: EdgeInsets.only(top: 60.w),
-                      child: Row(
-                        children: [
-                          Text(
-                            "+86",
-                            style: TextStyle(
-                              color: Color(0xff999999),
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                          Icon(Icons.arrow_drop_down, color: Color(0xff999999)),
-                          Container(
-                            width: 1.w,
-                            height: 30.w,
-                            color: Color(0xffD8D8D8),
-                            margin: EdgeInsets.symmetric(horizontal: 10.w),
-                          ),
-                          Expanded(
-                            child: CupertinoTextField(
-                              controller: _baixing_phoneNumberController,
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                              ),
-                              cursorColor: Colors.black,
-                              placeholder: "请输入手机号",
-                              placeholderStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14.sp,
-                              ),
-                              maxLength: 11,
-                              keyboardType: TextInputType.phone,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(11),
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 300.w,
-                      height: 50.w,
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25.w),
-                        border: Border.all(color: Color(0xffECECEC), width: 1.w),
-                      ),
-                      margin: EdgeInsets.only(top: 10.w),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: CupertinoTextField(
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                              ),
-                              controller: _baixing_codeController,
-                              cursorColor: Colors.black,
-                              placeholder: "请输入验证码",
-                              placeholderStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14.sp,
-                              ),
-                              maxLength: 6,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(6),
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: 1.w,
-                            height: 30.w,
-                            color: Color(0xffD8D8D8),
-                            margin: EdgeInsets.symmetric(horizontal: 10.w),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              _baixing_debouncer.debounce(
-                                duration: Baixing_dd500ms,
-                                onDebounce: () => baixing_sendCode(loginModel),
-                              );
-                            },
-                            child: Text(
-                              loginModel.baixing_out_code_button_text,
-                              style: TextStyle(
-                                color: Color(0xff999999),
-                                fontSize: 14.sp,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 300.w,
-                      height: 40.w,
-                      margin: EdgeInsets.only(top: 20.w),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [Color(0xFFBA68FA), Color(0xFF7854F2)],
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white.withValues(alpha: 0.6),
-                      ),
-                      child: TextButton(
-                        onPressed: () {
-                          _baixing_debouncer.debounce(
-                            duration: const Duration(microseconds: 500),
-                            onDebounce: () {
-                              baixing_login(loginModel);
-                            },
-                          );
-                        },
-                        child: Text(
-                          "登录",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 1.w, height: _height),
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Align(
+                  alignment: Alignment.center,
+                  child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {},
-                        child: SizedBox(
-                          width: 40.w,
-                          height: 40.w,
-                          child: Image.asset("images/baixing_weixin.webp"),
+                      widget.mBaixing_isDialogStyle
+                          ? SizedBox.shrink()
+                          : Container(
+                        width: 158.w,
+                        height: 50.w,
+                        margin: EdgeInsets.only(top: 120.w),
+                        child: Image.asset(
+                          "images/baixing_99zhibo_text.webp",
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: SizedBox(
-                          width: 40.w,
-                          height: 40.w,
-                          child: Image.asset("images/baixing_qq.webp"),
+                      Container(
+                        width: 300.w,
+                        height: 50.w,
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(25.w),
+                          border: Border.all(
+                            color: Color(0xffECECEC),
+                            width: 1.w,
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: SizedBox(
-                          width: 40.w,
-                          height: 40.w,
-                          child: Image.asset("images/baixing_99.webp"),
+                        margin: EdgeInsets.only(
+                          top: widget.mBaixing_isDialogStyle ? 10.h : 60.w,
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: SizedBox(
-                          width: 40.w,
-                          height: 40.w,
-                          child: Image.asset("images/baixing_weibo.webp"),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: AnimatedBuilder(
-                  animation: _animation,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset: Offset(_animation.value, 0),
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 30.w, top: 10.w),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            CupertinoCheckbox(
-                              value: _baixing_isAgree,
-                              onChanged: (value) {
-                                setState(() {
-                                  _baixing_isAgree = value ?? false;
-                                });
-                              },
-                            ),
                             Text(
-                              "已阅读并同意",
+                              "+86",
                               style: TextStyle(
                                 color: Color(0xff999999),
-                                fontSize: 10.sp,
+                                fontSize: 14.sp,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                GoRouter.of(
-                                  context,
-                                ).push("/web?url=https://www.163.com");
-                              },
-                              child: Text(
-                                '《用户协议》',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 10.sp,
+                            Icon(
+                              Icons.arrow_drop_down,
+                              color: Color(0xff999999),
+                            ),
+                            Container(
+                              width: 1.w,
+                              height: 30.w,
+                              color: Color(0xffD8D8D8),
+                              margin: EdgeInsets.symmetric(horizontal: 10.w),
+                            ),
+                            Expanded(
+                              child: CupertinoTextField(
+                                controller: _baixing_phoneNumberController,
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
                                 ),
+                                cursorColor: Colors.black,
+                                placeholder: "请输入手机号",
+                                placeholderStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14.sp,
+                                ),
+                                maxLength: 11,
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(11),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
                               ),
                             ),
-                            Text(
-                              "和",
-                              style: TextStyle(
-                                color: Color(0xff999999),
-                                fontSize: 10.sp,
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 300.w,
+                        height: 50.w,
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(25.w),
+                          border: Border.all(
+                            color: Color(0xffECECEC),
+                            width: 1.w,
+                          ),
+                        ),
+                        margin: EdgeInsets.only(top: 10.w),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CupertinoTextField(
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                ),
+                                controller: _baixing_codeController,
+                                cursorColor: Colors.black,
+                                placeholder: "请输入验证码",
+                                placeholderStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14.sp,
+                                ),
+                                maxLength: 6,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(6),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
                               ),
+                            ),
+                            Container(
+                              width: 1.w,
+                              height: 30.w,
+                              color: Color(0xffD8D8D8),
+                              margin: EdgeInsets.symmetric(horizontal: 10.w),
                             ),
                             GestureDetector(
                               onTap: () {
-                                GoRouter.of(
-                                  context,
-                                ).push("/web?url=https://www.233.tv");
+                                _baixing_debouncer.debounce(
+                                  duration: Baixing_dd500ms,
+                                  onDebounce:
+                                      () => baixing_sendCode(loginModel),
+                                );
                               },
                               child: Text(
-                                '《隐私政策》',
+                                loginModel.baixing_out_code_button_text,
                                 style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 10.sp,
+                                  color: Color(0xff999999),
+                                  fontSize: 14.sp,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    );
-                  },
+                      Container(
+                        width: 300.w,
+                        height: 40.w,
+                        margin: EdgeInsets.only(top: 20.w),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [Color(0xFFBA68FA), Color(0xFF7854F2)],
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white.withValues(alpha: 0.6),
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            _baixing_debouncer.debounce(
+                              duration: const Duration(microseconds: 500),
+                              onDebounce: () {
+                                baixing_login(loginModel);
+                              },
+                            );
+                          },
+                          child: Text(
+                            "登录",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  width: 1.w,
+                  height: widget.mBaixing_isDialogStyle ? 10.h : _height,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 32.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: SizedBox(
+                            width: 40.w,
+                            height: 40.w,
+                            child: Image.asset("images/baixing_weixin.webp"),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: SizedBox(
+                            width: 40.w,
+                            height: 40.w,
+                            child: Image.asset("images/baixing_qq.webp"),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: SizedBox(
+                            width: 40.w,
+                            height: 40.w,
+                            child: Image.asset("images/baixing_99.webp"),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: SizedBox(
+                            width: 40.w,
+                            height: 40.w,
+                            child: Image.asset("images/baixing_weibo.webp"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: AnimatedBuilder(
+                    animation: _animation,
+                    builder: (context, child) {
+                      return Transform.translate(
+                        offset: Offset(_animation.value, 0),
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 30.w, top: 10.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CupertinoCheckbox(
+                                value: _baixing_isAgree,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _baixing_isAgree = value ?? false;
+                                  });
+                                },
+                              ),
+                              Text(
+                                "已阅读并同意",
+                                style: TextStyle(
+                                  color: Color(0xff999999),
+                                  fontSize: 10.sp,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  GoRouter.of(
+                                    context,
+                                  ).push("/web?url=https://www.163.com");
+                                },
+                                child: Text(
+                                  '《用户协议》',
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 10.sp,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                "和",
+                                style: TextStyle(
+                                  color: Color(0xff999999),
+                                  fontSize: 10.sp,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  GoRouter.of(
+                                    context,
+                                  ).push("/web?url=https://www.233.tv");
+                                },
+                                child: Text(
+                                  '《隐私政策》',
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 10.sp,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -11,4 +11,3 @@ export 'package:window_size/window_size.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:image_picker/image_picker.dart';
 
-
