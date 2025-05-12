@@ -37,4 +37,18 @@ date '\n+%Y-%m-%d %H:%M:%S'
 - 函数的前缀是: baixing_
 - 私有函数的前缀是: _baixing_
 - 数据类的类名都以Entity结尾
-- 持久化采用Baixing_SharedPreferences类
+- 写对话框，界面内容文件在lib/dialog/目录下, 文件名以Dialog结尾。显示对话框的函数名必须写在lib/api/baixing_api_dialog.dart文件中。
+
+全局：
+1. 请保持对话语言为中文
+2. 我的系统为 Mac
+3. 严格遵守规则
+4. 请在执行任务的时候， 第一件事是必须在终端中执行脚本/Users/yuyuexing/myCommand/sound.sh，命令如下：
+```shell
+bash '/Users/yuyuexing/myCommand/sound.sh' 'run'
+```
+5. 请在执行任务完毕前的最后一件事，必须在终端中执行脚本/Users/yuyuexing/myCommand/sound.sh，命令如下：
+```shell
+bash '/Users/yuyuexing/myCommand/sound.sh' 'stop'
+```
+6. 每次修改完成，必须检查语法。

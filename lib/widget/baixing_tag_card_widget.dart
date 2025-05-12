@@ -34,10 +34,7 @@ class Baixing_TagCardWidget extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
-              decoration: Baixing_BackGround.baixing_getRectangularGradient(
-                startColor:  Color(0xFF41403C),
-                endColor: Color(0xFF232323),
-              ),
+              decoration: Baixing_BackGround.baixing_getRectangularGradient((0xFF41403C),(0xFF232323),),
               child: Row(
                 children: [
                   mbaixing_is_lock

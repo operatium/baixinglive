@@ -1,30 +1,5 @@
 
-2025-05-07 20:27:00
-补全 doc 目录下 config.md、dialog.md、item.md、utils.md 文档，维护 README.md 文档目录映射，确保与 lib 目录结构一致。
-修改文件：doc/config.md, doc/dialog.md, doc/item.md, doc/utils.md, README.md
-
-2025-05-08 08:01: 新增 lib/model/baixing_teenager_mode_model.dart，完善工程索引.md，持久化青少年模式相关数据。
-
-2025-05-08 14:11: 新增 lib/scene/baixing_real_name_auth_scene.dart 实名认证界面，更新工程索引.md和doc/scene.md文档。
-
-2025-05-08 15:18: 修改 lib/scene/baixing_real_name_auth_scene.dart，添加勾选框左右抖动动画效果。
-
-2025-05-08 17:54: 修改 lib/api/baixing_api_dialog.dart 中的 baixing_showGuildListDialog 函数，将 showBottomSheet 改为 showModalBottomSheet，修复了找不到 Scaffold 组件的错误。
-
-2025-05-08 20:36: 更新工程索引.md，添加api目录的详细说明，包含所有api文件的功能描述。
-
-2025-05-08 22:32: 新增 lib/scene/baixing_account_security_scene.dart 账号与安全界面，更新 lib/api/baixing_api_router.dart 添加路由，更新工程索引.md。
-
-2025-05-09 15:56: 修改 lib/scene/baixing_change_user_info_scene.dart，实现换头像功能，添加底部弹窗选择相册或拍照，并更新用户头像数据。
-
-2025-05-11 11:37: 实现 lib/fragment/baixing_player_privilege_recharge_fragment.dart 玩家特权充值界面，根据图片添加青铜特权卡片、升级特权卡片、基础特权和福利礼包等内容。
-
-2025-05-11 16:07: 修改 lib/widget/baixing_tag_widget.dart，根据图片更新待解锁标签组件样式，添加圆形灰色背景、音量图标、底部锁定标签和升级通知文字。
-
-2025-05-11 21:56: 创建 lib/widget/baixing_wealth_title_widget.dart 财富称号控件，实现带有图标、标题、解锁条件和右箭头的横向卡片布局，并更新工程索引.md。
-
-2025.05.11 23:05
-创建钱包充值页面，实现了余额显示、充值选项、协议同意等功能
-lib/scene/baixing_wallet_recharge_scene.dart
-lib/api/baixing_api_router.dart
-lib/fragment/baixing_me_fragment.dart
+2025.05.12 11:42
+创建充值确认对话框 lib/dialog/baixing_recharge_confirm_dialog.dart
+更新对话框API lib/api/baixing_api_dialog.dart
+更新钱包充值页面 lib/scene/baixing_wallet_recharge_scene.dart

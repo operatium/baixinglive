@@ -11,6 +11,7 @@ import '../dialog/baixing_continue_teenager_mode_dialog.dart';
 import '../dialog/baixing_exit_teenager_mode_dialog.dart';
 import '../dialog/baixing_message_dialog.dart';
 import '../dialog/baixing_privacy_agreement_dialog.dart';
+import '../dialog/baixing_recharge_confirm_dialog.dart';
 import '../dialog/baixing_set_enter_teenager_mode_password_dialog.dart';
 import '../dialog/baixing_teenager_mode_hit_dialog.dart';
 
@@ -252,5 +253,27 @@ void baixing_showUrlDialog(BuildContext context, String url) {
   showModalBottomSheet<void>(
     context: context,
     builder: (context) => Baixing_WebScene(url: url),
+  );
+}
+
+// 显示充值确认对话框
+void baixing_showRechargeConfirmDialog({
+  required BuildContext context,
+  required int amount, // 充值金额（元）
+  required int lemonAmount, // 柠檬数量
+  required Function(String) onConfirm, // 确认支付回调
+}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) => Baixing_RechargeConfirmDialog(
+      mBaixing_amount: amount,
+      mBaixing_lemonAmount: lemonAmount,
+      mBaixing_onConfirm: (paymentMethod) {
+        Navigator.of(context).pop();
+        onConfirm(paymentMethod);
+      },
+    ),
   );
 }

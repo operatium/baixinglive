@@ -29,6 +29,25 @@ class Baixing_BackGround {
     );
   }
 
+  // 圆角 矩形 描边 背景色
+  static BoxDecoration baixing_getRoundedRectangular_C001({
+    double radius = 20,
+    Color borderColor = Colors.black,
+    double borderWidth = 1,
+    Color backgroundColor = Colors.grey,
+  }) {
+    return BoxDecoration(
+      color: backgroundColor,
+      // 设置圆角
+      borderRadius: BorderRadius.circular(radius),
+      // 设置描边
+      border: Border.all(
+        color: borderColor,
+        width: borderWidth,
+      ),
+    );
+  }
+
   //圆角 矩形 白色实体
   static BoxDecoration baixing_getRoundedRectangular({
     required double radius,
@@ -67,7 +86,8 @@ class Baixing_BackGround {
   }
 
   //圆角 矩形 实体 水平方向2色渐变
-  static BoxDecoration baixing_getRoundedRectangular_K002() {
+  static BoxDecoration baixing_getRoundedRectangular_K002({double? radius}) {
+    radius = radius?? 16.r;
     return BoxDecoration(
       gradient: LinearGradient(
         colors: [
@@ -81,20 +101,19 @@ class Baixing_BackGround {
           1,
         ],
       ),
-      borderRadius: BorderRadius.all(Radius.circular(16.r)),
+      borderRadius: BorderRadius.all(Radius.circular(radius)),
     );
   }
 
   //矩形 实体 垂直方向2色渐变
-  static BoxDecoration baixing_getRectangularGradient({
-    required Color startColor,
-    required Color endColor,
-}) {
+  static BoxDecoration baixing_getRectangularGradient(int? startColor, int? endColor) {
+    startColor = startColor?? 0xFF41403C;
+    endColor = endColor?? 0xFF232323;
     return BoxDecoration(
       gradient: LinearGradient(
         colors: [
-          Color(0xFF41403C),
-          Color(0xFF232323),
+          Color(startColor),
+          Color(endColor),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,

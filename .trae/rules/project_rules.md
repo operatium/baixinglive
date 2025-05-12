@@ -36,4 +36,4 @@ date '\n+%Y-%m-%d %H:%M:%S'
 - 函数的前缀是: baixing_
 - 私有函数的前缀是: _baixing_
 - 数据类的类名都以Entity结尾
-- 持久化采用Baixing_SharedPreferences类
+- 写对话框，界面内容文件在lib/dialog/目录下, 文件名以Dialog结尾。显示对话框的函数名必须写在lib/api/baixing_api_dialog.dart文件中。
